@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<BaseClassList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BaseClasses>
+    <BaseClass>
+      <ClassName>UObject</ClassName>
+      <ReadableName>Object</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>Object.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+	    <BaseClass>
+      <ClassName></ClassName>
+      <ReadableName>None</ReadableName>
+	  <HeaderFiles/>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>Character</ClassName>
+      <ReadableName>Character</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>GameFramework/Character.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>Pawn</ClassName>
+      <ReadableName>Pawn</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>GameFramework/Pawn.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>Actor</ClassName>
+      <ReadableName>Actor</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>GameFramework/Actor.h</HeaderFile>
+      </HeaderFiles>
+	</BaseClass>
+    <BaseClass>
+      <ClassName>PlayerCameraManager</ClassName>
+      <ReadableName>Player Camera Manager</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>Camera/PlayerCameraManager.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>Player Controller</ClassName>
+      <ReadableName>PlayerController</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>GameFramework/GameMode.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>WorldSettings</ClassName>
+      <ReadableName>World Settings</ReadableName>
+	  	  <HeaderFiles>
+		<HeaderFile>GameFramework/WorldSettings.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>HUD</ClassName>
+      <ReadableName>HUD</ReadableName>
+	  	  	  <HeaderFiles>
+		<HeaderFile>GameFramework/HUD.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>PlayerState</ClassName>
+      <ReadableName>Player State</ReadableName>
+	  <HeaderFiles>
+		<HeaderFile>GameFramework/PlayerState.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>GameState</ClassName>
+      <ReadableName>Game State</ReadableName>
+	  	  <HeaderFiles>
+		<HeaderFile>GameFramework/GameState.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>BlueprintFunctionLibrary</ClassName>
+      <ReadableName>Blueprint Function Library</ReadableName>
+	  	  	  <HeaderFiles>
+		<HeaderFile>Kismet/BlueprintFunctionLibrary.h</HeaderFile>
+      </HeaderFiles>
+    </BaseClass>
+<!--
+    <BaseClass>
+      <ClassName>Slate Widget</ClassName>
+      <ReadableName>Slate Widget</ReadableName>
+    </BaseClass>
+    <BaseClass>
+      <ClassName>Slate Widget Style</ClassName>
+      <ReadableName>SlateWidgetStyle</ReadableName>
+    </BaseClass>
+	-->
+	</BaseClasses>
+</BaseClassList>
