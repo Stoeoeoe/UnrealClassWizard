@@ -52,6 +52,7 @@ namespace Unreal_Class_Wizard.ViewModel
             {
                 className = value.Trim();
                 classModel.ClassName = className;
+                NotifyPropertyChanged("ClassName");
             }
         }
 
@@ -62,6 +63,8 @@ namespace Unreal_Class_Wizard.ViewModel
             set {
                 currentBaseClass = value;
                 classModel.BaseClass = currentBaseClass;
+                NotifyPropertyChanged("CurrentBaseClass");
+
             }
         }
 
@@ -70,7 +73,10 @@ namespace Unreal_Class_Wizard.ViewModel
         public string PreviewHeader
         {
             get { return ClassModel.HeaderText; }
-            set { previewHeader = value; }
+            set {
+                previewHeader = value;
+                NotifyPropertyChanged("PreviewHeader");            
+            }
         }
 
 
@@ -90,6 +96,8 @@ namespace Unreal_Class_Wizard.ViewModel
                     {
                         currentBaseClass = baseClasses.First();
                     }
+                    NotifyPropertyChanged("BaseClasses");            
+
                 }
 
                 return baseClasses;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Unreal_Class_Wizard.Model
 {
-    public class UnrealClass : NotifyPropertyChangedBase
+    public class UnrealClass
     {
 
         #region Properties
@@ -22,10 +22,10 @@ namespace Unreal_Class_Wizard.Model
             {
                 if (className == value) return;
                 className = value;
-                NotifyPropertyChanged("ClassName");
+                //NotifyPropertyChanged("ClassName");
 
                 GenerateHeader();
-                NotifyPropertyChanged("HeaderText");
+                //NotifyPropertyChanged("HeaderText");
             }
         }
 
@@ -45,10 +45,10 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 baseClass = value;
-                NotifyPropertyChanged("BaseClass");
+                //NotifyPropertyChanged("BaseClass");
 
                 GenerateHeader();
-                NotifyPropertyChanged("HeaderText");
+                //NotifyPropertyChanged("HeaderText");
             }        
         }
 

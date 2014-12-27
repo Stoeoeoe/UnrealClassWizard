@@ -27,19 +27,11 @@ namespace Unreal_Class_Wizard.View
     {
         public MainPage()
         {
-
             InitializeComponent();
-            this.DataContext = new UnrealClassViewModel();
-
-            //BaseClassList test = new BaseClassList();
-            //test.BaseClasses = new List<BaseClass>();
-            //test.BaseClasses.Add(new BaseClass() { ClassName = "Character", ReadableName = "Character" });
-            //test.BaseClasses.Add(new BaseClass() { ClassName = "Pawn", ReadableName = "Pawn" });
-
-            //XmlSerializer xs = new XmlSerializer(typeof(BaseClassList));
-            //xs.Serialize(new FileStream("C:/Temp/test.xml", FileMode.OpenOrCreate), test);
-
+          //  this.DataContext = new UnrealClassViewModel();
         }
+
+        public UnrealClassViewModel viewModel;
 
         private void Wizard_PageChanged(object sender, RoutedEventArgs e)
         {
@@ -50,24 +42,10 @@ namespace Unreal_Class_Wizard.View
             }
             else if(currentPage == MetaInfosPage)
             {
-                //(MetaInfosPage.Content as MetaInformation).SetFocusOnNameBox();
+                (MetaInfosPage.Content as MetaInformation).SetFocusOnNameBox();
             }
 
         }
 
-                public UnrealClassViewModel viewModel;
-
-
-
-        public void SetFocusOnNameBox()
-        {
-            Dispatcher.BeginInvoke(DispatcherPriority.Input,
-            new Action(delegate()
-            {
-                nameBox.Focus();         // Set Logical Focus
-                Keyboard.Focus(nameBox); // Set Keyboard Focus
-            }));
-
-        }
     }
 }

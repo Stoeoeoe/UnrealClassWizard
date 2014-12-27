@@ -28,9 +28,8 @@ namespace Unreal_Class_Wizard.View
         public MetaInformation()
         {
             InitializeComponent();
-  //          viewModel = new UnrealClassViewModel();
-     //       editor.Document = new ICSharpCode.AvalonEdit.Document.TextDocument();
-//            this.DataContext = viewModel;
+            viewModel = new UnrealClassViewModel();
+            this.DataContext = viewModel;
 
         }
 
