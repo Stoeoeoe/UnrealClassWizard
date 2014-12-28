@@ -3,5 +3,6 @@
   <CompanyInformation>
     <CopyrightText>Copyright 1998-2014 RCG Studios. All Rights Reserved.</CopyrightText>
     <API>ILEX_API</API>
+    <GameplayClass>Ilex</GameplayClass>
   </CompanyInformation>
 </User>

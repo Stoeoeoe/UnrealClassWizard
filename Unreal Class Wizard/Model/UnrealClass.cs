@@ -27,7 +27,7 @@ namespace Unreal_Class_Wizard.Model
             {
                 if (className == value) return;
                 className = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -40,7 +40,7 @@ namespace Unreal_Class_Wizard.Model
             {
                 if (description == value) return;
                 description = value.Trim();
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -53,7 +53,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 baseClass = value;
-                GenerateHeader();
+                GeneratePreviews();
             }        
         }
 
@@ -66,7 +66,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 access = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -79,7 +79,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 includedClasses = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -91,7 +91,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 classSpecifiers = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -103,7 +103,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 isActor = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -115,7 +115,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 isAbstract = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -127,7 +127,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 copyrightText = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
@@ -140,12 +140,18 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 constructorText = value;
-                GenerateHeader();
+                GeneratePreviews();
             }
         }
 
 
         #endregion
+
+        public void GeneratePreviews()
+        {
+            GenerateHeader();
+            GenerateCPP();
+        }
 
         public void GenerateHeader()
         {
@@ -153,8 +159,7 @@ namespace Unreal_Class_Wizard.Model
 
             // Preparation
             string tempClassName = ClassName == "" ? "XXXXX" : ClassName;                               // Use XXXXX as a substitute as long as there is no class name
-            string prefix = IsActor ? "A" : "U";
-            // TODO: Add support for F prefix
+            string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
             string copyRightText = CopyrightText == "" ? App.CurrentUser.CompanyInformation.CopyrightText : CopyrightText;
 
             // Start writing header
@@ -209,12 +214,44 @@ namespace Unreal_Class_Wizard.Model
                 sb.AppendLine(String.Format("    {0}{1}({2});", prefix, ClassName, ConstructorText));                                                                       // Add constructor
             }
 
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine();                                                                             // Empty line
+
             sb.AppendLine("}");                                                                             // End class body
 
             HeaderText = sb.ToString();
         }
 
+        public void GenerateCPP()
+        {
+            string gamePlayClass = App.CurrentUser.CompanyInformation.GameplayClass;
+            gamePlayClass = gamePlayClass.EndsWith(".h")? gamePlayClass : gamePlayClass + ".h";
+            string tempClassName = ClassName == "" ? "XXXXX" : ClassName;                               // Use XXXXX as a substitute as long as there is no class name
+            string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("//" + App.CurrentUser.CompanyInformation.CopyrightText);                      // Copyright
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine(String.Format("#include \"{0}\"", gamePlayClass));                             // Gameplay class
+            sb.AppendLine();                                                                             // Empty line
+            
+            // TODO: Constructor support
+            //if(ConstructorText != "")
+            //{
+            //    sb.AppendLine("{0}{1}::{0}{1}");                                                             // Empty line
+            //}
+
+            // TODO: Method support
+
+
+            CPPText = sb.ToString();
+        }
+
         public string HeaderText { get; set; }
+        public string CPPText { get; set; }
 
 
 

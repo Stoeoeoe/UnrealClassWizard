@@ -10,7 +10,8 @@
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance d:Type=vm:SAMPLE_UnrealClassViewModel, IsDesignTimeCreatable=True}"
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="400" d:DesignWidth="1280"
+             
              x:Name="metaInformation"
              >
 
@@ -33,23 +34,28 @@
 
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="130"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="415*"/>
+            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="689"/>
 
         </Grid.ColumnDefinitions>
-        <Label Content="CLASS INFORMATION" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" FontWeight="Bold" Height="36" Margin="0,12" />
+        <GridSplitter Grid.Row="0" Grid.RowSpan="11" Grid.Column="3" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
+
+        <Label Content="CLASS INFORMATION" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" Height="36" Margin="0,4,0,5" />
+        <Label Content="PREVIEW" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" FontSize="20" FontWeight="Bold" Height="36" Margin="6,4,108,5" />
+
         <Label Content="Name" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Height="26" Margin="0,6"/>
         <Label Content="Base class" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Height="26" Margin="0,6"/>
-        <Label Content="Access" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="4" Height="26" Margin="0,6"/>
+        <Label Content="Access modifier" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="4" Height="26" Margin="0,6"/>
         <Label Content="Is Actor/spawnable?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="5" Height="26" Margin="0,6"/>
         <Label Content="Is Abstract?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="6" Height="26" Margin="0,6"/>
-        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Height="26"/>
-        <Label Content="Other class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8"  Margin="0,6"/>
+        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Height="26" Margin="0,6"/>
+        <Label Content="Class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8"  Margin="0,6" Height="26"/>
         <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9" Height="26" Margin="0,10,0,40"/>
 
-        <TextBox  x:Name="nameBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Margin="8" TabIndex="0" Text="{Binding Path=ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <ComboBox x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8" IsEditable="True" ItemsSource="{Binding BaseClasses}" TabIndex="1" Text="{Binding Path=CurrentBaseClassText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"  TextBoxBase.TextChanged="BaseClassChanged" />
-        <ComboBox x:Name="accessBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="8" TabIndex="2" Text="{Binding Path=Access, Mode=TwoWay}" SelectedIndex="0" >
+        <TextBox  x:Name="nameBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Margin="8,8,10,8" TabIndex="0" Text="{Binding Path=ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)"/>
+        <ComboBox x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8,8,10,8" IsEditable="True" ItemsSource="{Binding BaseClasses}" TabIndex="1" Text="{Binding Path=CurrentBaseClassText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"  TextBoxBase.TextChanged="BaseClassChanged" ToolTip="Class from which this class inherits, usually not empty" />
+        <ComboBox x:Name="accessBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="8,8,10,8" TabIndex="2" Text="{Binding Path=Access, Mode=TwoWay}" SelectedIndex="0" ToolTip="Determines whether a class is public or private" >
             <ComboBoxItem>Public</ComboBoxItem>
             <ComboBoxItem>Private</ComboBoxItem>
         </ComboBox>
@@ -57,16 +63,41 @@
             <RadioButton Content="Public"  GroupName="AccessGroup" IsChecked="{Binding IsPublic, Mode=TwoWay}" Margin="8,0,20,0" />
             <RadioButton Content="Private" GroupName="AccessGroup" IsChecked="{Binding IsPrivate, Mode=TwoWay}"/>
             </StackPanel> -->
+        <CheckBox x:Name="isSpawnable" IsChecked="{Binding IsActor, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="8,12,10,12" TabIndex="3" Height="14" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" />
+        <CheckBox x:Name="isAbstract" IsChecked="{Binding IsAbstract, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="8,12,10,12" TabIndex="4" Height="14" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" />
 
-        <CheckBox x:Name="isSpawnable" IsChecked="{Binding IsActor, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="8" TabIndex="3" />
-        <CheckBox x:Name="isAbstract" IsChecked="{Binding IsAbstract, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="8" TabIndex="4" />
 
-        <view:UE4AvalonEdit x:Name="editor" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" IsReadOnly="True" SyntaxHighlighting="C++">
-            <i:Interaction.Behaviors>
-                <view:AvalonEditBehavior GiveMeTheText="{Binding PreviewHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </i:Interaction.Behaviors>
-        </view:UE4AvalonEdit>
-        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7"  VerticalAlignment="Center" Margin="8" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="5" />
-        <TextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="9"  VerticalAlignment="Stretch" Margin="8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="6" />
+
+        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7"  VerticalAlignment="Center" Margin="8,8,10,8" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="5" Height="22" ToolTip="Other classes which will be included in the header" />
+        <Button x:Name="otherClassSpecifiersButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Stretch" Margin="8,8,0,8" TabIndex="6" Content="More..." Width="102" ToolTip="Management of all class specifiers"/>
+        <TextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="9"  VerticalAlignment="Stretch" Margin="8,8,10,8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="7" ToolTip="Description/documentation of this class" />
+
+
+
+        <TabControl Grid.Column="4" HorizontalAlignment="Left" Height="337" Margin="0,5,0,0" Grid.RowSpan="8" VerticalAlignment="Top" Width="689" Grid.Row="2">
+            <TabItem Header="Header File">
+                <view:UE4AvalonEdit x:Name="editorHeader" Grid.Row="2" Grid.Column="4" Margin="10,7,10,10" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
+                    <i:Interaction.Behaviors>
+                        <view:AvalonEditBehavior BoundText="{Binding PreviewHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:Interaction.Behaviors>
+                </view:UE4AvalonEdit>
+            </TabItem>
+            <TabItem Header="C++ File">
+                <view:UE4AvalonEdit x:Name="editorCPP" Grid.Row="2" Grid.Column="4" Margin="10,7,10,10" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
+                    <i:Interaction.Behaviors>
+                        <view:AvalonEditBehavior BoundText="{Binding PreviewCPP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:Interaction.Behaviors>
+                </view:UE4AvalonEdit>
+            </TabItem>
+        </TabControl>
+
+        <!--<view:HelpButton Grid.Column="3" Grid.Row="2" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="3" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="4" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="5" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="6" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="7" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="8" URL="http://www.ilex-game.com/" ToolTip="Olol" />
+        <view:HelpButton Grid.Column="3" Grid.Row="9" URL="http://www.ilex-game.com/" ToolTip="Olol" />-->
     </Grid>
 </UserControl>

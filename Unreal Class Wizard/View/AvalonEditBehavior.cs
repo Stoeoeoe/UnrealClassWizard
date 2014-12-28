@@ -13,14 +13,14 @@ namespace Unreal_Class_Wizard.View
     {
 
         // See http://stackoverflow.com/questions/18964176/two-way-binding-to-avalonedit-document-text-using-mvvm
-        public static readonly DependencyProperty GiveMeTheTextProperty =
-        DependencyProperty.Register("GiveMeTheText", typeof(string), typeof(AvalonEditBehavior),
+        public static readonly DependencyProperty BoundTextProperty =
+        DependencyProperty.Register("BoundText", typeof(string), typeof(AvalonEditBehavior),
         new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PropertyChangedCallback));
 
-        public string GiveMeTheText
+        public string BoundText
         {
-            get { return (string)GetValue(GiveMeTheTextProperty); }
-            set { SetValue(GiveMeTheTextProperty, value); }
+            get { return (string)GetValue(BoundTextProperty); }
+            set { SetValue(BoundTextProperty, value); }
         }
 
         protected override void OnAttached()
@@ -43,7 +43,7 @@ namespace Unreal_Class_Wizard.View
             if (textEditor != null)
             {
                 if (textEditor.Document != null)
-                    GiveMeTheText = textEditor.Document.Text;
+                    BoundText = textEditor.Document.Text;
             }
         }
 

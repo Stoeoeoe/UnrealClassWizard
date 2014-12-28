@@ -29,7 +29,7 @@ namespace Unreal_Class_Wizard.ViewModel
             this.ClassModel = new UnrealClass();
             this.ClassModel.Access = "Public";
             this.ClassModel.ClassName = ClassName;
-            this.ClassModel.GenerateHeader();
+            this.ClassModel.GeneratePreviews();
 
             NotifyPropertyChanged("ClassName");
             NotifyPropertyChanged("IsPrivate");

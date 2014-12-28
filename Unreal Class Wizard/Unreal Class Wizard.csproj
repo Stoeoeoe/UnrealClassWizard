@@ -92,6 +92,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\HelpButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OtherClassSpecifiers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -120,6 +124,9 @@
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\UnrealClassViewModel.cs" />
+    <Compile Include="View\HelpButton.xaml.cs">
+      <DependentUpon>HelpButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OtherClassSpecifiers.xaml.cs">
       <DependentUpon>OtherClassSpecifiers.xaml</DependentUpon>
     </Compile>
@@ -150,6 +157,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Images\Thumbs.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -188,6 +196,11 @@
     <Content Include="Data\BaseClasses.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\info.png" />
+    <Resource Include="Images\info_inactive.png" />
+    <Resource Include="Images\info.jpg" />
+    <Resource Include="Data\ClassSpecifiers.xml" />
+    <Resource Include="Data\TemplateClasses.xml" />
     <Content Include="Data\User.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

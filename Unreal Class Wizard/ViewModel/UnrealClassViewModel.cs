@@ -163,7 +163,7 @@ namespace Unreal_Class_Wizard.ViewModel
                     classModel.IncludedClasses.Add(include.Trim());
                 }
 
-                classModel.GenerateHeader();                                // Trigger manual generation because we do not set the value
+                classModel.GeneratePreviews();                                // Trigger manual generation because we do not set the value
                 NotifyPropertyChanged("AdditionalIncludedClasses");
                 NotifyPropertyChanged("PreviewHeader");
             }
@@ -205,6 +205,17 @@ namespace Unreal_Class_Wizard.ViewModel
             set {
                 previewHeader = value;
                 NotifyPropertyChanged("PreviewHeader");            
+            }
+        }
+
+        private string previewCPP;
+        public string PreviewCPP
+        {
+            get { return ClassModel.CPPText; }
+            set
+            {
+                previewCPP = value;
+                NotifyPropertyChanged("PreviewCPP");
             }
         }
 

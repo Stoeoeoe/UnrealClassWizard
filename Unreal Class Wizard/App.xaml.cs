@@ -34,7 +34,7 @@ namespace Unreal_Class_Wizard
 //            (MainWindow as MainPage).LayoutRoot.DataContext = new UnrealClassViewModel(); 
             
             CurrentUser = User.LoadUser();
-            HeaderParser.ParseHeader("blah");
+            // HeaderParser.ParseHeader("blah");
 
             ClassSpecifierList list = new ClassSpecifierList();
             list.ClassSpecifiers = new List<ClassSpecifier>();

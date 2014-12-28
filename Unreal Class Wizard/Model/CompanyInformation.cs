@@ -12,7 +12,8 @@ namespace Unreal_Class_Wizard.Model
     {
         public string CopyrightText { get; set; }
         public string API { get; set; }
-        
+
+        public string GameplayClass { get; set; }
 
         public void LoadCompanyInformation()
         {
