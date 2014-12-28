@@ -113,7 +113,6 @@
     <Compile Include="Model\ClassSpecifier.cs" />
     <Compile Include="Model\HeaderParser.cs" />
     <Compile Include="Model\NotifyPropertyChangedBase.cs" />
-    <Compile Include="Utils\BaseClassConverter.cs" />
     <Compile Include="ViewModel\SAMPLE_UnrealClassViewModel.cs" />
     <Compile Include="View\AvalonEditBehavior.cs" />
     <Compile Include="Model\CompanyInformation.cs" />
@@ -163,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libs\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

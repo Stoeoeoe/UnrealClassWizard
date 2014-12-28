@@ -8,16 +8,12 @@
       xmlns:view="clr-namespace:Unreal_Class_Wizard.View"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
-      xmlns:utils="clr-namespace:Unreal_Class_Wizard.Utils"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance d:Type=vm:SAMPLE_UnrealClassViewModel, IsDesignTimeCreatable=True}"
       d:DesignHeight="600" d:DesignWidth="800"
              x:Name="metaInformation"
              >
 
-    <UserControl.Resources>
-        <utils:BaseClassConverter x:Key="BaseClassConverter"/>
-    </UserControl.Resources>
     <Grid x:Name="baseGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>

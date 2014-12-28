@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Serialization;
 using Unreal_Class_Wizard.Model;
 using Unreal_Class_Wizard.View;
 using Unreal_Class_Wizard.ViewModel;
@@ -68,10 +69,12 @@ namespace Unreal_Class_Wizard
             list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "NotPlaceable", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/NotPlaceable/index.html" });
             list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "PerObjectConfig", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/PerObjectConfig/index.html" });
             list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "Placeable", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Placeable/index.html" });
-            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Placeable/index.html" });
-            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "", URL = "" });
-            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "", URL = "" });
-            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "", URL = "" });
+            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "ShowCategories", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/ShowCategories/index.html" });
+            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "Transient", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Transient/index.html" });
+            list.ClassSpecifiers.Add(new ClassSpecifier() { Name = "Within", URL = "https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Within/index.html" });
+            XmlSerializer xs = new XmlSerializer(typeof(ClassSpecifierList));
+            FileStream fs = new FileStream(@"C:\Users\Matthias\Documents\Visual Studio 2013\Projects\Unreal Class Wizard\Unreal Class Wizard\Data\ClassSpecifiers.xml", FileMode.OpenOrCreate);
+            xs.Serialize(fs, list);
 
         }
     }
