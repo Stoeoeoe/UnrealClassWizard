@@ -92,6 +92,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\IncludedClasses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\IntroPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,13 +110,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ClassSpecifier.cs" />
     <Compile Include="Model\NotifyPropertyChangedBase.cs" />
+    <Compile Include="ViewModel\SAMPLE_UnrealClassViewModel.cs" />
     <Compile Include="View\AvalonEditBehavior.cs" />
     <Compile Include="Model\CompanyInformation.cs" />
     <Compile Include="Model\BaseClass.cs" />
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\UnrealClassViewModel.cs" />
+    <Compile Include="View\IncludedClasses.xaml.cs">
+      <DependentUpon>IncludedClasses.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\IntroPage.xaml.cs">
       <DependentUpon>IntroPage.xaml</DependentUpon>
     </Compile>
@@ -151,7 +160,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Libs\" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +181,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ClassWizard.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\BaseClasses.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\User.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

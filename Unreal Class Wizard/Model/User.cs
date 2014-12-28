@@ -29,12 +29,14 @@ namespace Unreal_Class_Wizard.Model
                 user = new User();
                 user.CompanyInformation = new CompanyInformation();
                 user.CompanyInformation.CopyrightText = String.Format("Copyright 1998-{0} Epic Games, Inc. All Rights Reserved.", DateTime.Now.Year);
-                
+                user.CompanyInformation.API = "";
+
                 // Save user
                 xs.Serialize(fs, user);
             }
             return user;
 
         }
+
     }
 }

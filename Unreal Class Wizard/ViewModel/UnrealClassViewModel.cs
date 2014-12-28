@@ -15,8 +15,22 @@ namespace Unreal_Class_Wizard.ViewModel
     {
         public UnrealClassViewModel()
         {
-            classModel = new UnrealClass();
-            className = "";
+            this.baseClasses = new ObservableCollection<BaseClass>(BaseClass.LoadBaseClasses());
+
+
+
+            this.classModel = new UnrealClass();
+            this.classModel.BaseClass = BaseClasses.FirstOrDefault();
+
+            //classModel.ClassName = "XXXXXXXX";
+            this.Access = "Public";
+            NotifyPropertyChanged("Access");
+
+            this.currentBaseClass = baseClasses.FirstOrDefault();
+            NotifyPropertyChanged("CurrentBaseClass");
+
+            this.classModel.IncludedClasses = new List<string>();
+
         }
 
         private UnrealClass classModel;
@@ -26,22 +40,6 @@ namespace Unreal_Class_Wizard.ViewModel
             set { classModel = value; }
         }
 
-
-        private bool isPublic = true;
-
-        public bool IsPublic
-        {
-            get { return isPublic; }
-            set { isPublic = value; }
-        }
-        
-
-        private bool isPrivate = false;
-        public bool IsPrivate
-        {
-            get { return isPrivate; }
-            set { isPrivate = value; }
-        }
 
 
         private string className;
@@ -53,6 +51,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 className = value.Trim();
                 classModel.ClassName = className;
                 NotifyPropertyChanged("ClassName");
+                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
@@ -61,13 +60,77 @@ namespace Unreal_Class_Wizard.ViewModel
         {
             get { return currentBaseClass; }
             set {
-                currentBaseClass = value;
+
+                // In case of a new class
+                if(value == null)
+                {
+                    currentBaseClass = new BaseClass("blah");
+                }
+                else
+                {
+                    currentBaseClass = value;
+                }
                 classModel.BaseClass = currentBaseClass;
                 NotifyPropertyChanged("CurrentBaseClass");
+                NotifyPropertyChanged("PreviewHeader");
 
+                // If the base class is "Actor", activate the checkbox
+                IsActor = currentBaseClass.IsActorClass;
             }
         }
 
+        private string access;
+        public string Access
+        {
+            get { return access; }
+            set
+            {
+                access = value;
+                classModel.Access = access;
+                NotifyPropertyChanged("Access");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                classModel.Description = description;
+                NotifyPropertyChanged("Description");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
+
+        private bool isActor;
+        public bool IsActor
+        {
+            get { return isActor; }
+            set
+            {
+                isActor = value;
+                classModel.IsActor = isActor;
+                NotifyPropertyChanged("IsActor");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
+        private bool isAbstract;
+        public bool IsAbstract
+        {
+            get { return isAbstract; }
+            set
+            {
+                isAbstract = value;
+                classModel.IsAbstract = isAbstract;
+                NotifyPropertyChanged("IsAbstract");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
 
         private string previewHeader;
         public string PreviewHeader
@@ -79,7 +142,18 @@ namespace Unreal_Class_Wizard.ViewModel
             }
         }
 
+        private ObservableCollection<string> includedClasses;
+        public ObservableCollection<string> IncludedClasses
+        {
+            get { return new ObservableCollection<string>(ClassModel.IncludedClasses); }
+            set
+            {
+                includedClasses = value;
 
+                NotifyPropertyChanged("IncludedClasses");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
 
         
         private ObservableCollection<BaseClass> baseClasses;
@@ -88,22 +162,14 @@ namespace Unreal_Class_Wizard.ViewModel
         {
             get 
             {
-                // If it has not yet been loaded, load the template classes and set the current chosen class to the first in the list
-                if (baseClasses == null || baseClasses.Count == 0)
-                {
-                    baseClasses = new ObservableCollection<BaseClass>(BaseClass.LoadBaseClasses());
-                    if(baseClasses.Count > 0)
-                    {
-                        currentBaseClass = baseClasses.First();
-                    }
-                    NotifyPropertyChanged("BaseClasses");            
-
-                }
-
                 return baseClasses;
             
             }
-            set { baseClasses = value; }
+            set
+            {
+                baseClasses = value;
+                NotifyPropertyChanged("BaseClasses");
+            }
         }
 
 

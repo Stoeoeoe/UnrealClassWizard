@@ -11,8 +11,20 @@ using System.Xml.Serialization;
 
 namespace Unreal_Class_Wizard.Model
 {
-    public class BaseClass : NotifyPropertyChangedBase
+    public class BaseClass
     {
+        public BaseClass(string name)
+        {
+            this.ClassName = name;
+            this.ReadableName = name;
+            this.IsActorClass = false;
+            this.HeaderFiles = new string[]{ "XXXXX/" + name + ".h" };
+        }
+
+        public BaseClass()
+        {
+
+        }
 
         public static List<BaseClass> LoadBaseClasses()
         {
@@ -30,26 +42,34 @@ namespace Unreal_Class_Wizard.Model
         private static List<BaseClass> LoadFromXML()
         {
             XmlSerializer xs = new XmlSerializer(typeof(BaseClassList));
-            FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/BaseClasses.xml", FileMode.OpenOrCreate);
-
             List<BaseClass> baseClasses = new List<BaseClass>();
-            if (fs.Length >= 0)
-            {
-                BaseClassList list = xs.Deserialize(fs) as BaseClassList;
-                baseClasses = new List<BaseClass>();
-                baseClasses.AddRange(list.BaseClasses);
 
+
+            if(Directory.Exists(Directory.GetCurrentDirectory() + "/Data/"))
+            {
+                using(FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/BaseClasses.xml", FileMode.OpenOrCreate))
+                {
+                    BaseClassList list = xs.Deserialize(fs) as BaseClassList;
+                    baseClasses = new List<BaseClass>();
+                    baseClasses.AddRange(list.BaseClasses);
+                }
                 //DataContractJsonSerializer s = new DataContractJsonSerializer(typeof(BaseClassList), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = false });
                 //FileStream fs2 = new FileStream(Directory.GetCurrentDirectory()  + "/Data/BaseClasses.json", FileMode.OpenOrCreate);
                 //s.WriteObject(fs2, list);
-
-                return baseClasses;
             }
             else
             {
-                // TODO: Create new Template
+                // Create new Template
+                BaseClassList list = new BaseClassList();
+                list.BaseClasses = new List<BaseClass>();
+                list.BaseClasses.Add(new BaseClass() { ClassName = "", HeaderFiles = new string[] { "" }, ReadableName = "" });
+                using(FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/BaseClasses.xml", FileMode.OpenOrCreate))
+                {
+                    xs.Serialize(fs, list);
+                }
                 return baseClasses;
             }
+            return baseClasses;
         }
 
         private static List<BaseClass> LoadFromJSON()
@@ -73,31 +93,11 @@ namespace Unreal_Class_Wizard.Model
 
         }
 
-        private string className;
+        public string ClassName { get; set; }
 
-        public string ClassName
-        {
-            get { return className; }
-            set
-            {
-                if (className == value) return;
-                className = value;
-                NotifyPropertyChanged("ClassName");
-            }
-        }
+        public string ReadableName { get; set; }
 
-        private string readableName;
-
-        public string ReadableName
-        {
-            get { return readableName; }
-            set
-            {
-                if (className == value) return;
-                readableName = value;
-                NotifyPropertyChanged("ReadableName");
-            }
-        }
+        public bool IsActorClass { get; set; }
 
         [XmlArray("HeaderFiles")]
         [XmlArrayItem("HeaderFile")]

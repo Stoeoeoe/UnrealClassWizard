@@ -10,39 +10,14 @@ namespace Unreal_Class_Wizard.Model
 {
     public class CompanyInformation
     {
-        #region Property Boilerplate
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
-
-        #region Properties
-
-        private string copyrightText;
-
-        public string CopyrightText
-        {
-            get { return copyrightText; }
-            set
-            {
-                if (copyrightText == value) return;
-                copyrightText = value;
-                NotifyPropertyChanged("CopyrightText");
-            }
-        }
-
-        #endregion
+        public string CopyrightText { get; set; }
+        public string API { get; set; }
+        
 
         public void LoadCompanyInformation()
         {
 
         }
+
     }
 }
