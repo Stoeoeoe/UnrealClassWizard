@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<TemplateClassList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TemplateClasses>
+    <TemplateClass>
+      <ClassName>UObject</ClassName>
+      <ReadableName>Object</ReadableName>
+    </TemplateClass>
+	    <TemplateClass>
+      <ClassName></ClassName>
+      <ReadableName>None</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>Character</ClassName>
+      <ReadableName>Character</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>Pawn</ClassName>
+      <ReadableName>Pawn</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>Actor</ClassName>
+      <ReadableName>Actor</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>PlayerCameraManager</ClassName>
+      <ReadableName>Player Camera Manager</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>Player Controller</ClassName>
+      <ReadableName>PlayerController</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>WorldSettings</ClassName>
+      <ReadableName>World Settings</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>HUD</ClassName>
+      <ReadableName>HUD</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>PlayerState</ClassName>
+      <ReadableName>Player State</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>GameState</ClassName>
+      <ReadableName>Game State</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>BlueprintFunctionLibrary</ClassName>
+      <ReadableName>Blueprint Function Library</ReadableName>
+    </TemplateClass>
+<!--
+    <TemplateClass>
+      <ClassName>Slate Widget</ClassName>
+      <ReadableName>Slate Widget</ReadableName>
+    </TemplateClass>
+    <TemplateClass>
+      <ClassName>Slate Widget Style</ClassName>
+      <ReadableName>SlateWidgetStyle</ReadableName>
+    </TemplateClass>
+	-->
+	</TemplateClasses>
+</TemplateClassList>

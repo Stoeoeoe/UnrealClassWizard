@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Unreal_Class_Wizard.Model;
 using Unreal_Class_Wizard.ViewModel;
 
 namespace Unreal_Class_Wizard.View
@@ -43,6 +44,16 @@ namespace Unreal_Class_Wizard.View
             }));
 
         }
+
+        // TODO: Ugly.
+        private void BaseClassChanged(object sender, TextChangedEventArgs e)
+        {
+            // Instead of binding
+//           viewModel.CurrentBaseClassText = (sender as ComboBox).Text;
+            viewModel.CurrentBaseClass = (sender as ComboBox).SelectedItem as BaseClass;
+            //viewModel.CurrentBaseClass.ClassName = (sender as ComboBox).Text;
+        }
+
 
     }
 }

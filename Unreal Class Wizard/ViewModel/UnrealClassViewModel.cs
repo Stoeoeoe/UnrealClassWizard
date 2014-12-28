@@ -26,7 +26,8 @@ namespace Unreal_Class_Wizard.ViewModel
             this.Access = "Public";
             NotifyPropertyChanged("Access");
 
-            this.currentBaseClass = baseClasses.FirstOrDefault();
+            this.currentBaseClass = BaseClasses.FirstOrDefault();
+//            this.currentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
             NotifyPropertyChanged("CurrentBaseClass");
 
             this.classModel.IncludedClasses = new List<string>();
@@ -55,27 +56,69 @@ namespace Unreal_Class_Wizard.ViewModel
             }
         }
 
+        //private string currentBaseClassText;
+
+        //public string CurrentBaseClassText
+        //{
+        //    get { return currentBaseClassText; }
+        //    set
+        //    {
+        //        currentBaseClassText = value;
+        //        // Search for the base class if it exists, otherwise create a new one
+        //        BaseClass existingBaseClass = BaseClasses.FirstOrDefault(baseClass => baseClass.ReadableName == currentBaseClassText);
+        //        if(existingBaseClass != null)
+        //        {
+        //            CurrentBaseClass = existingBaseClass;
+        //        }
+        //        else
+        //        {
+        //            CurrentBaseClass = new BaseClass();
+        //            CurrentBaseClass.ClassName = currentBaseClassText;
+        //        }
+        //        NotifyPropertyChanged("CurrentBaseClassText");
+        //        NotifyPropertyChanged("CurrentBaseClass");
+        //    }
+        //}
+
+        private string currentBaseClassText;
+        public string CurrentBaseClassText
+        {
+            get { return currentBaseClassText; }
+            set
+            {
+                currentBaseClassText = value.Trim();
+                NotifyPropertyChanged("CurrentBaseClassText");
+            }
+        }
+
         private BaseClass currentBaseClass;
         public BaseClass CurrentBaseClass
         {
             get { return currentBaseClass; }
             set {
+                    // TODO: Not pretty at all
+                    // The BaseClassConverted created an empty BaseClass which lacks information, so it must be retrieved from the collection again
+                    if(value == null)
+                    {
+                        currentBaseClass = new BaseClass();
+                        currentBaseClass.ClassName = CurrentBaseClassText;
+                    }
+                    else
+                    {
+                        currentBaseClass = value;
+                        CurrentBaseClassText = currentBaseClass.ToString();
+                    }
+                    //BaseClass existingBaseClass = BaseClasses.FirstOrDefault(b => b.ClassName == (value as BaseClass).ClassName);
 
-                // In case of a new class
-                if(value == null)
-                {
-                    currentBaseClass = new BaseClass("blah");
-                }
-                else
-                {
-                    currentBaseClass = value;
-                }
-                classModel.BaseClass = currentBaseClass;
-                NotifyPropertyChanged("CurrentBaseClass");
-                NotifyPropertyChanged("PreviewHeader");
+                    //currentBaseClass = existingBaseClass == null ? value : existingBaseClass;
+                    //classModel.BaseClass = currentBaseClass;
 
-                // If the base class is "Actor", activate the checkbox
-                IsActor = currentBaseClass.IsActorClass;
+                    classModel.BaseClass = currentBaseClass;    
+
+                    NotifyPropertyChanged("CurrentBaseClass");
+                    NotifyPropertyChanged("PreviewHeader");
+                    // If the base class is "Actor", activate the checkbox
+                    IsActor = currentBaseClass.IsActorClass;
             }
         }
 
@@ -104,6 +147,29 @@ namespace Unreal_Class_Wizard.ViewModel
                 NotifyPropertyChanged("PreviewHeader");
             }
         }
+
+        private string additionalIncludedClasses;
+        public string AdditionalIncludedClasses
+        {
+            get { return additionalIncludedClasses; }
+            set
+            {
+                additionalIncludedClasses = value;
+                classModel.IncludedClasses.Clear();
+                // Split up string
+                string[] splitUpIncludes = additionalIncludedClasses.Split(new string[]{";"}, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string include in splitUpIncludes)
+                {
+                    classModel.IncludedClasses.Add(include.Trim());
+                }
+
+                classModel.GenerateHeader();                                // Trigger manual generation because we do not set the value
+                NotifyPropertyChanged("AdditionalIncludedClasses");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
+        
 
 
         private bool isActor;
@@ -174,16 +240,5 @@ namespace Unreal_Class_Wizard.ViewModel
 
 
 
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        //{
-
-        //    if (PropertyChanged != null)
-        //    {
-        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        //    }
-        //}
     }
 }

@@ -8,11 +8,16 @@
       xmlns:view="clr-namespace:Unreal_Class_Wizard.View"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
+      xmlns:utils="clr-namespace:Unreal_Class_Wizard.Utils"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance d:Type=vm:SAMPLE_UnrealClassViewModel, IsDesignTimeCreatable=True}"
       d:DesignHeight="600" d:DesignWidth="800"
              x:Name="metaInformation"
              >
+
+    <UserControl.Resources>
+        <utils:BaseClassConverter x:Key="BaseClassConverter"/>
+    </UserControl.Resources>
     <Grid x:Name="baseGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -21,6 +26,8 @@
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
+            <RowDefinition Height="38"/>
+
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="76"/>
@@ -34,18 +41,19 @@
             <ColumnDefinition Width="20"/>
 
         </Grid.ColumnDefinitions>
-        <Label Content="META INFORMATION" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" FontWeight="Bold" Height="36" Margin="0,12" />
+        <Label Content="CLASS INFORMATION" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" FontWeight="Bold" Height="36" Margin="0,12" />
         <Label Content="Name" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Height="26" Margin="0,6"/>
         <Label Content="Base class" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Height="26" Margin="0,6"/>
         <Label Content="Access" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="4" Height="26" Margin="0,6"/>
         <Label Content="Is Actor/spawnable?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="5" Height="26" Margin="0,6"/>
         <Label Content="Is Abstract?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="6" Height="26" Margin="0,6"/>
         <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Height="26"/>
-        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8" Height="26" Margin="0,10,0,40"/>
+        <Label Content="Other class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8"  Margin="0,6"/>
+        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9" Height="26" Margin="0,10,0,40"/>
 
         <TextBox  x:Name="nameBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Margin="8" TabIndex="0" Text="{Binding Path=ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <ComboBox x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8" IsEditable="True" ItemsSource="{Binding BaseClasses}" TabIndex="1" SelectedItem="{Binding CurrentBaseClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"/>
-        <ComboBox x:Name="accessBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="8" TabIndex="3" Text="{Binding Path=Access, Mode=TwoWay}" SelectedIndex="0">
+        <ComboBox x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8" IsEditable="True" ItemsSource="{Binding BaseClasses}" TabIndex="1" Text="{Binding Path=CurrentBaseClassText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"  TextBoxBase.TextChanged="BaseClassChanged" />
+        <ComboBox x:Name="accessBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="8" TabIndex="2" Text="{Binding Path=Access, Mode=TwoWay}" SelectedIndex="0" >
             <ComboBoxItem>Public</ComboBoxItem>
             <ComboBoxItem>Private</ComboBoxItem>
         </ComboBox>
@@ -54,15 +62,15 @@
             <RadioButton Content="Private" GroupName="AccessGroup" IsChecked="{Binding IsPrivate, Mode=TwoWay}"/>
             </StackPanel> -->
 
-        <CheckBox x:Name="isSpawnable" IsChecked="{Binding IsActor, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="8" />
-        <CheckBox x:Name="isAbstract" IsChecked="{Binding IsAbstract, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="8" />
+        <CheckBox x:Name="isSpawnable" IsChecked="{Binding IsActor, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="8" TabIndex="3" />
+        <CheckBox x:Name="isAbstract" IsChecked="{Binding IsAbstract, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="8" TabIndex="4" />
 
         <view:UE4AvalonEdit x:Name="editor" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Margin="8" IsReadOnly="True" SyntaxHighlighting="C++">
             <i:Interaction.Behaviors>
                 <view:AvalonEditBehavior GiveMeTheText="{Binding PreviewHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </i:Interaction.Behaviors>
         </view:UE4AvalonEdit>
-        <TextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7"  VerticalAlignment="Center" Margin="8"/>
-        <TextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="8"  VerticalAlignment="Stretch" Margin="8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" />
+        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7"  VerticalAlignment="Center" Margin="8" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="5" />
+        <TextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="9"  VerticalAlignment="Stretch" Margin="8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="6" />
     </Grid>
 </UserControl>

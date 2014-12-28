@@ -92,7 +92,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\IncludedClasses.xaml">
+    <Page Include="View\OtherClassSpecifiers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,7 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ClassSpecifier.cs" />
+    <Compile Include="Model\HeaderParser.cs" />
     <Compile Include="Model\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Utils\BaseClassConverter.cs" />
     <Compile Include="ViewModel\SAMPLE_UnrealClassViewModel.cs" />
     <Compile Include="View\AvalonEditBehavior.cs" />
     <Compile Include="Model\CompanyInformation.cs" />
@@ -119,8 +121,8 @@
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\UnrealClassViewModel.cs" />
-    <Compile Include="View\IncludedClasses.xaml.cs">
-      <DependentUpon>IncludedClasses.xaml</DependentUpon>
+    <Compile Include="View\OtherClassSpecifiers.xaml.cs">
+      <DependentUpon>OtherClassSpecifiers.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IntroPage.xaml.cs">
       <DependentUpon>IntroPage.xaml</DependentUpon>

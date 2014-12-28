@@ -106,7 +106,7 @@ namespace Unreal_Class_Wizard.Model
 
         public override string ToString()
         {
-            return ReadableName;
+            return ClassName + " (" + ReadableName + ")";
         }
         
     }
