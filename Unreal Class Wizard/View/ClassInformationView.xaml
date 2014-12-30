@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Unreal_Class_Wizard.View.MetaInformation"
+﻿<UserControl x:Class="Unreal_Class_Wizard.View.ClassInformationView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +10,7 @@
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance d:Type=vm:SAMPLE_UnrealClassViewModel, IsDesignTimeCreatable=True}"
-      d:DesignHeight="400" d:DesignWidth="1280"
+      d:DesignHeight="800" d:DesignWidth="1280"
              
              x:Name="metaInformation"
              >
@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
@@ -34,9 +35,9 @@
 
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="130"/>
-            <ColumnDefinition Width="415*"/>
-            <ColumnDefinition Width="26*"/>
-            <ColumnDefinition Width="689"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1.5*"/>
 
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Row="0" Grid.RowSpan="11" Grid.Column="3" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
@@ -48,10 +49,10 @@
         <Label Content="Base class" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Height="26" Margin="0,6"/>
         <Label Content="Access modifier" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="4" Height="26" Margin="0,6"/>
         <Label Content="Is Actor/spawnable?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="5" Height="26" Margin="0,6"/>
-        <Label Content="Is Abstract?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="6" Height="26" Margin="0,6"/>
-        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Height="26" Margin="0,6"/>
-        <Label Content="Class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8"  Margin="0,6" Height="26"/>
-        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9" Height="26" Margin="0,10,0,40"/>
+        <Label Content="Is abstract?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="6" Height="26" Margin="0,6"/>
+        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8" Height="26" Margin="0,6"/>
+        <Label Content="Class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9"  Margin="0,6" Height="26"/>
+        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="10" Height="26" Margin="0,10,0,40"/>
 
         <TextBox  x:Name="nameBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Margin="8,8,10,8" TabIndex="0" Text="{Binding Path=ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)"/>
         <ComboBox x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8,8,10,8" IsEditable="True" ItemsSource="{Binding BaseClasses}" TabIndex="1" Text="{Binding Path=CurrentBaseClassText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"  TextBoxBase.TextChanged="BaseClassChanged" ToolTip="Class from which this class inherits, usually not empty" />
@@ -68,28 +69,30 @@
 
 
 
-        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="7"  VerticalAlignment="Center" Margin="8,8,10,8" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="5" Height="22" ToolTip="Other classes which will be included in the header" />
-        <Button x:Name="otherClassSpecifiersButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Stretch" Margin="8,8,0,8" TabIndex="6" Content="More..." Width="102" ToolTip="Management of all class specifiers"/>
-        <TextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="9"  VerticalAlignment="Stretch" Margin="8,8,10,8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="7" ToolTip="Description/documentation of this class" />
+        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="8"  VerticalAlignment="Center" Margin="8,8,10,8" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="5" Height="22" ToolTip="Other classes which will be included in the header" />
+        <Button x:Name="otherClassSpecifiersButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Stretch" Margin="8,8,0,8" TabIndex="6" Content="More..." Width="102" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click"/>
+        <TextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="10"  VerticalAlignment="Stretch" Margin="8,8,10,8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="7" ToolTip="Description/documentation of this class" />
 
 
 
-        <TabControl Grid.Column="4" HorizontalAlignment="Left" Height="337" Margin="0,5,0,0" Grid.RowSpan="8" VerticalAlignment="Top" Width="689" Grid.Row="2">
+        <TabControl Grid.Column="4" HorizontalAlignment="Stretch" Margin="5" Grid.RowSpan="9" VerticalAlignment="Stretch" Grid.Row="2">
             <TabItem Header="Header File">
-                <view:UE4AvalonEdit x:Name="editorHeader" Grid.Row="2" Grid.Column="4" Margin="10,7,10,10" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
+                <view:UE4AvalonEdit x:Name="editorHeader" Grid.Row="2" Grid.Column="4" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
                     <i:Interaction.Behaviors>
                         <view:AvalonEditBehavior BoundText="{Binding PreviewHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </i:Interaction.Behaviors>
                 </view:UE4AvalonEdit>
             </TabItem>
             <TabItem Header="C++ File">
-                <view:UE4AvalonEdit x:Name="editorCPP" Grid.Row="2" Grid.Column="4" Margin="10,7,10,10" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
+                <view:UE4AvalonEdit x:Name="editorCPP" Grid.Row="2" Grid.Column="4" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
                     <i:Interaction.Behaviors>
                         <view:AvalonEditBehavior BoundText="{Binding PreviewCPP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </i:Interaction.Behaviors>
                 </view:UE4AvalonEdit>
             </TabItem>
         </TabControl>
+        <Label Content="Is blueprintable?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Height="26" Margin="0,6"/>
+        <CheckBox x:Name="isBlueprintableBox" IsChecked="{Binding IsBlueprintable, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Margin="8,12,10,12" TabIndex="4" Height="14" ToolTip="Determines whether the class will show up as a possible base class when creating a new blueprint" />
 
         <!--<view:HelpButton Grid.Column="3" Grid.Row="2" URL="http://www.ilex-game.com/" ToolTip="Olol" />
         <view:HelpButton Grid.Column="3" Grid.Row="3" URL="http://www.ilex-game.com/" ToolTip="Olol" />

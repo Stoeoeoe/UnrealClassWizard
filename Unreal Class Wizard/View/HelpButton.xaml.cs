@@ -58,7 +58,10 @@ namespace Unreal_Class_Wizard.View
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(URL);
+            if(URL != null)
+            {
+                System.Diagnostics.Process.Start(URL);
+            }
         }
 
 

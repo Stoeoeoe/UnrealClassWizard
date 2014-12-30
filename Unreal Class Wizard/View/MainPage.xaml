@@ -27,7 +27,7 @@
                                    NextPage="{Binding ElementName=Page2}"
                                    PreviousPage="{Binding ElementName=IntroPage}">
 
-                <view:MetaInformation/>
+                <view:ClassInformationView/>
             </xctk:WizardPage>
 
             <xctk:WizardPage x:Name="Page2" PageType="Interior"

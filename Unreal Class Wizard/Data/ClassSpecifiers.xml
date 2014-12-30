@@ -88,11 +88,6 @@
     </ClassSpecifier>
     <ClassSpecifier>
       <Name>HideCategories</Name>
-      <URL />
-      <DoNotUse>false</DoNotUse>
-    </ClassSpecifier>
-    <ClassSpecifier>
-      <Name>HideCategories</Name>
       <URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/HideCategories/index.html</URL>
       <DoNotUse>false</DoNotUse>
     </ClassSpecifier>
@@ -103,11 +98,6 @@
     </ClassSpecifier>
     <ClassSpecifier>
       <Name>HideFunctions</Name>
-      <URL />
-      <DoNotUse>false</DoNotUse>
-    </ClassSpecifier>
-    <ClassSpecifier>
-      <Name>AutoCollapseCategories</Name>
       <URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/HideFunctions/index.html</URL>
       <DoNotUse>false</DoNotUse>
     </ClassSpecifier>
@@ -118,11 +108,6 @@
     </ClassSpecifier>
     <ClassSpecifier>
       <Name>MinimalAPI</Name>
-      <URL />
-      <DoNotUse>false</DoNotUse>
-    </ClassSpecifier>
-    <ClassSpecifier>
-      <Name>AutoCollapseCategories</Name>
       <URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/MinimalAPI/index.html</URL>
       <DoNotUse>false</DoNotUse>
     </ClassSpecifier>
@@ -168,11 +153,6 @@
     </ClassSpecifier>
     <ClassSpecifier>
       <Name>Within</Name>
-      <URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Within/index.html</URL>
-      <DoNotUse>false</DoNotUse>
-    </ClassSpecifier>
-  </ClassSpecifiers>
-</ClassSpecifierList>n</Name>
       <URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Within/index.html</URL>
       <DoNotUse>false</DoNotUse>
     </ClassSpecifier>

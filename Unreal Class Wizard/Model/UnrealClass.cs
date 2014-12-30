@@ -83,14 +83,15 @@ namespace Unreal_Class_Wizard.Model
             }
         }
 
-        private List<ClassSpecifier> classSpecifiers = new List<ClassSpecifier>();
 
-        public List<ClassSpecifier> ClassSpecifiers
+        private List<string> classSpecifierValues = new List<string>();
+
+        public List<string> ClassSpecifiersValues
         {
-            get { return classSpecifiers; }
+            get { return classSpecifierValues; }
             set
             {
-                classSpecifiers = value;
+                classSpecifierValues = value;
                 GeneratePreviews();
             }
         }
@@ -115,6 +116,18 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 isAbstract = value;
+                GeneratePreviews();
+            }
+        }
+
+        private bool isBlueprintable = false;
+        public bool IsBlueprintable
+        {
+            get { return isBlueprintable; }
+
+            set
+            {
+                isBlueprintable = value;
                 GeneratePreviews();
             }
         }
@@ -162,6 +175,15 @@ namespace Unreal_Class_Wizard.Model
             string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
             string copyRightText = CopyrightText == "" ? App.CurrentUser.CompanyInformation.CopyrightText : CopyrightText;
 
+            // Concat all Class Specifiers
+            StringBuilder sbClassSpecifiers = new StringBuilder();
+            foreach (string classSpecifierValue in ClassSpecifiersValues)
+            {
+                sbClassSpecifiers.Append(classSpecifierValue + ", ");
+            }
+            // remove final comma
+            string classSpecifierString = sbClassSpecifiers.ToString().TrimEnd(new char[] { ',', ' ' });
+
             // Start writing header
             sb.AppendLine("//" + App.CurrentUser.CompanyInformation.CopyrightText + "\r\n\r\n");         // Copyright
             sb.AppendLine("#pragma once");                                                               // Pragma once
@@ -194,7 +216,9 @@ namespace Unreal_Class_Wizard.Model
             sb.AppendLine(" */");                                                                       // End description
 
             sb.Append("UCLASS(");                                                                       // UClass definition start
-                if (IsAbstract) sb.Append("abstract");                                                  // Abstract
+            sb.Append(classSpecifierString);
+                //if (IsAbstract) sb.Append("abstract");                                                  // Abstract
+                //if (IsBlueprintable) sb.Append(",blueprintable");                                                  // Blueprintable FALLLLSCH
             sb.Append(")\r\n");                                                                         // UClass definition end
 
             sb.Append(String.Format("class {0} {1}{2} ", App.CurrentUser.CompanyInformation.API, prefix, tempClassName));      // Class declaration
@@ -252,6 +276,7 @@ namespace Unreal_Class_Wizard.Model
 
         public string HeaderText { get; set; }
         public string CPPText { get; set; }
+
 
 
 

@@ -22,12 +22,11 @@ namespace Unreal_Class_Wizard.ViewModel
             this.classModel = new UnrealClass();
             this.classModel.BaseClass = BaseClasses.FirstOrDefault();
 
-            //classModel.ClassName = "XXXXXXXX";
             this.Access = "Public";
             NotifyPropertyChanged("Access");
 
             this.currentBaseClass = BaseClasses.FirstOrDefault();
-//            this.currentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
+            this.currentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
             NotifyPropertyChanged("CurrentBaseClass");
 
             this.classModel.IncludedClasses = new List<string>();
@@ -198,6 +197,19 @@ namespace Unreal_Class_Wizard.ViewModel
             }
         }
 
+        private bool isBlueprintable;
+        public bool IsBlueprintable
+        {
+            get { return isBlueprintable; }
+            set
+            {
+                isBlueprintable = value;
+                classModel.IsBlueprintable = isBlueprintable;
+                NotifyPropertyChanged("IsBlueprintable");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
         private string previewHeader;
         public string PreviewHeader
         {
@@ -227,7 +239,20 @@ namespace Unreal_Class_Wizard.ViewModel
             {
                 includedClasses = value;
 
-                NotifyPropertyChanged("IncludedClasses");
+                NotifyPropertyChanged("ClassSpecifiers");
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
+        private ObservableCollection<string> classSpecifiers;
+        public ObservableCollection<string> ClassSpecifiers
+        {
+            get { return new ObservableCollection<string>(ClassModel.ClassSpecifiersValues); }
+            set
+            {
+                classSpecifiers = value;
+                classModel.ClassSpecifiersValues = classSpecifiers.ToList<string>();
+                NotifyPropertyChanged("ClassSpecifiers");
                 NotifyPropertyChanged("PreviewHeader");
             }
         }
@@ -248,6 +273,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 NotifyPropertyChanged("BaseClasses");
             }
         }
+
 
 
 

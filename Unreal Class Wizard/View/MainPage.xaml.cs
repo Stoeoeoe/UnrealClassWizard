@@ -28,10 +28,8 @@ namespace Unreal_Class_Wizard.View
         public MainPage()
         {
             InitializeComponent();
-          //  this.DataContext = new UnrealClassViewModel();
         }
 
-        public UnrealClassViewModel viewModel;
 
         private void Wizard_PageChanged(object sender, RoutedEventArgs e)
         {
@@ -42,7 +40,7 @@ namespace Unreal_Class_Wizard.View
             }
             else if(currentPage == MetaInfosPage)
             {
-                (MetaInfosPage.Content as MetaInformation).SetFocusOnNameBox();
+                (MetaInfosPage.Content as ClassInformationView).SetFocusOnNameBox();
             }
 
         }

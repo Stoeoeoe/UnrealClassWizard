@@ -96,7 +96,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\OtherClassSpecifiers.xaml">
+    <Page Include="View\ClassSpecifiersWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,7 +104,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MetaInformation.xaml">
+    <Page Include="View\ClassInformationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,11 +114,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ClassSpecifierEventArgs.cs" />
     <Compile Include="Model\ClassSpecifier.cs" />
     <Compile Include="Model\HeaderParser.cs" />
     <Compile Include="Model\NotifyPropertyChangedBase.cs" />
+    <Compile Include="ViewModel\ClassSpecifierViewModel.cs" />
     <Compile Include="ViewModel\SAMPLE_UnrealClassViewModel.cs" />
-    <Compile Include="View\AvalonEditBehavior.cs" />
+    <Compile Include="Helpers\AvalonEditBehavior.cs" />
     <Compile Include="Model\CompanyInformation.cs" />
     <Compile Include="Model\BaseClass.cs" />
     <Compile Include="Model\UnrealClass.cs" />
@@ -127,15 +129,16 @@
     <Compile Include="View\HelpButton.xaml.cs">
       <DependentUpon>HelpButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\OtherClassSpecifiers.xaml.cs">
-      <DependentUpon>OtherClassSpecifiers.xaml</DependentUpon>
+    <Compile Include="View\ClassSpecifiersWindows.xaml.cs">
+      <DependentUpon>ClassSpecifiersWindows.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IntroPage.xaml.cs">
       <DependentUpon>IntroPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MetaInformation.xaml.cs">
-      <DependentUpon>MetaInformation.xaml</DependentUpon>
+    <Compile Include="View\ClassInformationView.xaml.cs">
+      <DependentUpon>ClassInformationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SpecifierValueConverter.cs" />
     <Compile Include="View\UE4AvalonEdit.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -170,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Libs\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -198,9 +200,9 @@
     </Content>
     <Resource Include="Images\info.png" />
     <Resource Include="Images\info_inactive.png" />
-    <Resource Include="Images\info.jpg" />
-    <Resource Include="Data\ClassSpecifiers.xml" />
-    <Resource Include="Data\TemplateClasses.xml" />
+    <Content Include="Data\ClassSpecifiers.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\User.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
