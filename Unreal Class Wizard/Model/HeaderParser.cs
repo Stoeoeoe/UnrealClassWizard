@@ -33,7 +33,7 @@ namespace Unreal_Class_Wizard.Model
             specifiers.AddRange(specifierString.Split(','));
 
             // Check if abstract
-            parsedClass.IsAbstract = specifierString.ToLower().Contains("abstract");
+            //parsedClass.IsAbstract = specifierString.ToLower().Contains("abstract");
 
 
         }

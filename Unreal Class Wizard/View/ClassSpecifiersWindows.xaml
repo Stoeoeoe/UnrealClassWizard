@@ -8,14 +8,23 @@
     xmlns:helpers="clr-namespace:Unreal_Class_Wizard.Helpers"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Unreal_Class_Wizard.View.ClassSpecifiersWindow"
-      ResizeMode="NoResize"
+      ResizeMode="CanResizeWithGrip"
 
-        Title="Class Specifiers" Height="799" Width="780">
+        Title="Class Specifiers">
     <Window.Resources>
         <helpers:ClassSpecifierValueConverter x:Key="specifierValueConverter" />
     </Window.Resources>
-    <Grid x:Name="baseGrid" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+    <Grid x:Name="baseGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="CLASS SPECIFIERS" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" Height="36" Margin="0,4,0,5" />
+
+        <Grid x:Name="itemGrid" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1">
+            <!--<Grid.RowDefinitions>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
@@ -150,7 +159,9 @@
 
 
         <Border  Grid.Column="0" Grid.Row="19" Height="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.ColumnSpan="6" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-        <StackPanel Orientation="Horizontal"  Grid.Column="5" Grid.Row="19" VerticalAlignment="Stretch" Margin="11,0,0,0" >
+-->
+        </Grid>
+        <StackPanel Orientation="Horizontal"  Grid.Column="5" Grid.Row="19" VerticalAlignment="Stretch" Margin="11,0,20,0" HorizontalAlignment="Right" >
             <Button x:Name="okButton" Content="OK" HorizontalAlignment="Left"  Width="75" Height="20" Margin="5" Click="okButton_Click" />
             <Button x:Name="closeButton"  Content="Cancel" HorizontalAlignment="Left" Width="75" Height="20" Margin="5" Click="closeButton_Click"/>
         </StackPanel>

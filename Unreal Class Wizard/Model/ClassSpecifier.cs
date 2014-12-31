@@ -18,6 +18,10 @@ namespace Unreal_Class_Wizard.Model
 
         public bool DoNotUse { get; set; }
 
+        public object Value { get; set; }
+
+        public string Type { get; set; }            // Possible types: String, Boolean
+
         public ClassSpecifier()
         {
 
@@ -32,14 +36,17 @@ namespace Unreal_Class_Wizard.Model
             {
                 using (FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/ClassSpecifiers.xml", FileMode.OpenOrCreate))
                 {
+                    
                     ClassSpecifierList csl = (ClassSpecifierList)xs.Deserialize(fs);
                     list.AddRange(csl.ClassSpecifiers);
+
                 }
 
             }
             return list;
-        }
 
+
+        }
 
         // https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Abstract/index.html
     }

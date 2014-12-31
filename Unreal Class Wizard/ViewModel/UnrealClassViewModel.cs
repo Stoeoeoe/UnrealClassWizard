@@ -25,9 +25,13 @@ namespace Unreal_Class_Wizard.ViewModel
             this.Access = "Public";
             NotifyPropertyChanged("Access");
 
-            this.currentBaseClass = BaseClasses.FirstOrDefault();
-            this.currentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
+            this.CurrentBaseClass = BaseClasses.FirstOrDefault();
+            this.CurrentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
             NotifyPropertyChanged("CurrentBaseClass");
+
+            this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassSpecifier.LoadClassSpecifiers());
+            NotifyPropertyChanged("ClassSpecifiers");
+            
 
             this.classModel.IncludedClasses = new List<string>();
 
@@ -78,7 +82,7 @@ namespace Unreal_Class_Wizard.ViewModel
         //        NotifyPropertyChanged("CurrentBaseClass");
         //    }
         //}
-
+        
         private string currentBaseClassText;
         public string CurrentBaseClassText
         {
@@ -188,13 +192,17 @@ namespace Unreal_Class_Wizard.ViewModel
         public bool IsAbstract
         {
             get { return isAbstract; }
-            set
-            {
-                isAbstract = value;
-                classModel.IsAbstract = isAbstract;
-                NotifyPropertyChanged("IsAbstract");
-                NotifyPropertyChanged("PreviewHeader");
-            }
+                // isBlueprintable = value;
+             set{
+                 isAbstract = value;
+
+                 classModel.ClassSpecifiersValues.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract").Value = isAbstract;
+                 
+                 classModel.GeneratePreviews();
+                 NotifyPropertyChanged("ClassSpecifiers");
+                 NotifyPropertyChanged("IsAbstract");
+                 NotifyPropertyChanged("PreviewHeader");
+                }
         }
 
         private bool isBlueprintable;
@@ -202,12 +210,16 @@ namespace Unreal_Class_Wizard.ViewModel
         {
             get { return isBlueprintable; }
             set
-            {
+                {
                 isBlueprintable = value;
-                classModel.IsBlueprintable = isBlueprintable;
+
+                classModel.ClassSpecifiersValues.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isAbstract;
+                
+                classModel.GeneratePreviews();
+                NotifyPropertyChanged("ClassSpecifiers");
                 NotifyPropertyChanged("IsBlueprintable");
                 NotifyPropertyChanged("PreviewHeader");
-            }
+                }
         }
 
         private string previewHeader;
@@ -239,21 +251,22 @@ namespace Unreal_Class_Wizard.ViewModel
             {
                 includedClasses = value;
 
-                NotifyPropertyChanged("ClassSpecifiers");
+                NotifyPropertyChanged("IncludedClasses");
                 NotifyPropertyChanged("PreviewHeader");
             }
         }
 
-        private ObservableCollection<string> classSpecifiers;
-        public ObservableCollection<string> ClassSpecifiers
+        private ObservableCollection<ClassSpecifier> classSpecifiers;
+        public ObservableCollection<ClassSpecifier> ClassSpecifiers
         {
-            get { return new ObservableCollection<string>(ClassModel.ClassSpecifiersValues); }
+            get { return new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiersValues); }
             set
             {
                 classSpecifiers = value;
-                classModel.ClassSpecifiersValues = classSpecifiers.ToList<string>();
+                classModel.ClassSpecifiersValues = classSpecifiers.ToList<ClassSpecifier>();
                 NotifyPropertyChanged("ClassSpecifiers");
                 NotifyPropertyChanged("PreviewHeader");
+                classModel.GeneratePreviews();
             }
         }
 

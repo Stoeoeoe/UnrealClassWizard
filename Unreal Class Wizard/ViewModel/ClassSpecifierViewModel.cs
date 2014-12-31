@@ -11,21 +11,19 @@ namespace Unreal_Class_Wizard.ViewModel
     public class ClassSpecifierViewModel : NotifyPropertyChangedBase
     {
         public ObservableCollection<ClassSpecifier> AllSpecifiers {get;set;}
-        public ObservableCollection<object> SpecifierValues { get; set; } 
 
-        public ClassSpecifierViewModel()
+        public ClassSpecifierViewModel(List<ClassSpecifier> ClassSpecifiersValues)
         {
 
-            List<ClassSpecifier> loadedList = ClassSpecifier.LoadClassSpecifiers();
-            AllSpecifiers = new ObservableCollection<ClassSpecifier>(loadedList);
 
-            SpecifierValues = new ObservableCollection<object>();
-            //// TODO: Hacky stuff. Preload list with empty values
+            AllSpecifiers = new ObservableCollection<ClassSpecifier>(ClassSpecifiersValues);
 
-            foreach (ClassSpecifier specifier in loadedList)
-            {
-                SpecifierValues.Add(new object());
-            }
+            //SpecifierValues = new ObservableCollection<object>();
+
+            //foreach (ClassSpecifier specifier in loadedList)
+            //{
+            //    SpecifierValues.Add(new object());
+            //}
 
         }
     }

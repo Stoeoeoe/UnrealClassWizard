@@ -21,7 +21,6 @@ namespace Unreal_Class_Wizard.View
     /// </summary>
     public partial class HelpButton : UserControl
     {
-        public static readonly DependencyProperty TooltipProperty = DependencyProperty.Register("Tooltip", typeof(string), typeof(HelpButton));
         public static readonly DependencyProperty URLProperty = DependencyProperty.Register("URL", typeof(string), typeof(HelpButton));
 
         
@@ -29,13 +28,6 @@ namespace Unreal_Class_Wizard.View
         public HelpButton()
         {
             InitializeComponent();
-
-        }
-
-        public string Tooltip
-        {
-            get { return base.GetValue(TooltipProperty) as string; }
-            set { base.SetValue(TooltipProperty, value); }
         }
 
 
@@ -45,14 +37,10 @@ namespace Unreal_Class_Wizard.View
             set { base.SetValue(URLProperty, value); }
         } 
 
-        //public string URL { get; set; }
-        //public string Tooltip { get; set; }
 
-
-        public HelpButton(string url, string tooltip)
+        public HelpButton(string url)
         {
-            //this.URL = url;
-            //this.Tooltip = tooltip;
+            this.URL = url;
             InitializeComponent();
         }
 

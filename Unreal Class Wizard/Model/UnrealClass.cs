@@ -13,12 +13,20 @@ namespace Unreal_Class_Wizard.Model
 
         public UnrealClass()
         {
-            
+            className = "";
+            description = "";
+            baseClass = new BaseClass();
+            access = "Public";
+            includedClasses = new List<string>();
+            classSpecifiers = ClassSpecifier.LoadClassSpecifiers();
+            isActor = false;
+            copyrightText = "";
+            constructorText = "";
         }
 
         #region Properties
 
-        private string className = "";
+        private string className;
 
         public string ClassName
         {
@@ -31,7 +39,7 @@ namespace Unreal_Class_Wizard.Model
             }
         }
 
-        private string description = "";
+        private string description;
 
         public string Description
         {
@@ -45,7 +53,7 @@ namespace Unreal_Class_Wizard.Model
         }
 
 
-        private BaseClass baseClass = new BaseClass();
+        private BaseClass baseClass;
 
         public BaseClass BaseClass
         {
@@ -58,7 +66,7 @@ namespace Unreal_Class_Wizard.Model
         }
 
 
-        private string access = "Public";
+        private string access;
 
         public string Access
         {
@@ -71,7 +79,7 @@ namespace Unreal_Class_Wizard.Model
         }
 
 
-        private List<string> includedClasses = new List<string>();
+        private List<string> includedClasses;
 
         public List<string> IncludedClasses
         {
@@ -84,19 +92,19 @@ namespace Unreal_Class_Wizard.Model
         }
 
 
-        private List<string> classSpecifierValues = new List<string>();
+        private List<ClassSpecifier> classSpecifiers;
 
-        public List<string> ClassSpecifiersValues
+        public List<ClassSpecifier> ClassSpecifiersValues
         {
-            get { return classSpecifierValues; }
+            get { return classSpecifiers; }
             set
             {
-                classSpecifierValues = value;
+                classSpecifiers = value;
                 GeneratePreviews();
             }
         }
 
-        private bool isActor = false;
+        private bool isActor;
 
         public bool IsActor {
             get { return isActor; }
@@ -108,31 +116,7 @@ namespace Unreal_Class_Wizard.Model
             }
         }
 
-        private bool isAbstract = false;
-        public bool IsAbstract
-        {
-            get { return isAbstract; }
-
-            set
-            {
-                isAbstract = value;
-                GeneratePreviews();
-            }
-        }
-
-        private bool isBlueprintable = false;
-        public bool IsBlueprintable
-        {
-            get { return isBlueprintable; }
-
-            set
-            {
-                isBlueprintable = value;
-                GeneratePreviews();
-            }
-        }
-
-        private string copyrightText = "";
+        private string copyrightText;
         public string CopyrightText
         {
             get { return copyrightText; }
@@ -145,7 +129,7 @@ namespace Unreal_Class_Wizard.Model
         }
 
 
-        private string constructorText = "";
+        private string constructorText;
         public string ConstructorText
         {
             get { return constructorText; }
@@ -177,10 +161,20 @@ namespace Unreal_Class_Wizard.Model
 
             // Concat all Class Specifiers
             StringBuilder sbClassSpecifiers = new StringBuilder();
-            foreach (string classSpecifierValue in ClassSpecifiersValues)
+            foreach (ClassSpecifier classSpecifierValue in ClassSpecifiersValues)
             {
-                sbClassSpecifiers.Append(classSpecifierValue + ", ");
+                string name = classSpecifierValue.Name;
+                object value = classSpecifierValue.Value;
+                if (value is bool && value as bool? == true)
+                {
+                    sbClassSpecifiers.Append(name + ", ");
+                }
+                else if(value is string && value as string != "")
+                {
+                    sbClassSpecifiers.Append(name + "(" + value + ")");
+                }
             }
+
             // remove final comma
             string classSpecifierString = sbClassSpecifiers.ToString().TrimEnd(new char[] { ',', ' ' });
 

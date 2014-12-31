@@ -22,28 +22,47 @@ namespace Unreal_Class_Wizard.View
     /// </summary>
     public partial class ClassSpecifiersWindow : Window
     {
+        private const int itemsPerColumn = 18;
+        private const int heightRow = 38;
+        private const int widthBufferColumn = 20;
+        private const int widthLabelColumn = 165;
+        private const int widthValueColumn = 200;
+
+        private int numberOfLogicalColumns = 0;
+        private int numberOfActualColumns = 0;
+        private int numberOfRows = 0;
+
         private ClassSpecifierViewModel viewModel;
-
         public event RoutedEventHandler OKButtonEvent;
+        
 
-        // TODO: Move this out of CodeBehind...
+
+        //// TODO: Move this out of CodeBehind...
         protected void On_OKButtonPressed()
         {
             if (this.OKButtonEvent != null)
             {
-                ClassSpecifierEventArgs args = new ClassSpecifierEventArgs();                
-                List<string> cleanedSpecifiers = ReadAllFields();
-                args.ClassSpecifiers = cleanedSpecifiers;
+                ClassSpecifierEventArgs args = new ClassSpecifierEventArgs();
+                List<ClassSpecifier> newSpecifiers = ReadSpecifiers();
+                args.ClassSpecifiers = newSpecifiers;
                 this.OKButtonEvent(this, args);
                 Close();
             }
         }
-        public ClassSpecifiersWindow()
+
+        public ClassSpecifiersWindow(List<ClassSpecifier> ClassSpecifierValues)
         {
-            InitializeComponent();
-            viewModel = new ClassSpecifierViewModel();
+            InitializeComponent();           
+            viewModel = new ClassSpecifierViewModel(ClassSpecifierValues);
             this.DataContext = viewModel;
+
+            DetermineNumberOfColumnsAndRows();
+            ResizeWindow();
+            GenerateGrid();
+            FillGrid();
         }
+
+
 
         /// <summary>
         /// Closes the window
@@ -65,20 +84,155 @@ namespace Unreal_Class_Wizard.View
             On_OKButtonPressed();
         }
 
-        /// <summary>
-        /// TODO: This is sooo ugly... It assumes that all UI Elements are in the right order. Probably a programmatic generation would help.
-        /// </summary>
-        private List<string> ReadAllFields()
+        public void DetermineNumberOfColumnsAndRows()
         {
-            // Container for all new specifier values (in case of checkboxes only their names, otherwise the content of the textbox in parenthesis
-            List<string> allSpecifierValues = new List<string>();
+            int numberOfClassSpecifiers = viewModel.AllSpecifiers.Count;
+
+            numberOfLogicalColumns = numberOfClassSpecifiers / itemsPerColumn;
+            numberOfLogicalColumns = numberOfClassSpecifiers % itemsPerColumn > 0 ? numberOfLogicalColumns + 1 : numberOfLogicalColumns;      // Add one if there is a partially filled column
+            numberOfActualColumns = numberOfLogicalColumns * 3;                                                                               // Every "logical" column consists of three columns: buffer, label, value
+
+            numberOfRows = itemsPerColumn;                                     // Divide the number of total entries by the number of logical columns
+        }
+
+        public void ResizeWindow()
+        {
+            int totalWidth = numberOfLogicalColumns * (widthBufferColumn + widthLabelColumn + widthValueColumn);
+
+            int header = (int)baseGrid.RowDefinitions[0].Height.Value;
+            int footer = (int)baseGrid.RowDefinitions[2].Height.Value;
+            int totalHeight = header + ((numberOfRows + 1) * heightRow) + footer;
+            this.Width = totalWidth;
+            this.Height = totalHeight;
+        }
+
+        public void GenerateGrid()
+        {
+            // Generate grid
+            Grid grid = itemGrid;
+
+            // Create columns
+            for(int i = 0; i < numberOfActualColumns; i++)
+            {
+                if (i % 3 == 0) { grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(widthBufferColumn) });}     // Buffer column
+                if (i % 3 == 1) { grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(widthLabelColumn)  });}     // Label column
+                if (i % 3 == 2) { grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(widthValueColumn)  });}     // Value column
+            }
+
+            // Create rows
+            for(int i = 0; i < numberOfRows; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(heightRow) });
+            }
+
+            grid.ShowGridLines = true;
+            
+
+        }
+
+        public void FillGrid()
+        {
+            for (int i = 0; i < numberOfActualColumns; i++ )
+            {
+                // Ignore first row, deduct one for the index though. 
+                for (int j = 0; j < numberOfRows; j++)
+                {
+
+
+
+                    // Buffer, nothing to do here
+                    if (i % 3 == 0)
+                    {
+                        continue;
+                    }
+
+                    // If there are too many columns / rows, stop this!
+                    if (i/3 * numberOfRows + j >= viewModel.AllSpecifiers.Count)
+                    {
+                        return;
+                    }
+                    // Label
+                    else if (i % 3 == 1)
+                    {
+                        ClassSpecifier specifier = viewModel.AllSpecifiers[i / 3 * numberOfRows + j];
+
+                        Label label = new Label();
+                        label.Content = specifier.Name;
+                        label.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+                        label.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                        Grid.SetColumn(label, i);
+                        Grid.SetRow(label, j);
+                        itemGrid.Children.Add(label);
+                    }
+                    else if (i % 3 == 2)
+                    {
+                        ClassSpecifier specifier = viewModel.AllSpecifiers[i / 3 * numberOfRows + j];
+                        if(specifier.Type == "String")
+                        {
+                            TextBox textBox = new TextBox();
+                            textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                            textBox.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                            textBox.Margin = new Thickness(10);
+                            textBox.Width = 150;
+                            textBox.Height = 18;
+                            Grid.SetColumn(textBox, i);
+                            Grid.SetRow(textBox, j);
+
+                            // Fill value if there is one
+                            textBox.Text = (string)specifier.Value;
+
+                            itemGrid.Children.Add(textBox);
+                        }
+                        if(specifier.Type == "Boolean")
+                        {
+                            CheckBox checkBox = new CheckBox();
+                            checkBox .HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                            checkBox .VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                            checkBox .Margin = new Thickness(10, 12, 0, 12);
+                            checkBox .Width = 16;
+                            checkBox .Height = 16;
+                            Grid.SetColumn(checkBox , i);
+                            Grid.SetRow(checkBox , j);
+
+                            // Fill value if there is one
+                            bool value = (bool?)specifier.Value == false || (bool?)specifier.Value == null ? false : true;        // Haha...
+                            checkBox.IsChecked = value;
+
+                            itemGrid.Children.Add(checkBox);
+                        }
+
+                        // Set infobox
+                        HelpButton helpButton = new HelpButton(specifier.URL);
+                        helpButton.Width = 24;
+                        helpButton.Height = 24;
+                        helpButton.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                        helpButton.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                        helpButton.Margin = new Thickness(0, 7, 10, 7);
+                        Grid.SetColumn(helpButton , i);
+                        Grid.SetRow(helpButton , j);
+                        itemGrid.Children.Add(helpButton);
+
+ 
+                    }
+
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// TODO: This is sooo ugly... Probably gonna be replaced by data binding.
+        /// </summary>
+        private List<ClassSpecifier> ReadSpecifiers()
+        {
 
             // Get all specifiers, needed to match the elements and the corresponding values
             List<ClassSpecifier> allSpecifiers = viewModel.AllSpecifiers.ToList<ClassSpecifier>();
 
+
             // Only get Checkboxes and Textboxes
             List<UIElement> relevantUIElements = new List<UIElement>();
-            foreach (UIElement element in baseGrid.Children)
+            foreach (UIElement element in itemGrid.Children)
             {
                 if(element is CheckBox || element is TextBox)
                 {
@@ -97,7 +251,7 @@ namespace Unreal_Class_Wizard.View
                     if((bool)checkBoxElement.IsChecked)
                     {
                         // In case the control is a checkbox and it's ticked (true), write the name of the corresponding specifier into the list
-                        allSpecifierValues.Add(allSpecifiers[i].Name);              
+                        allSpecifiers[i].Value = true;              
                     }
                 }
                 else if (element is TextBox)
@@ -105,12 +259,11 @@ namespace Unreal_Class_Wizard.View
                     TextBox textBoxElement = element as TextBox;
                     if (textBoxElement.Text != "")
                     {
-                        // In case the control is a textbox and there is a value, write the name of the corresponding specifier plus the value of the textbox into the list
-                        allSpecifierValues.Add(allSpecifiers[i].Name + "=(" + textBoxElement.Text + ")");
+                        allSpecifiers[i].Value = textBoxElement.Text;
                     }
                 }
             }
-            return allSpecifierValues;
+            return allSpecifiers;
         }
     }
 }
