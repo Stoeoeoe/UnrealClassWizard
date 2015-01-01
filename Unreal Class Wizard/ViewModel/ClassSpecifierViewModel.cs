@@ -12,12 +12,18 @@ namespace Unreal_Class_Wizard.ViewModel
     {
         public ObservableCollection<ClassSpecifier> AllSpecifiers {get;set;}
 
+        public int BufferWidth { get; set; }
+        public int LabelWidth { get; set; }
+        public int ValueWidth { get; set; }
+
         public ClassSpecifierViewModel(List<ClassSpecifier> ClassSpecifiersValues)
         {
 
 
             AllSpecifiers = new ObservableCollection<ClassSpecifier>(ClassSpecifiersValues);
-
+            BufferWidth = 20;
+            LabelWidth = 160;
+            ValueWidth = 200;
             //SpecifierValues = new ObservableCollection<object>();
 
             //foreach (ClassSpecifier specifier in loadedList)

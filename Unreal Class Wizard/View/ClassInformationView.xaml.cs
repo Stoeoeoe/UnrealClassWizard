@@ -69,7 +69,8 @@ namespace Unreal_Class_Wizard.View
             //TODO: Ugly
             ClassSpecifierEventArgs classSpecifierEventArgs = (ClassSpecifierEventArgs)e;
 
-            viewModel.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(classSpecifierEventArgs.ClassSpecifiers);
+            viewModel.UpdateClassSpecifiers(classSpecifierEventArgs.ClassSpecifiers);
+
 
         }
 

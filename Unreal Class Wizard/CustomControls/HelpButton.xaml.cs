@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Unreal_Class_Wizard.View
+namespace Unreal_Class_Wizard.CustomControls
 {
     /// <summary>
     /// Interaktionslogik für HelpButton.xaml

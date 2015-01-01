@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Unreal_Class_Wizard.View.SpecifierControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:custom="clr-namespace:Unreal_Class_Wizard.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300"
+             x:Name="specifierControl"
+             >
+    <Grid x:Name="itemGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding BufferWidth, ElementName=specifierControl}"/>
+            <ColumnDefinition Width="{Binding LabelWidth, ElementName=specifierControl}"/>
+            <ColumnDefinition Width="{Binding ValueWidth, ElementName=specifierControl}"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6"/>
+        <!--<Label Content="{Binding Name, ElementName=specifierControl}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6"/>-->
+        <custom:HelpButton Grid.Column="5" HorizontalAlignment="Right" Margin="0,7,10,7" VerticalAlignment="Center" URL="{Binding URL}" Height="24" Width="24"/>
+
+    </Grid>
+</UserControl>

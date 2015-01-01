@@ -29,8 +29,7 @@ namespace Unreal_Class_Wizard.ViewModel
             this.CurrentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
             NotifyPropertyChanged("CurrentBaseClass");
 
-            this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassSpecifier.LoadClassSpecifiers());
-            NotifyPropertyChanged("ClassSpecifiers");
+            UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
             
 
             this.classModel.IncludedClasses = new List<string>();
@@ -213,7 +212,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 {
                 isBlueprintable = value;
 
-                classModel.ClassSpecifiersValues.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isAbstract;
+                classModel.ClassSpecifiersValues.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isBlueprintable;
                 
                 classModel.GeneratePreviews();
                 NotifyPropertyChanged("ClassSpecifiers");
@@ -290,5 +289,25 @@ namespace Unreal_Class_Wizard.ViewModel
 
 
 
+
+        public void UpdateClassSpecifiers(List<ClassSpecifier> newSpecifiers)
+        {
+            ClassSpecifiers = new ObservableCollection<ClassSpecifier>(newSpecifiers);
+            NotifyPropertyChanged("ClassSpecifiers");
+
+            // There are two special cases, abstract and blueprintable which are handled separately
+            ClassSpecifier abstractClassSpecifier = ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract");
+            ClassSpecifier blueprintableClassSpecifier = ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable");
+
+            if (blueprintableClassSpecifier != null && blueprintableClassSpecifier.Value != null)
+            {
+                IsBlueprintable = (bool)blueprintableClassSpecifier.Value;
+            }
+            if (abstractClassSpecifier != null && abstractClassSpecifier.Value != null)
+            {
+                IsAbstract = (bool)abstractClassSpecifier.Value;
+            }
+
+        }
     }
 }

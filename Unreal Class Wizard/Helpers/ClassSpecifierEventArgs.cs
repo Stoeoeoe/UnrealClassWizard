@@ -11,5 +11,6 @@ namespace Unreal_Class_Wizard.Helpers
     public class ClassSpecifierEventArgs : RoutedEventArgs
     {
         public List<ClassSpecifier> ClassSpecifiers { get; set; }
+
     }
 }

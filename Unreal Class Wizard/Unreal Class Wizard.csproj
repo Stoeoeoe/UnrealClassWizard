@@ -92,11 +92,31 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\HelpButton.xaml">
+    <Page Include="CustomControls\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\SpecifierResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\UE4Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\HelpButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClassSpecifiersWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\UE4StyleTitleBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\UE4StyleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,8 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\SpecifierControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomControls\ImageButton.xaml.cs">
+      <DependentUpon>ImageButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ClassSpecifierEventArgs.cs" />
     <Compile Include="Model\ClassSpecifier.cs" />
     <Compile Include="Model\HeaderParser.cs" />
@@ -126,11 +153,17 @@
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\UnrealClassViewModel.cs" />
-    <Compile Include="View\HelpButton.xaml.cs">
+    <Compile Include="CustomControls\HelpButton.xaml.cs">
       <DependentUpon>HelpButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ClassSpecifiersWindows.xaml.cs">
       <DependentUpon>ClassSpecifiersWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\UE4StyleTitleBar.xaml.cs">
+      <DependentUpon>UE4StyleTitleBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\UE4StyleWindow.xaml.cs">
+      <DependentUpon>UE4StyleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IntroPage.xaml.cs">
       <DependentUpon>IntroPage.xaml</DependentUpon>
@@ -139,7 +172,11 @@
       <DependentUpon>ClassInformationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SpecifierValueConverter.cs" />
-    <Compile Include="View\UE4AvalonEdit.cs" />
+    <Compile Include="CustomControls\SpecifierControl.xaml.cs">
+      <DependentUpon>SpecifierControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\SpecifierValueTemplateSelector.cs" />
+    <Compile Include="CustomControls\UE4AvalonEdit.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -160,7 +197,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Images\Thumbs.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -198,6 +234,19 @@
     <Content Include="Data\BaseClasses.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\CPP-Symbol.png" />
+    <Resource Include="Images\WindowButton_Maximize_Disabled.png" />
+    <Resource Include="Images\WindowButton_Minimize_Disabled.png" />
+    <Resource Include="Images\WindowButton_Minimize_Hovered.png" />
+    <Resource Include="Images\WindowButton_Minimize_Normal.png" />
+    <Resource Include="Images\WindowButton_Minimize_Pressed.png" />
+    <Resource Include="Images\WindowButton_Maximize_Hovered.png" />
+    <Resource Include="Images\WindowButton_Maximize_Normal.png" />
+    <Resource Include="Images\WindowButton_Maximize_Pressed.png" />
+    <Resource Include="Images\WindowButton_Close_Hovered.png" />
+    <Resource Include="Images\WindowButton_Close_Normal.png" />
+    <Resource Include="Images\WindowButton_Close_Pressed.png" />
+    <Resource Include="Images\windowBar.png" />
     <Resource Include="Images\info.png" />
     <Resource Include="Images\info_inactive.png" />
     <Content Include="Data\ClassSpecifiers.xml">

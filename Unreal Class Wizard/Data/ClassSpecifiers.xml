@@ -1,6 +1,12 @@
 <ClassSpecifierList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<ClassSpecifiers>
 		<ClassSpecifier>
+			<Name>Abstract</Name>
+			<URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Abstract/index.html</URL>
+			<DoNotUse>false</DoNotUse>
+			<Type>Boolean</Type>
+		</ClassSpecifier>
+		<ClassSpecifier>
 			<Name>AdvancedClassDisplay</Name>
 			<URL>https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/AdvancedClassDisplay/index.html</URL>
 			<DoNotUse>false</DoNotUse>

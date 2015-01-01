@@ -34,15 +34,21 @@ namespace Unreal_Class_Wizard.View
         private void Wizard_PageChanged(object sender, RoutedEventArgs e)
         {
             WizardPage currentPage = (sender as Wizard).CurrentPage;
-            if (currentPage == IntroPage)
-            {
+            //if (currentPage == IntroPage)
+            //{
 
-            }
-            else if(currentPage == MetaInfosPage)
-            {
-                (MetaInfosPage.Content as ClassInformationView).SetFocusOnNameBox();
-            }
+            //}
+            //else if(currentPage == MetaInfosPage)
+            //{
+            //    (MetaInfosPage.Content as ClassInformationView).SetFocusOnNameBox();
+            //}
 
+        }
+
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
 
     }

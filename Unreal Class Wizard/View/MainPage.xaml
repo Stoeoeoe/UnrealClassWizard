@@ -6,39 +6,70 @@
       xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
       xmlns:editor="http://icsharpcode.net/sharpdevelop/avalonedit"
       xmlns:view="clr-namespace:Unreal_Class_Wizard.View"
+      xmlns:custom="clr-namespace:Unreal_Class_Wizard.CustomControls"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
       mc:Ignorable="d" 
-        Title="WizardWindow" Height="800" Width="1280"
         x:Name="wizardWindow"
+        MouseDown="DragWindow"
+        Height="Auto" Width="Auto"
+        ResizeMode="CanResizeWithGrip"  WindowStartupLocation="CenterScreen" 
+        WindowStyle="None"  AllowsTransparency="True" 
         >
-    <Grid  x:Name="LayoutRoot">
-        <xctk:Wizard FinishButtonClosesWindow="True" CanHelp="False" PageChanged="Wizard_PageChanged">
-            <xctk:WizardPage
-                x:Name="IntroPage"
-                Title="Welcome to the UE4 Class Wizzard"
-                Description="Blah">
+    <Window.Resources>
+        <!-- Data templates, used for specifiers -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/UE4Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" Background="{DynamicResource DarkBackground}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <custom:UE4StyleTitleBar Grid.Row="0" Title="Unreal Class Wizard" Grid.ColumnSpan="2"/>
+                <view:ClassInformationView Grid.Row="1" Grid.Column="1"/>
+
+            <Grid Grid.Row="1" Grid.Column="0" Background="{DynamicResource LightBackground}" x:Name="sidePanel">
+                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="150" Source="/Unreal Class Wizard;component/Images/CPP-Symbol.png"/>
+            </Grid>
+
+            <!--<xctk:Wizard Grid.Row="1" FinishButtonClosesWindow="True" CanHelp="False" PageChanged="Wizard_PageChanged" Grid.ColumnSpan="2">
+                <xctk:WizardPage
+                    x:Name="IntroPage"
+                    Title="Welcome to the UE4 Class Wizzard"
+                    Description="Blah">
                     <view:IntroPage/>
-            </xctk:WizardPage>
+                </xctk:WizardPage>
 
-            <xctk:WizardPage x:Name="MetaInfosPage" PageType="Interior"
-                                   Title="Meta Information"
-                                   Description="This is the first page in the process."
-                                   NextPage="{Binding ElementName=Page2}"
-                                   PreviousPage="{Binding ElementName=IntroPage}">
+                <xctk:WizardPage x:Name="MetaInfosPage" PageType="Interior"
+                                       Title="Meta Information"
+                                       Description="This is the first page in the process."
+                                       NextPage="{Binding ElementName=Page2}"
+                                       PreviousPage="{Binding ElementName=IntroPage}">
 
-                <view:ClassInformationView/>
-            </xctk:WizardPage>
+                    <view:ClassInformationView/>
+                </xctk:WizardPage>
 
-            <xctk:WizardPage x:Name="Page2" PageType="Interior"
-                                   Title="Page 2"
-                                   Description="This is the second page in the process">
-            </xctk:WizardPage>
+                <xctk:WizardPage x:Name="Page2" PageType="Interior"
+                                       Title="Page 2"
+                                       Description="This is the second page in the process">
+                </xctk:WizardPage>
 
-            <xctk:WizardPage x:Name="LastPage" PageType="Interior"
-                                   Title="Last Page"
-                                   Description="This is the last page in the process"
-                                   CanFinish="True"/>
-        </xctk:Wizard>
-    </Grid>
+                <xctk:WizardPage x:Name="LastPage" PageType="Interior"
+                                       Title="Last Page"
+                                       Description="This is the last page in the process"
+                                       CanFinish="True"/>
+            </xctk:Wizard>-->
+        </Grid>
+    </Border>
 </Window>
