@@ -42,7 +42,8 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="445*"/>
+                <ColumnDefinition Width="131*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="23"/>
@@ -50,8 +51,8 @@
                 <RowDefinition Height="37*"/>
             </Grid.RowDefinitions>
 
-            <custom:UE4StyleTitleBar Grid.Row="0" Title="Unreal Class Wizard" Grid.ColumnSpan="2" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove"/>
-            <Frame x:Name="navigationFrame" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+            <custom:UE4StyleTitleBar Grid.Row="0" Title="Unreal Class Wizard" Grid.ColumnSpan="3" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove"/>
+            <Frame x:Name="navigationFrame" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2"/>
 
             <Grid Grid.Row="1" Grid.Column="0" Background="{DynamicResource LightBackground}" x:Name="sidePanel" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
@@ -64,7 +65,7 @@
                     <ListBoxItem Content="2. Class Information"/>
                 </ListBox>
             </Grid>
-            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,12,7" Height="30" Width="176" Grid.RowSpan="2">
+            <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,12,7" Height="30" Width="176" Grid.ColumnSpan="2">
                 <Button Content="Previous" Grid.Column="1" Grid.Row="1" Width="80" Margin="4" Command="NavigationCommands.PreviousPage"/>
                 <Button Content="Next" Grid.Column="1" Grid.Row="1" Width="80" Margin="4"  Command="NavigationCommands.NextPage"/>
 
