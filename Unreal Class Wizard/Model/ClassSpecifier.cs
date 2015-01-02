@@ -32,20 +32,15 @@ namespace Unreal_Class_Wizard.Model
             XmlSerializer xs = new XmlSerializer(typeof(ClassSpecifierList));
             List<ClassSpecifier> list = new List<ClassSpecifier>();
 
-            if (Directory.Exists(Directory.GetCurrentDirectory() + "/Data/"))
+            if (Directory.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/"))
             {
                 using (FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/ClassSpecifiers.xml", FileMode.OpenOrCreate))
                 {
-                    
                     ClassSpecifierList csl = (ClassSpecifierList)xs.Deserialize(fs);
                     list.AddRange(csl.ClassSpecifiers);
-
                 }
-
             }
             return list;
-
-
         }
 
         // https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Reference/Classes/Specifiers/Abstract/index.html

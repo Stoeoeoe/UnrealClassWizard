@@ -13,6 +13,8 @@ namespace Unreal_Class_Wizard.Model
 {
     public class BaseClass
     {
+        public static List<BaseClass> AllBaseClasses { get; set; }
+
         public BaseClass(string name)
         {
             this.ClassName = name;
@@ -26,7 +28,7 @@ namespace Unreal_Class_Wizard.Model
 
         }
 
-        public static List<BaseClass> LoadBaseClasses()
+        public static void LoadBaseClasses()
         {
             string method = Properties.Settings.Default.SerializationMethod.Trim();
             List<BaseClass> list = new List<BaseClass>();
@@ -36,7 +38,7 @@ namespace Unreal_Class_Wizard.Model
                 case "JSON": list = LoadFromJSON(); break;
                 default:     list = LoadFromXML();  break;
             }
-            return list;
+            AllBaseClasses = list;
         }
 
         private static List<BaseClass> LoadFromXML()
@@ -45,17 +47,21 @@ namespace Unreal_Class_Wizard.Model
             List<BaseClass> baseClasses = new List<BaseClass>();
 
 
-            if(Directory.Exists(Directory.GetCurrentDirectory() + "/Data/"))
+            if (Directory.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/"))
             {
-                using(FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/BaseClasses.xml", FileMode.OpenOrCreate))
+                try
                 {
-                    BaseClassList list = xs.Deserialize(fs) as BaseClassList;
-                    baseClasses = new List<BaseClass>();
-                    baseClasses.AddRange(list.BaseClasses);
+                    using (FileStream fs = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/BaseClasses.xml", FileMode.OpenOrCreate))
+                    {
+                        BaseClassList list = xs.Deserialize(fs) as BaseClassList;
+                        baseClasses = new List<BaseClass>();
+                        baseClasses.AddRange(list.BaseClasses);
+                    }
                 }
-                //DataContractJsonSerializer s = new DataContractJsonSerializer(typeof(BaseClassList), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = false });
-                //FileStream fs2 = new FileStream(Directory.GetCurrentDirectory()  + "/Data/BaseClasses.json", FileMode.OpenOrCreate);
-                //s.WriteObject(fs2, list);
+                catch(Exception ex)
+                {
+                    // TODO: Handle.
+                }
             }
             else
             {
@@ -63,11 +69,18 @@ namespace Unreal_Class_Wizard.Model
                 BaseClassList list = new BaseClassList();
                 list.BaseClasses = new List<BaseClass>();
                 list.BaseClasses.Add(new BaseClass() { ClassName = "", HeaderFiles = new string[] { "" }, ReadableName = "" });
-                using(FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/BaseClasses.xml", FileMode.OpenOrCreate))
+                try
                 {
-                    xs.Serialize(fs, list);
+                    using (FileStream fs = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/BaseClasses.xml", FileMode.OpenOrCreate))
+                    {
+                        xs.Serialize(fs, list);
+                    }
+                    return baseClasses;
+
+                }catch(Exception ex)
+                {
+
                 }
-                return baseClasses;
             }
             return baseClasses;
         }
@@ -76,7 +89,7 @@ namespace Unreal_Class_Wizard.Model
         {
 
             DataContractJsonSerializer s = new DataContractJsonSerializer(typeof(BaseClassList), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = false });
-            FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/BaseClasses.json", FileMode.OpenOrCreate);
+            FileStream fs = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/BaseClasses.json", FileMode.OpenOrCreate);
             List<BaseClass> baseClasses = new List<BaseClass>();
 
             if (fs.Length >= 0)
@@ -114,6 +127,8 @@ namespace Unreal_Class_Wizard.Model
     [XmlRoot("BaseClassList")]
     public class BaseClassList
     {
+
+
         [XmlArray]
         public List<BaseClass> BaseClasses { get; set; }
     }

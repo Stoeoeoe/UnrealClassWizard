@@ -15,22 +15,33 @@ namespace Unreal_Class_Wizard.ViewModel
     {
         public UnrealClassViewModel()
         {
-            this.baseClasses = new ObservableCollection<BaseClass>(BaseClass.LoadBaseClasses());
+            // Fill BaseClass dropdown
+            BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);
+
+            ClassModel = App.CurrentClass;
 
 
+            CurrentBaseClass = ClassModel.BaseClass;
+            if (BaseClasses.Count > 0)
+            {
+                this.CurrentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
+                NotifyPropertyChanged("CurrentBaseClass");
+                NotifyPropertyChanged("CurrentBaseClassText");
 
-            this.classModel = new UnrealClass();
-            this.classModel.BaseClass = BaseClasses.FirstOrDefault();
+            }
+            else
+            {
+                this.CurrentBaseClass = new BaseClass();
+                this.CurrentBaseClassText = "";
+                NotifyPropertyChanged("CurrentBaseClass");
+                NotifyPropertyChanged("CurrentBaseClassText");
+            }
+
+
+            UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
 
             this.Access = "Public";
             NotifyPropertyChanged("Access");
-
-            this.CurrentBaseClass = BaseClasses.FirstOrDefault();
-            this.CurrentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
-            NotifyPropertyChanged("CurrentBaseClass");
-
-            UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
-            
 
             this.classModel.IncludedClasses = new List<string>();
 
@@ -85,7 +96,16 @@ namespace Unreal_Class_Wizard.ViewModel
         private string currentBaseClassText;
         public string CurrentBaseClassText
         {
-            get { return currentBaseClassText; }
+            get {
+                if(currentBaseClassText == null)
+                {
+                    return currentBaseClassText;
+                }
+                else
+                {
+                    return "";
+                }
+            }
             set
             {
                 currentBaseClassText = value.Trim();
@@ -276,8 +296,11 @@ namespace Unreal_Class_Wizard.ViewModel
         {
             get 
             {
+                if(baseClasses == null)
+                {
+                    BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);
+                }
                 return baseClasses;
-            
             }
             set
             {

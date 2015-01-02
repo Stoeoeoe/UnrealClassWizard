@@ -20,20 +20,25 @@ namespace Unreal_Class_Wizard
     {
         public static User CurrentUser { get; set; }
 
+        // The currently generated class... TODO: Implement properly.
+        public static UnrealClass CurrentClass { get; set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-
             //Check if all required folders exist
-            if(Directory.Exists(Directory.GetCurrentDirectory() + "/Data/") == false)
+            if (Directory.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/") == false)
             {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/Data/");
+                Directory.CreateDirectory(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/");
             }
 
 //            (MainWindow as MainPage).LayoutRoot.DataContext = new UnrealClassViewModel(); 
             
             CurrentUser = User.LoadUser();
+            BaseClass.LoadBaseClasses();
+            CurrentClass = new UnrealClass();
+            
             // HeaderParser.ParseHeader("blah");
 
             //ClassSpecifierList list = new ClassSpecifierList();

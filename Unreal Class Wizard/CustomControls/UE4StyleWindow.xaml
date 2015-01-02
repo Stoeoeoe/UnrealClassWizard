@@ -15,8 +15,5 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" Background="{DynamicResource DarkBackground}">
-        <custom:UE4StyleTitleBar Title="Unreal Class Wizard"/>
-    </Border>
 
 </Window>

@@ -24,19 +24,24 @@ namespace Unreal_Class_Wizard.View
     /// <summary>
     /// Interaktionslogik für ClassInformation.xaml
     /// </summary>
-    public partial class ClassInformationView : UserControl
+    public partial class ClassInformationView : Page
     {
-        public UnrealClassViewModel viewModel;
+        public UnrealClassViewModel ViewModel {get;set;}
 
 
         public ClassInformationView()
         {
             InitializeComponent();
-            viewModel = new UnrealClassViewModel();
-            this.DataContext = viewModel;
+
+            ViewModel = new UnrealClassViewModel();
+            this.DataContext = ViewModel;
+            SetFocusOnNameBox();
 
         }
 
+        /// <summary>
+        /// Sets the focus on the first textbox.
+        /// </summary>
         public void SetFocusOnNameBox()
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input,
@@ -48,30 +53,29 @@ namespace Unreal_Class_Wizard.View
 
         }
 
-        // TODO: Ugly.
+        // TODO: Could not be handled via DataBinding due to Nullpointer Exceptions, to be corrected.
         private void BaseClassChanged(object sender, TextChangedEventArgs e)
         {
-            // Instead of binding
-//           viewModel.CurrentBaseClassText = (sender as ComboBox).Text;
-            viewModel.CurrentBaseClass = (sender as ComboBox).SelectedItem as BaseClass;
-            //viewModel.CurrentBaseClass.ClassName = (sender as ComboBox).Text;
+            ViewModel.CurrentBaseClass = (sender as ComboBox).SelectedItem as BaseClass;
         }
 
+        /// <summary>
+        /// Opens the ClassSpecifiers window.
+        /// </summary>
         private void otherClassSpecifiersButton_Click(object sender, RoutedEventArgs e)
         {
-            ClassSpecifiersWindow classSpecifierWindow = new ClassSpecifiersWindow(viewModel.ClassModel.ClassSpecifiersValues);
+            ClassSpecifiersWindow classSpecifierWindow = new ClassSpecifiersWindow(ViewModel.ClassModel.ClassSpecifiersValues);
             classSpecifierWindow.OKButtonEvent += new RoutedEventHandler(RouteClassSpecifiers);
             classSpecifierWindow.Show();
         }
 
+        /// <summary>
+        /// Gets called when the ClassSpecifiers windows is closed, routes the new ClassSpecifiers to the current class.
+        /// </summary>
         private void RouteClassSpecifiers(object sender, RoutedEventArgs e)
         {
-            //TODO: Ugly
             ClassSpecifierEventArgs classSpecifierEventArgs = (ClassSpecifierEventArgs)e;
-
-            viewModel.UpdateClassSpecifiers(classSpecifierEventArgs.ClassSpecifiers);
-
-
+            ViewModel.UpdateClassSpecifiers(classSpecifierEventArgs.ClassSpecifiers);
         }
 
 

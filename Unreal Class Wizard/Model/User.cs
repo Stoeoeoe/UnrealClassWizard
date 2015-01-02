@@ -18,7 +18,7 @@ namespace Unreal_Class_Wizard.Model
             User user;
 
             XmlSerializer xs = new XmlSerializer(typeof(User));
-            FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "/Data/User.xml", FileMode.OpenOrCreate);
+            FileStream fs = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/User.xml", FileMode.OpenOrCreate);
             if(fs.Length > 0)
             {
                 user = xs.Deserialize(fs) as User;

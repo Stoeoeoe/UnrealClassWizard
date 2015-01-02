@@ -15,7 +15,11 @@ namespace Unreal_Class_Wizard.Model
         {
             className = "";
             description = "";
+
             baseClass = new BaseClass();
+            baseClass.ClassName = "XXXXX";
+            
+
             access = "Public";
             includedClasses = new List<string>();
             classSpecifiers = ClassSpecifier.LoadClassSpecifiers();
@@ -155,7 +159,6 @@ namespace Unreal_Class_Wizard.Model
             StringBuilder sb = new StringBuilder();
 
             // Preparation
-            string tempClassName = ClassName == "" ? "XXXXX" : ClassName;                               // Use XXXXX as a substitute as long as there is no class name
             string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
             string copyRightText = CopyrightText == "" ? App.CurrentUser.CompanyInformation.CopyrightText : CopyrightText;
 
@@ -181,26 +184,26 @@ namespace Unreal_Class_Wizard.Model
             // Start writing header
             sb.AppendLine("//" + App.CurrentUser.CompanyInformation.CopyrightText + "\r\n\r\n");         // Copyright
             sb.AppendLine("#pragma once");                                                               // Pragma once
-            
+
             // TODO: Included classes
-            for (int i = 0; i < includedClasses.Count; i++ )
+            for (int i = 0; i < includedClasses.Count; i++)
             {
                 string includedClass = includedClasses[i];
                 if (includedClass.EndsWith(".h") == false)
                 {
                     includedClass += ".h";
                 }
-                sb.AppendLine(String.Format("#include \"{0}\"", includedClass));                                                                           
+                sb.AppendLine(String.Format("#include \"{0}\"", includedClass));
             }
 
-            sb.AppendLine(String.Format("#include \"{0}\"", tempClassName + ".generated.h"));            // Generated header
+            sb.AppendLine(String.Format("#include \"{0}\"", ClassName + ".generated.h"));            // Generated header
             sb.AppendLine();                                                                             // Empty line
-            
+
 
             sb.AppendLine("/**");                                                                        // Start description
             if (Description != "")
             {
-                string[] lines = Description.Split(new string[] { "\r\n", "\r", "\n" },StringSplitOptions.RemoveEmptyEntries);  // Get all description lines
+                string[] lines = Description.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);  // Get all description lines
                 foreach (string line in lines)
                 {
                     sb.AppendLine(" * " + line);                                                        // Add description line
@@ -211,14 +214,14 @@ namespace Unreal_Class_Wizard.Model
 
             sb.Append("UCLASS(");                                                                       // UClass definition start
             sb.Append(classSpecifierString);
-                //if (IsAbstract) sb.Append("abstract");                                                  // Abstract
-                //if (IsBlueprintable) sb.Append(",blueprintable");                                                  // Blueprintable FALLLLSCH
+            //if (IsAbstract) sb.Append("abstract");                                                  // Abstract
+            //if (IsBlueprintable) sb.Append(",blueprintable");                                                  // Blueprintable FALLLLSCH
             sb.Append(")\r\n");                                                                         // UClass definition end
 
-            sb.Append(String.Format("class {0} {1}{2} ", App.CurrentUser.CompanyInformation.API, prefix, tempClassName));      // Class declaration
-            
+            sb.Append(String.Format("class {0} {1}{2} ", App.CurrentUser.CompanyInformation.API, prefix, ClassName));      // Class declaration
+
             // Only inherit if there is a base class
-            if(BaseClass.ClassName != "")
+            if (BaseClass.ClassName != "")
             {
                 sb.Append(String.Format(": {0} {1}", Access.ToLower(), BaseClass.ClassName));
             }
@@ -226,7 +229,7 @@ namespace Unreal_Class_Wizard.Model
             sb.AppendLine();                                                                             // Empty line
             sb.AppendLine("{");                                                                          // Start class body
             sb.AppendLine("    GENERATED_BODY()");                                                       // GENERATED_BODY() macro
-        
+
             if (ConstructorText != "")
             {
                 sb.AppendLine(String.Format("    {0}{1}({2});", prefix, ClassName, ConstructorText));                                                                       // Add constructor

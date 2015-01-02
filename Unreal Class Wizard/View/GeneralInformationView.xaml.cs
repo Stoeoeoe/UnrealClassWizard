@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Unreal_Class_Wizard.View
 {
     /// <summary>
-    /// Interaktionslogik für IntroPage.xaml
+    /// Interaktionslogik für GeneralInformationView.xaml
     /// </summary>
-    public partial class IntroPage : UserControl
+    public partial class GeneralInformationView : Page
     {
-        public IntroPage()
+        public GeneralInformationView()
         {
             InitializeComponent();
         }

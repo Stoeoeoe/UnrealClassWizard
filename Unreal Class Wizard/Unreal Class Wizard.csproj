@@ -28,6 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,6 +60,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -120,7 +122,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\IntroPage.xaml">
+    <Page Include="View\GeneralInformationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,8 +167,8 @@
     <Compile Include="CustomControls\UE4StyleWindow.xaml.cs">
       <DependentUpon>UE4StyleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\IntroPage.xaml.cs">
-      <DependentUpon>IntroPage.xaml</DependentUpon>
+    <Compile Include="View\GeneralInformationView.xaml.cs">
+      <DependentUpon>GeneralInformationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ClassInformationView.xaml.cs">
       <DependentUpon>ClassInformationView.xaml</DependentUpon>
@@ -233,7 +235,11 @@
   <ItemGroup>
     <Content Include="Data\BaseClasses.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
+    <Resource Include="Images\WindowButton_Restore_Hovered.png" />
+    <Resource Include="Images\WindowButton_Restore_Normal.png" />
+    <Resource Include="Images\WindowButton_Restore_Pressed.png" />
     <Resource Include="Images\CPP-Symbol.png" />
     <Resource Include="Images\WindowButton_Maximize_Disabled.png" />
     <Resource Include="Images\WindowButton_Minimize_Disabled.png" />
