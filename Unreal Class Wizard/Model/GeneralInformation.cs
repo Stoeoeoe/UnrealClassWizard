@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace Unreal_Class_Wizard.Model
 {
-    public class CompanyInformation
+    public class GeneralInformation
     {
         public string CopyrightText { get; set; }
+
         public string API { get; set; }
 
         public string GameplayClass { get; set; }
 
-        public void LoadCompanyInformation()
-        {
+        public string HeaderPath { get; set; }
 
-        }
-
+        public string CppPath { get; set; }
     }
 }

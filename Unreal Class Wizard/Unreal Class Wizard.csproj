@@ -56,6 +56,15 @@
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -148,9 +157,8 @@
     <Compile Include="Model\HeaderParser.cs" />
     <Compile Include="Model\NotifyPropertyChangedBase.cs" />
     <Compile Include="ViewModel\ClassSpecifierViewModel.cs" />
-    <Compile Include="ViewModel\SAMPLE_UnrealClassViewModel.cs" />
     <Compile Include="Helpers\AvalonEditBehavior.cs" />
-    <Compile Include="Model\CompanyInformation.cs" />
+    <Compile Include="Model\GeneralInformation.cs" />
     <Compile Include="Model\BaseClass.cs" />
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
@@ -179,6 +187,7 @@
     </Compile>
     <Compile Include="Helpers\SpecifierValueTemplateSelector.cs" />
     <Compile Include="CustomControls\UE4AvalonEdit.cs" />
+    <Compile Include="ViewModel\GeneralInformationViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

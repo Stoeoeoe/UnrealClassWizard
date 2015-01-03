@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -33,7 +34,7 @@ namespace Unreal_Class_Wizard.View
         {
             InitializeComponent();
 
-            ViewModel = new UnrealClassViewModel();
+            ViewModel = new UnrealClassViewModel(DesignerProperties.GetIsInDesignMode(this));
             this.DataContext = ViewModel;
             SetFocusOnNameBox();
 

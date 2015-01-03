@@ -13,22 +13,24 @@ namespace Unreal_Class_Wizard.ViewModel
 {
     public class UnrealClassViewModel : NotifyPropertyChangedBase
     {
-        public UnrealClassViewModel()
+        public UnrealClassViewModel(bool isDesignMode)
         {
-            ClassModel = App.CurrentClass;
+            // Run application (not design time)
+            if (isDesignMode == false)
+            {
+                this.ClassModel = App.CurrentClass;
 
-            // Fill BaseClass dropdown
-            this.BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);
-            CurrentBaseClassIndex = 0;
+                this.BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);               // Fill BaseClass dropdown
+                this.CurrentBaseClassIndex = 0;
+                this.Access = "Public";
 
+                UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
+            }
+            // Design time
+            else
+            {
 
-
-
-
-            UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
-
-            this.Access = "Public";
-            NotifyPropertyChanged("Access");
+            }
 
         }
 

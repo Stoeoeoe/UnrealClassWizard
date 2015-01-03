@@ -10,6 +10,8 @@
     <Color x:Key="ControlGradientDark">#AAAAAA</Color>
     <Color x:Key="ControlGradientLight">#DCDCDC</Color>
     <Color x:Key="DarkTextColor">#FF000000</Color>
+    <Color x:Key="FocusColor">#FFFEDD44</Color>
+	<Color x:Key="FocusColorHover">#FFFEE88F</Color>
 
 
     <SolidColorBrush x:Key="DarkBackground" Color="#FF404040"/>
@@ -19,6 +21,8 @@
     <SolidColorBrush x:Key="ControlGrayBackgroundBrush" Color="{StaticResource LightGrayColor}"/>
     <SolidColorBrush x:Key="DarkControlForegroundBrush" Color="{StaticResource DarkTextColor}"/>
     <SolidColorBrush x:Key="LightBorderBrush" Color="{StaticResource LightBorderColor}"/>
+	<SolidColorBrush x:Key="FocusBrush" Color="{StaticResource FocusColor}"/>
+    <SolidColorBrush x:Key="FocusHoverBrush" Color="{StaticResource FocusColorHover}"/>
 
     <LinearGradientBrush x:Key="ControlGrayGradientBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="{StaticResource ControlGradientDark}" Offset="0"/>
@@ -667,6 +671,105 @@
             </Trigger>
         </Style.Triggers>-->
     </Style>
+
+	<!-- Navigation ListBoxItem style -->
+
+    <Style x:Key="NavigationListBoxStyle" TargetType="{x:Type ListBox}">
+    	<Setter Property="Background" Value="{StaticResource DarkBackground}"/>
+    	<Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}"/>
+    	<Setter Property="BorderThickness" Value="1"/>
+    	<Setter Property="Foreground" Value="{DynamicResource LabelForegroundBrush}"/>
+    	<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+    	<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+    	<Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+    	<Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+    	<Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+    	<Setter Property="VerticalContentAlignment" Value="Center"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="{x:Type ListBox}">
+    				<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+    					<ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+    						<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+    					</ScrollViewer>
+    				</Border>
+    				<ControlTemplate.Triggers>
+    					<MultiTrigger>
+    						<MultiTrigger.Conditions>
+    							<Condition Property="IsGrouping" Value="true"/>
+    							<Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+    						</MultiTrigger.Conditions>
+    						<Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+    					</MultiTrigger>
+    				</ControlTemplate.Triggers>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+
+	<!-- Navigation ListBoxItem style -->
+    <Style x:Key="NavigationListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+    	<Setter Property="SnapsToDevicePixels" Value="True"/>
+    	<Setter Property="Padding" Value="4,1"/>
+    	<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+    	<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+    	<Setter Property="Background" Value="Transparent"/>
+    	<Setter Property="BorderBrush" Value="Transparent"/>
+    	<Setter Property="BorderThickness" Value="1"/>
+    	<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="{x:Type ListBoxItem}">
+    				<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+    					<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+    				</Border>
+    				<ControlTemplate.Triggers>
+    					<MultiTrigger>
+    						<MultiTrigger.Conditions>
+    							<Condition Property="IsMouseOver" Value="True"/>
+    						</MultiTrigger.Conditions>
+    						<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+    						<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+    					</MultiTrigger>
+    					<MultiTrigger>
+    						<MultiTrigger.Conditions>
+    							<Condition Property="Selector.IsSelectionActive" Value="False"/>
+    							<Condition Property="IsSelected" Value="True"/>
+    						</MultiTrigger.Conditions>
+    						<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+    						<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+    					</MultiTrigger>
+    					<MultiTrigger>
+    						<MultiTrigger.Conditions>
+    							<Condition Property="Selector.IsSelectionActive" Value="True"/>
+    							<Condition Property="IsSelected" Value="True"/>
+    						</MultiTrigger.Conditions>
+							<Setter Property="Foreground" Value="{StaticResource DarkControlForegroundBrush}"/>
+    						<Setter Property="Background" TargetName="Bd" Value="{StaticResource FocusBrush}"/>
+    						<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource FocusBrush}"/>
+    					</MultiTrigger>
+    					<Trigger Property="IsEnabled" Value="False">
+    						<Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+    					</Trigger>
+    				</ControlTemplate.Triggers>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    	<Setter Property="Foreground" Value="{DynamicResource LabelForegroundBrush}"/>
+    </Style>
+    <Style x:Key="FocusVisual">
+    	<Setter Property="Control.Template">
+    		<Setter.Value>
+    			<ControlTemplate>
+    				<Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+    <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#1F26A0DA"/>
+    <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da"/>
+    <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#3DDADADA"/>
+    <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA"/>
     
     
 

@@ -10,7 +10,7 @@ namespace Unreal_Class_Wizard.Model
 {
     public class User
     {
-        public CompanyInformation CompanyInformation {get; set; }
+        public GeneralInformation CompanyInformation {get; set; }
 
         internal static User LoadUser()
         {
@@ -27,7 +27,7 @@ namespace Unreal_Class_Wizard.Model
             {
                 // Make new user
                 user = new User();
-                user.CompanyInformation = new CompanyInformation();
+                user.CompanyInformation = new GeneralInformation();
                 user.CompanyInformation.CopyrightText = String.Format("Copyright 1998-{0} Epic Games, Inc. All Rights Reserved.", DateTime.Now.Year);
                 user.CompanyInformation.API = "";
 
