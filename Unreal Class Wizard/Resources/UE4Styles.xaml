@@ -272,9 +272,9 @@
     
     <!-- ComboBox Style -->
     <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
-        <Setter Property="BorderThickness" Value="2"/>            
-        <Style.Triggers>
-            <!-- Editable ComboBox -->
+        <Setter Property="BorderThickness" Value="2"/>
+        <!--<Style.Triggers>
+            --><!-- Editable ComboBox --><!--
             <Trigger Property="IsEditable" Value="True">
                 <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}"/>
                 <Setter Property="Template">
@@ -486,7 +486,7 @@
                 </Setter>
 
             </Trigger>
-            <!-- Template for non-editable ComboBox -->
+            --><!-- Template for non-editable ComboBox --><!--
             <Trigger Property="IsEditable" Value="False">
                 <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}"/>
                 <Setter Property="Template">
@@ -665,7 +665,7 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-        </Style.Triggers>
+        </Style.Triggers>-->
     </Style>
     
     

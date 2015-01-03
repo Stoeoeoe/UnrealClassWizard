@@ -64,7 +64,7 @@ namespace Unreal_Class_Wizard.View
         /// </summary>
         private void otherClassSpecifiersButton_Click(object sender, RoutedEventArgs e)
         {
-            ClassSpecifiersWindow classSpecifierWindow = new ClassSpecifiersWindow(ViewModel.ClassModel.ClassSpecifiersValues);
+            ClassSpecifiersWindow classSpecifierWindow = new ClassSpecifiersWindow(ViewModel.ClassModel.ClassSpecifiers);
             classSpecifierWindow.OKButtonEvent += new RoutedEventHandler(RouteClassSpecifiers);
             classSpecifierWindow.Show();
         }

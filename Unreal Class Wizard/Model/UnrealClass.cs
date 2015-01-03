@@ -17,7 +17,6 @@ namespace Unreal_Class_Wizard.Model
             description = "";
 
             baseClass = new BaseClass();
-            baseClass.ClassName = "XXXXX";
             
 
             access = "Public";
@@ -98,7 +97,7 @@ namespace Unreal_Class_Wizard.Model
 
         private List<ClassSpecifier> classSpecifiers;
 
-        public List<ClassSpecifier> ClassSpecifiersValues
+        public List<ClassSpecifier> ClassSpecifiers
         {
             get { return classSpecifiers; }
             set
@@ -164,7 +163,7 @@ namespace Unreal_Class_Wizard.Model
 
             // Concat all Class Specifiers
             StringBuilder sbClassSpecifiers = new StringBuilder();
-            foreach (ClassSpecifier classSpecifierValue in ClassSpecifiersValues)
+            foreach (ClassSpecifier classSpecifierValue in ClassSpecifiers)
             {
                 string name = classSpecifierValue.Name;
                 object value = classSpecifierValue.Value;

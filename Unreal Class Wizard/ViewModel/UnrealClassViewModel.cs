@@ -15,35 +15,20 @@ namespace Unreal_Class_Wizard.ViewModel
     {
         public UnrealClassViewModel()
         {
-            // Fill BaseClass dropdown
-            BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);
-
             ClassModel = App.CurrentClass;
 
+            // Fill BaseClass dropdown
+            this.BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);
+            CurrentBaseClassIndex = 0;
 
-            CurrentBaseClass = ClassModel.BaseClass;
-            if (BaseClasses.Count > 0)
-            {
-                this.CurrentBaseClassText = BaseClasses.FirstOrDefault().ClassName;
-                NotifyPropertyChanged("CurrentBaseClass");
-                NotifyPropertyChanged("CurrentBaseClassText");
 
-            }
-            else
-            {
-                this.CurrentBaseClass = new BaseClass();
-                this.CurrentBaseClassText = "";
-                NotifyPropertyChanged("CurrentBaseClass");
-                NotifyPropertyChanged("CurrentBaseClassText");
-            }
+
 
 
             UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
 
             this.Access = "Public";
             NotifyPropertyChanged("Access");
-
-            this.classModel.IncludedClasses = new List<string>();
 
         }
 
@@ -69,73 +54,52 @@ namespace Unreal_Class_Wizard.ViewModel
             }
         }
 
-        //private string currentBaseClassText;
-
-        //public string CurrentBaseClassText
-        //{
-        //    get { return currentBaseClassText; }
-        //    set
-        //    {
-        //        currentBaseClassText = value;
-        //        // Search for the base class if it exists, otherwise create a new one
-        //        BaseClass existingBaseClass = BaseClasses.FirstOrDefault(baseClass => baseClass.ReadableName == currentBaseClassText);
-        //        if(existingBaseClass != null)
-        //        {
-        //            CurrentBaseClass = existingBaseClass;
-        //        }
-        //        else
-        //        {
-        //            CurrentBaseClass = new BaseClass();
-        //            CurrentBaseClass.ClassName = currentBaseClassText;
-        //        }
-        //        NotifyPropertyChanged("CurrentBaseClassText");
-        //        NotifyPropertyChanged("CurrentBaseClass");
-        //    }
-        //}
         
         private string currentBaseClassText;
         public string CurrentBaseClassText
         {
-            get {
-                if(currentBaseClassText == null)
-                {
-                    return currentBaseClassText;
-                }
-                else
-                {
-                    return "";
-                }
+            get
+            {
+                return currentBaseClassText;
             }
             set
             {
                 currentBaseClassText = value.Trim();
                 NotifyPropertyChanged("CurrentBaseClassText");
+                if (CurrentBaseClassIndex == -1)
+                {
+                    CurrentBaseClass = new BaseClass(currentBaseClassText);
+                    NotifyPropertyChanged("CurrentBaseClass");
+                }
             }
         }
+
+        private int currentBaseClassIndex;
+
+        public int CurrentBaseClassIndex
+        {
+            get { return currentBaseClassIndex; }
+            set
+            {
+                currentBaseClassIndex = value;
+                // Get existing class if a value has been selected, otherwise create a new one
+                if (CurrentBaseClassIndex > -1)
+                {
+                    CurrentBaseClass = BaseClasses[currentBaseClassIndex];
+                    NotifyPropertyChanged("CurrentBaseClass");
+                }
+
+            }
+        }
+
 
         private BaseClass currentBaseClass;
         public BaseClass CurrentBaseClass
         {
             get { return currentBaseClass; }
             set {
-                    // TODO: Not pretty at all
-                    // The BaseClassConverted created an empty BaseClass which lacks information, so it must be retrieved from the collection again
-                    if(value == null)
-                    {
-                        currentBaseClass = new BaseClass();
-                        currentBaseClass.ClassName = CurrentBaseClassText;
-                    }
-                    else
-                    {
-                        currentBaseClass = value;
-                        CurrentBaseClassText = currentBaseClass.ToString();
-                    }
-                    //BaseClass existingBaseClass = BaseClasses.FirstOrDefault(b => b.ClassName == (value as BaseClass).ClassName);
-
-                    //currentBaseClass = existingBaseClass == null ? value : existingBaseClass;
-                    //classModel.BaseClass = currentBaseClass;
-
-                    classModel.BaseClass = currentBaseClass;    
+                    currentBaseClass = value;
+                    classModel.BaseClass = currentBaseClass;
 
                     NotifyPropertyChanged("CurrentBaseClass");
                     NotifyPropertyChanged("PreviewHeader");
@@ -215,7 +179,7 @@ namespace Unreal_Class_Wizard.ViewModel
              set{
                  isAbstract = value;
 
-                 classModel.ClassSpecifiersValues.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract").Value = isAbstract;
+                 classModel.ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract").Value = isAbstract;
                  
                  classModel.GeneratePreviews();
                  NotifyPropertyChanged("ClassSpecifiers");
@@ -232,7 +196,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 {
                 isBlueprintable = value;
 
-                classModel.ClassSpecifiersValues.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isBlueprintable;
+                classModel.ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isBlueprintable;
                 
                 classModel.GeneratePreviews();
                 NotifyPropertyChanged("ClassSpecifiers");
@@ -278,11 +242,14 @@ namespace Unreal_Class_Wizard.ViewModel
         private ObservableCollection<ClassSpecifier> classSpecifiers;
         public ObservableCollection<ClassSpecifier> ClassSpecifiers
         {
-            get { return new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiersValues); }
+            get
+            {
+                return classSpecifiers;
+            }
             set
             {
                 classSpecifiers = value;
-                classModel.ClassSpecifiersValues = classSpecifiers.ToList<ClassSpecifier>();
+                classModel.ClassSpecifiers = classSpecifiers.ToList<ClassSpecifier>();
                 NotifyPropertyChanged("ClassSpecifiers");
                 NotifyPropertyChanged("PreviewHeader");
                 classModel.GeneratePreviews();
@@ -290,16 +257,12 @@ namespace Unreal_Class_Wizard.ViewModel
         }
 
         
-        private ObservableCollection<BaseClass> baseClasses;
+        private ObservableCollection<BaseClass> baseClasses = new ObservableCollection<BaseClass>();
 
         public ObservableCollection<BaseClass> BaseClasses
         {
             get 
             {
-                if(baseClasses == null)
-                {
-                    BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);
-                }
                 return baseClasses;
             }
             set

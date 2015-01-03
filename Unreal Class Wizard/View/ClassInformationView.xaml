@@ -69,16 +69,13 @@
         <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="10" Margin="0,10,0,40" />
 
         <xctk:WatermarkTextBox x:Name="nameBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" Watermark="Example: 'MyActor'" VerticalAlignment="Stretch" Margin="8,8,10,8" TabIndex="0" Text="{Binding Path=ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)"/>
-        <ComboBox x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8,6,10,10" IsEditable="True"  ItemsSource="{Binding BaseClasses}" TabIndex="1" Text="{Binding Path=CurrentBaseClassText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0"  TextBoxBase.TextChanged="BaseClassChanged" ToolTip="Class from which to inherit, usually not empty"/>
+        <ComboBox  x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8,6,10,10" IsEditable="True"  ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}" TabIndex="1"  ToolTip="Class from which to inherit, usually not empty"/>
         <!-- Todo integrate into combobox -->
         <ComboBox x:Name="accessBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="8,8,10,8" TabIndex="2" Text="{Binding Path=Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" >
             <ComboBoxItem>Public</ComboBoxItem>
             <ComboBoxItem>Private</ComboBoxItem>
         </ComboBox>
-        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center">
-            <RadioButton Content="Public"  GroupName="AccessGroup" IsChecked="{Binding IsPublic, Mode=TwoWay}" Margin="8,0,20,0" />
-            <RadioButton Content="Private" GroupName="AccessGroup" IsChecked="{Binding IsPrivate, Mode=TwoWay}"/>
-            </StackPanel> 
+
         <CheckBox x:Name="isSpawnable" IsChecked="{Binding IsActor, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0" TabIndex="3" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" />
         <CheckBox x:Name="isAbstract" IsChecked="{Binding IsAbstract, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0" TabIndex="4" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" />
 
