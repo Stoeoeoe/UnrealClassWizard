@@ -47,7 +47,7 @@
 			<Run Text=" using this magical tool"/><Run Text="."/><LineBreak/>
 			<Run Text="In order to get the best result possible, please fill in the following fields"/><LineBreak/>
 			<Run Text="The results will be stored here: "/>
-			<Hyperlink x:Name="userFileLink" Click="userFileLink_Click" ><Run Text="{Binding UserFilePath}"/></Hyperlink>
+			<Hyperlink x:Name="userFileLink" Click="userFileLink_Click" Foreground="{StaticResource LinkBrush}" ><Run Text="{Binding UserFilePath}"/></Hyperlink>
         </TextBlock>
 
         <Label Content="Project Name" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" />

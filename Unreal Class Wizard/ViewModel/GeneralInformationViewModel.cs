@@ -11,7 +11,7 @@ namespace Unreal_Class_Wizard.ViewModel
 
         public GeneralInformationViewModel(bool isDesignMode)
         {
-            UserFilePath = System.AppDomain.CurrentDomain.BaseDirectory + "\\Data\\User.xml";
+            UserFilePath = System.AppDomain.CurrentDomain.BaseDirectory + "Data\\User.xml";
 
             // Run application (not design time)
             if (isDesignMode)

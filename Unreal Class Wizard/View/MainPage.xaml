@@ -34,6 +34,8 @@
             <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button"/>
             <Style BasedOn="{StaticResource TabItemStyle}" TargetType="TabItem"/>
             <Style BasedOn="{StaticResource ComboBoxStyle}" TargetType="ComboBox"/>
+            <Style BasedOn="{StaticResource NavigationListBoxStyle}" TargetType="ListBox"/>
+            <Style BasedOn="{StaticResource NavigationListBoxItemStyle}" TargetType="ListBoxItem"/>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -54,17 +56,22 @@
             <custom:UE4StyleTitleBar Grid.Row="0" Title="Unreal Class Wizard" Grid.ColumnSpan="3" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove"/>
             <Frame x:Name="navigationFrame" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2"/>
 
-            <Grid Grid.Row="1" Grid.Column="0" Background="{DynamicResource LightBackground}" x:Name="sidePanel" Grid.RowSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="150" Source="/Unreal Class Wizard;component/Images/CPP-Symbol.png" Grid.RowSpan="2"/>
-                <ListBox x:Name="navigationListBox" HorizontalAlignment="Stretch"   VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" FontSize="14" Grid.Row="1" ScrollViewer.CanContentScroll="False" Style="{StaticResource NavigationListBoxStyle}" BorderThickness="0" >
-                    <ListBoxItem Content="1. General Information" Style="{StaticResource NavigationListBoxItemStyle}"/>
-                    <ListBoxItem Content="2. Class Information" Style="{StaticResource NavigationListBoxItemStyle}"/>
-                </ListBox>
-            </Grid>
+            <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" BorderBrush="{DynamicResource LightBackground}" BorderThickness="0,0,1,0">
+                <Grid  Background="{DynamicResource LightBackground}" x:Name="sidePanel" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="150" Source="/Unreal Class Wizard;component/Images/CPP-Symbol.png" Grid.RowSpan="2"/>
+                    <ListBox x:Name="navigationListBox" HorizontalAlignment="Stretch"   VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" FontSize="14" Grid.Row="1" BorderThickness="0"  AlternationCount="2">
+                        <ListBoxItem Content="1. General Information"/>
+                        <ListBoxItem Content="2. Class Information" />
+                        <ListBoxItem Content="3. Properties" />
+                    </ListBox>
+                </Grid>
+
+            </Border>
+            
             <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,12,7" Height="30" Width="176" Grid.ColumnSpan="2">
                 <Button Content="Previous" Grid.Column="1" Grid.Row="1" Width="80" Margin="4" Command="NavigationCommands.PreviousPage"/>
                 <Button Content="Next" Grid.Column="1" Grid.Row="1" Width="80" Margin="4"  Command="NavigationCommands.NextPage"/>
