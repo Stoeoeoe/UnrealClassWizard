@@ -10,6 +10,7 @@ namespace Unreal_Class_Wizard.Model
 {
     public class GeneralInformation
     {
+        public string ProjectName {get; set;}
         public string CopyrightText { get; set; }
 
         public string API { get; set; }

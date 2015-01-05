@@ -59,12 +59,26 @@ namespace Unreal_Class_Wizard.ViewModel
             set { userFile = value; }
         }
 
+        private string projectName;
 
-
-        public void SaveChangesToModel(string companyName, string headerPath, string cppPath, bool useAPI)
+        public string ProjectName
         {
-            App.CurrentUser.CompanyInformation.HeaderPath = HeaderPath;
-            App.CurrentUser.CompanyInformation.CppPath = CppPath;
+            get { return projectName; }
+            set
+            {
+                projectName = value;
+                App.CurrentUser.CompanyInformation.ProjectName = projectName;
+                NotifyPropertyChanged("ProjectName");                
+            }
         }
+
+
+
+
+        //public void SaveChangesToModel(string companyName, string headerPath, string cppPath, bool useAPI)
+        //{
+        //    App.CurrentUser.CompanyInformation.HeaderPath = HeaderPath;
+        //    App.CurrentUser.CompanyInformation.CppPath = CppPath;
+        //}
     }
 }

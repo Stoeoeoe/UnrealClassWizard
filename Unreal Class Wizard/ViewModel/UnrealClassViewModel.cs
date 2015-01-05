@@ -24,6 +24,9 @@ namespace Unreal_Class_Wizard.ViewModel
                 this.CurrentBaseClassIndex = 0;
                 this.Access = "Public";
 
+                this.API = App.CurrentUser.CompanyInformation.ProjectName + "_API";
+                this.UseAPI = false;
+
                 UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
             }
             // Design time
@@ -123,6 +126,22 @@ namespace Unreal_Class_Wizard.ViewModel
             }
         }
 
+        private string api;
+
+        public string API
+        {
+            get { return api; }
+            set
+            {
+                api = value;
+                classModel.API = api;
+                NotifyPropertyChanged("API");
+                NotifyPropertyChanged("PreviewHeader");
+
+            }
+        }
+
+
         private string description;
         public string Description
         {
@@ -215,7 +234,9 @@ namespace Unreal_Class_Wizard.ViewModel
             set 
             {
                 useAPI = value;
+                classModel.UseAPI = useAPI;
                 NotifyPropertyChanged("UseAPI");
+                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
@@ -240,6 +261,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 NotifyPropertyChanged("PreviewCPP");
             }
         }
+
 
         private ObservableCollection<string> includedClasses;
         public ObservableCollection<string> IncludedClasses
@@ -310,5 +332,6 @@ namespace Unreal_Class_Wizard.ViewModel
             }
 
         }
+
     }
 }

@@ -27,11 +27,14 @@
     <SolidColorBrush x:Key="LightBorderBrush" Color="{StaticResource LightBorderColor}"/>
     <SolidColorBrush x:Key="FocusBrush" Color="{StaticResource FocusColor}"/>
     <SolidColorBrush x:Key="FocusDarkBrush" Color="{StaticResource FocusColorDark}"/>
-    <SolidColorBrush x:Key="FocusLightBrush" Color="{StaticResource FocusColorLight}"/>
-
+    <SolidColorBrush x:Key="FocusLightBrush" Color="{DynamicResource FocusColorLight}"/>
     <LinearGradientBrush x:Key="ControlGrayGradientBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{StaticResource ControlGradientDark}" Offset="0"/>
-        <GradientStop Color="{StaticResource ControlGradientLight}" Offset="1"/>
+    	<GradientStop Color="{DynamicResource ControlGradientDark}" Offset="0"/>
+    	<GradientStop Color="{DynamicResource ControlGradientLight}" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="FocusGradientBrush" StartPoint="0,0" EndPoint="0,1">
+    	<GradientStop Color="{DynamicResource FocusColor}" Offset="0"/>
+    	<GradientStop Color="{DynamicResource FocusColorLight}" Offset="1"/>
     </LinearGradientBrush>
 
 </ResourceDictionary>

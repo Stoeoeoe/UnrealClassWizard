@@ -13,7 +13,7 @@ namespace Unreal_Class_Wizard.Model
 
         public UnrealClass()
         {
-            className = "";
+            className = "XXXXX";
             description = "";
 
             baseClass = new BaseClass();
@@ -119,6 +119,19 @@ namespace Unreal_Class_Wizard.Model
             }
         }
 
+        private bool useAPI;
+
+        public bool UseAPI
+        {
+            get { return useAPI; }
+            set
+            {
+                useAPI = value;
+                GeneratePreviews();
+            }
+        }
+
+
         private string copyrightText;
         public string CopyrightText
         {
@@ -127,6 +140,18 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 copyrightText = value;
+                GeneratePreviews();
+            }
+        }
+
+        private string api;
+        public string API
+        {
+            get { return api; }
+
+            set
+            {
+                api = value;
                 GeneratePreviews();
             }
         }
@@ -143,6 +168,7 @@ namespace Unreal_Class_Wizard.Model
                 GeneratePreviews();
             }
         }
+
 
 
         #endregion
@@ -213,11 +239,14 @@ namespace Unreal_Class_Wizard.Model
 
             sb.Append("UCLASS(");                                                                       // UClass definition start
             sb.Append(classSpecifierString);
-            //if (IsAbstract) sb.Append("abstract");                                                  // Abstract
-            //if (IsBlueprintable) sb.Append(",blueprintable");                                                  // Blueprintable FALLLLSCH
             sb.Append(")\r\n");                                                                         // UClass definition end
 
-            sb.Append(String.Format("class {0} {1}{2} ", App.CurrentUser.CompanyInformation.API, prefix, ClassName));      // Class declaration
+            sb.Append("class");      // Class declaration start
+            if (useAPI)
+            {
+                sb.Append(String.Format(" {0}" , API));      // API
+            }
+            sb.Append(String.Format(" {0}{1} ", prefix, className));      // Class declaration
 
             // Only inherit if there is a base class
             if (BaseClass.ClassName != "")
@@ -272,6 +301,7 @@ namespace Unreal_Class_Wizard.Model
 
         public string HeaderText { get; set; }
         public string CPPText { get; set; }
+
 
 
 
