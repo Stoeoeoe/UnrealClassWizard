@@ -8,7 +8,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class ClassSpecifierViewModel : NotifyPropertyChangedBase
+    public class ClassSpecifierViewModel : BaseViewModel
     {
         public ObservableCollection<ClassSpecifier> AllSpecifiers {get;set;}
 

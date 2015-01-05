@@ -11,7 +11,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class UnrealClassViewModel : NotifyPropertyChangedBase
+    public class UnrealClassViewModel : BaseViewModel
     {
         public UnrealClassViewModel(bool isDesignMode)
         {
@@ -206,6 +206,19 @@ namespace Unreal_Class_Wizard.ViewModel
                 NotifyPropertyChanged("PreviewHeader");
                 }
         }
+
+        private bool useAPI;
+
+        public bool UseAPI
+        {
+            get { return useAPI; }
+            set 
+            {
+                useAPI = value;
+                NotifyPropertyChanged("UseAPI");
+            }
+        }
+
 
         private string previewHeader;
         public string PreviewHeader

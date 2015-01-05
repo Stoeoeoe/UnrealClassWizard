@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Unreal_Class_Wizard.Model
 {
-    public class NotifyPropertyChangedBase : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -36,7 +36,6 @@ namespace Unreal_Class_Wizard.Model
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
 
     }
 }

@@ -79,6 +79,18 @@ namespace Unreal_Class_Wizard.View
             ViewModel.UpdateClassSpecifiers(classSpecifierEventArgs.ClassSpecifiers);
         }
 
+        private void useAPI_Checked(object sender, RoutedEventArgs e)
+        {
+            bool checkBoxValue = (bool)(sender as CheckBox).IsChecked;
+            Visibility apiBoxVisibility = checkBoxValue == true? Visibility.Visible : Visibility.Collapsed;
+            Visibility apiCheckBoxVisibility = checkBoxValue == true? Visibility.Collapsed : Visibility.Visible;
+            string labelText = checkBoxValue == true ? "API" : "Use API?";
+
+            useAPICheckBox.Visibility = apiCheckBoxVisibility;
+            apiTextBox.Visibility = apiBoxVisibility;
+
+        }
+
 
     }
 }

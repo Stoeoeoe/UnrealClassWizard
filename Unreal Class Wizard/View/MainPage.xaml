@@ -34,8 +34,8 @@
             <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button"/>
             <Style BasedOn="{StaticResource TabItemStyle}" TargetType="TabItem"/>
             <Style BasedOn="{StaticResource ComboBoxStyle}" TargetType="ComboBox"/>
-            <Style BasedOn="{StaticResource NavigationListBoxStyle}" TargetType="ListBox"/>
-            <Style BasedOn="{StaticResource NavigationListBoxItemStyle}" TargetType="ListBoxItem"/>
+            <Style BasedOn="{StaticResource ListBoxStyle}" TargetType="ListBox"/>
+            <Style BasedOn="{StaticResource ListBoxItemStyle}" TargetType="ListBoxItem"/>
         </ResourceDictionary>
     </Window.Resources>
 

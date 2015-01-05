@@ -6,7 +6,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class GeneralInformationViewModel : NotifyPropertyChangedBase
+    public class GeneralInformationViewModel : BaseViewModel
     {
 
 
@@ -61,7 +61,7 @@ namespace Unreal_Class_Wizard.ViewModel
 
 
 
-        internal void SaveChanges()
+        public void SaveChangesToModel(string companyName, string headerPath, string cppPath, bool useAPI)
         {
             App.CurrentUser.CompanyInformation.HeaderPath = HeaderPath;
             App.CurrentUser.CompanyInformation.CppPath = CppPath;

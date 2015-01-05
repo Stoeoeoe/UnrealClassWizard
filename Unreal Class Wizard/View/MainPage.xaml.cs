@@ -62,6 +62,8 @@ namespace Unreal_Class_Wizard.View
         }
 
 
+        #region Forward/Backward Logic
+
         private void PreviousPage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if(currentPage == 1)
@@ -98,16 +100,6 @@ namespace Unreal_Class_Wizard.View
             navigationListBox.SelectedIndex = navigationListBox.SelectedIndex + 1;
         }
 
-
-
-
-
-
-
-
-
-
-
-
+    #endregion
     }
 }

@@ -41,7 +41,7 @@ namespace Unreal_Class_Wizard.View
 
         private void Browse_ButtonClick(object sender, RoutedEventArgs e)
         {
-            GetPath(sender);
+            GetSavePath(sender);
         }
 
 
@@ -49,7 +49,7 @@ namespace Unreal_Class_Wizard.View
         /// Opens a folder browser and stores the string in the ViewModel
         /// </summary>
         /// <param name="source">The button which was pressed</param>
-        private void GetPath(object source)
+        private void GetSavePath(object source)
         {
             var dialog = new CommonOpenFileDialog("Choose Folder") { IsFolderPicker = true };
             CommonFileDialogResult result = dialog.ShowDialog();
@@ -73,7 +73,7 @@ namespace Unreal_Class_Wizard.View
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            viewModel.SaveChanges();
+    //        viewModel.SaveChangesToModel();
         }
 
         private void userFileLink_Click(object sender, RoutedEventArgs e)
