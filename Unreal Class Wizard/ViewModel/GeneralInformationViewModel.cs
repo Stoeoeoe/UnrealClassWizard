@@ -9,6 +9,8 @@ namespace Unreal_Class_Wizard.ViewModel
     public class GeneralInformationViewModel : NotifyPropertyChangedBase
     {
 
+
+
         public GeneralInformationViewModel(bool isDesignMode)
         {
             UserFilePath = System.AppDomain.CurrentDomain.BaseDirectory + "Data\\User.xml";

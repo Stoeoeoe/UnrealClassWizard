@@ -64,7 +64,7 @@
                     </Grid.RowDefinitions>
                     <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="150" Source="/Unreal Class Wizard;component/Images/CPP-Symbol.png" Grid.RowSpan="2"/>
                     <ListBox x:Name="navigationListBox" HorizontalAlignment="Stretch"   VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" FontSize="14" Grid.Row="1" BorderThickness="0"  AlternationCount="2">
-                        <ListBoxItem Content="1. General Information"/>
+                        <ListBoxItem Content="1. General Information" IsSelected="True"/>
                         <ListBoxItem Content="2. Class Information" />
                         <ListBoxItem Content="3. Properties" />
                     </ListBox>

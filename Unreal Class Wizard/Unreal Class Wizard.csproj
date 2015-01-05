@@ -188,6 +188,7 @@
     <Compile Include="Helpers\SpecifierValueTemplateSelector.cs" />
     <Compile Include="CustomControls\UE4AvalonEdit.cs" />
     <Compile Include="ViewModel\GeneralInformationViewModel.cs" />
+    <Compile Include="View\MainPage.Window.xaml.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
