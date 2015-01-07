@@ -5,23 +5,17 @@
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 					xmlns:Themes1="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit"
                     mc:Ignorable="d">
-	
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/CheckBoxStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ComboBoxStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/LabelStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ListBoxItemStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ListBoxStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TabItemStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TextBlockStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TextBoxStyle.xaml"/>
-                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TitleStyle.xaml"/>
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ButtonStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/CheckBoxStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ComboBoxStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/LabelStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ListBoxItemStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ListBoxStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TabItemStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TextBlockStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TextBoxStyle.xaml"/>
+        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TitleStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
-
-
-
-
-
 </ResourceDictionary>

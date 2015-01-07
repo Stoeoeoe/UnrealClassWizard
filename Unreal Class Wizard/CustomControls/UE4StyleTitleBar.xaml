@@ -19,7 +19,7 @@
             <ImageBrush Viewport="0,0,37,30" ViewportUnits="Absolute" TileMode="Tile" ImageSource="/Unreal Class Wizard;component/Images/windowBar.png"/>
         </Border.Background>
         <Grid>
-            <Label Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top" Height="24"  Content="{Binding Title, ElementName=titleBar}">
+            <Label Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top"  Content="{Binding Title, ElementName=titleBar}">
                 <Label.Effect>
                     <DropShadowEffect BlurRadius="1" ShadowDepth="2"/>
                 </Label.Effect>
