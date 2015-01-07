@@ -23,14 +23,14 @@ namespace Unreal_Class_Wizard.View
     /// <summary>
     /// Interaktionslogik für GeneralInformationView.xaml
     /// </summary>
-    public partial class GeneralInformationView : Page
+    public partial class UserInformationView : Page
     {
-        GeneralInformationViewModel viewModel;
+        UserInformationViewModel viewModel;
 
-        public GeneralInformationView()
+        public UserInformationView()
         {
             InitializeComponent();
-            viewModel = new GeneralInformationViewModel(DesignerProperties.GetIsInDesignMode(this));
+            viewModel = new UserInformationViewModel(DesignerProperties.GetIsInDesignMode(this));
             this.DataContext = viewModel;
         }
 
@@ -68,12 +68,10 @@ namespace Unreal_Class_Wizard.View
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-    //        viewModel.SaveChangesToModel();
         }
 
         private void userFileLink_Click(object sender, RoutedEventArgs e)

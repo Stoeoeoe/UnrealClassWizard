@@ -24,7 +24,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 this.CurrentBaseClassIndex = 0;
                 this.Access = "Public";
 
-                this.API = App.CurrentUser.CompanyInformation.ProjectName + "_API";
+                this.API = App.CurrentUser.UserInformation.ProjectName + "_API";
                 this.UseAPI = false;
 
                 UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());

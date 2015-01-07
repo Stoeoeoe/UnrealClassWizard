@@ -185,7 +185,7 @@ namespace Unreal_Class_Wizard.Model
 
             // Preparation
             string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
-            string copyRightText = CopyrightText == "" ? App.CurrentUser.CompanyInformation.CopyrightText : CopyrightText;
+            string copyRightText = CopyrightText == "" ? App.CurrentUser.UserInformation.CopyrightText : CopyrightText;
 
             // Concat all Class Specifiers
             StringBuilder sbClassSpecifiers = new StringBuilder();
@@ -207,7 +207,7 @@ namespace Unreal_Class_Wizard.Model
             string classSpecifierString = sbClassSpecifiers.ToString().TrimEnd(new char[] { ',', ' ' });
 
             // Start writing header
-            sb.AppendLine("//" + App.CurrentUser.CompanyInformation.CopyrightText + "\r\n\r\n");         // Copyright
+            sb.AppendLine("//" + App.CurrentUser.UserInformation.CopyrightText + "\r\n\r\n");         // Copyright
             sb.AppendLine("#pragma once");                                                               // Pragma once
 
             // TODO: Included classes
@@ -275,14 +275,14 @@ namespace Unreal_Class_Wizard.Model
 
         public void GenerateCPP()
         {
-            string gamePlayClass = App.CurrentUser.CompanyInformation.GameplayClass;
+            string gamePlayClass = App.CurrentUser.UserInformation.GameplayClass;
             gamePlayClass = gamePlayClass.EndsWith(".h")? gamePlayClass : gamePlayClass + ".h";
             string tempClassName = ClassName == "" ? "XXXXX" : ClassName;                               // Use XXXXX as a substitute as long as there is no class name
             string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
 
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("//" + App.CurrentUser.CompanyInformation.CopyrightText);                      // Copyright
+            sb.AppendLine("//" + App.CurrentUser.UserInformation.CopyrightText);                      // Copyright
             sb.AppendLine();                                                                             // Empty line
             sb.AppendLine(String.Format("#include \"{0}\"", gamePlayClass));                             // Gameplay class
             sb.AppendLine();                                                                             // Empty line

@@ -31,7 +31,6 @@ namespace Unreal_Class_Wizard.View
         ///  Controls window restore (snap functionality)
         /// </summary>
         private bool restoreIfMove = false;
-
         private int numberOfPages;
         private int currentPage;
 
@@ -42,7 +41,7 @@ namespace Unreal_Class_Wizard.View
             
             numberOfPages = navigationListBox.Items.Count;
             currentPage = 1;
-            navigationFrame.Navigate(new Uri("View/GeneralInformationView.xaml", UriKind.Relative));
+            navigationFrame.Navigate(new Uri("View/UserInformationView.xaml", UriKind.Relative));
 
         }
 
@@ -55,7 +54,7 @@ namespace Unreal_Class_Wizard.View
 
             switch (currentPage)
             {
-                case 1: navigationFrame.Navigate(new Uri("View/GeneralInformationView.xaml", UriKind.Relative));      break;
+                case 1: navigationFrame.Navigate(new Uri("View/UserInformationView.xaml", UriKind.Relative)); break;
                 case 2: navigationFrame.Navigate(new Uri("View/ClassInformationView.xaml", UriKind.Relative)); break;
                 default: break;
             }

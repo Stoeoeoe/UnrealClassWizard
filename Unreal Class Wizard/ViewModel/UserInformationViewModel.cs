@@ -6,25 +6,31 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class GeneralInformationViewModel : BaseViewModel
+    public class UserInformationViewModel : BaseViewModel
     {
 
+        public UserInformation UserInformationModel { get; set; }
 
-
-        public GeneralInformationViewModel(bool isDesignMode)
+        public UserInformationViewModel(bool isDesignMode)
         {
-            UserFilePath = System.AppDomain.CurrentDomain.BaseDirectory + "Data\\User.xml";
+            // Model
+            this.UserInformationModel = App.CurrentUser.UserInformation;
+            
+            // ViewModel
+            this.UserFilePath = System.AppDomain.CurrentDomain.BaseDirectory + "Data\\User.xml";
+            this.CppPath = UserInformationModel.CppPath;
+            this.HeaderPath = UserInformationModel.HeaderPath;
+            this.ProjectName = UserInformationModel.ProjectName;
+            this.CopyrightText = UserInformationModel.CopyrightText;
 
-            // Run application (not design time)
-            if (isDesignMode)
-            {
-
-            }
-            // Design time
-            else
-            {
-
-            }
+            //// Run application (not design time)
+            //if (isDesignMode)
+            //{
+            //}
+            //// Design time
+            //else
+            //{
+            //}
         }
 
         private string headerPath;
@@ -35,9 +41,25 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 headerPath = value;
+                UserInformationModel.HeaderPath = headerPath;
                 NotifyPropertyChanged("HeaderPath");
+
             }
         }
+
+        private string copyrightText;
+
+        public string CopyrightText
+        {
+            get { return copyrightText; }
+            set
+            {
+                copyrightText = value;
+                UserInformationModel.CopyrightText = copyrightText;
+                NotifyPropertyChanged("CopyrightText");
+            }
+        }
+
 
         private string cppPath;
 
@@ -47,6 +69,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 cppPath = value;
+                UserInformationModel.CppPath = cppPath;
                 NotifyPropertyChanged("CppPath");
             }
         }
@@ -67,7 +90,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 projectName = value;
-                App.CurrentUser.CompanyInformation.ProjectName = projectName;
+                UserInformationModel.ProjectName = projectName;
                 NotifyPropertyChanged("ProjectName");                
             }
         }

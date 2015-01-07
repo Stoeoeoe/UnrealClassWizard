@@ -27,8 +27,10 @@ namespace Unreal_Class_Wizard.View
         private const int itemsPerColumn = 18;
         private const int heightRow = 38;
         private const int widthBufferColumn = 20;
-        private const int widthLabelColumn = 165;
-        private const int widthValueColumn = 200;
+        private const int widthLabelColumn = 170;
+        private const int widthValueColumn = 180;
+        private const int widthButton = 24;
+
 
         private int numberOfLogicalColumns = 0;
         private int numberOfActualColumns = 0;
@@ -39,20 +41,6 @@ namespace Unreal_Class_Wizard.View
         private bool restoreIfMove;
         
 
-
-        // TODO: Move this out of CodeBehind...
-        protected void On_OKButtonPressed()
-        {
-            if (this.OKButtonEvent != null)
-            {
-                ClassSpecifierEventArgs args = new ClassSpecifierEventArgs();
-                List<ClassSpecifier> newSpecifiers = ReadSpecifiers();
-                args.ClassSpecifiers = newSpecifiers;
-                this.OKButtonEvent(this, args);
-                Close();
-            }
-        }
-
         public ClassSpecifiersWindow(List<ClassSpecifier> ClassSpecifierValues)
         {
             InitializeComponent();         
@@ -62,12 +50,19 @@ namespace Unreal_Class_Wizard.View
 
             DetermineNumberOfColumnsAndRows();
             ResizeWindow();
-            //GenerateGrid();
-            //FillGrid();
         }
 
 
+        public void ResizeWindow()
+        {
+            int totalWidth = numberOfLogicalColumns * (widthBufferColumn + widthLabelColumn + widthValueColumn + widthButton) + 12;
 
+            int header = (int)baseGrid.RowDefinitions[0].Height.Value;
+            int footer = (int)baseGrid.RowDefinitions[2].Height.Value;
+            int totalHeight = header + ((numberOfRows + 1) * heightRow) + footer;
+            this.Width = totalWidth;
+            this.Height = totalHeight;
+        }
 
 
         /// <summary>
@@ -101,141 +96,18 @@ namespace Unreal_Class_Wizard.View
             numberOfRows = itemsPerColumn;                                     // Divide the number of total entries by the number of logical columns
         }
 
-        public void ResizeWindow()
+        protected void On_OKButtonPressed()
         {
-            int totalWidth = numberOfLogicalColumns * (widthBufferColumn + widthLabelColumn + widthValueColumn);
-
-            int header = (int)baseGrid.RowDefinitions[0].Height.Value;
-            int footer = (int)baseGrid.RowDefinitions[2].Height.Value;
-            int totalHeight = header + ((numberOfRows + 1) * heightRow) + footer;
-            this.Width = totalWidth;
-            this.Height = totalHeight;
+            if (this.OKButtonEvent != null)
+            {
+                ClassSpecifierEventArgs args = new ClassSpecifierEventArgs();
+                List<ClassSpecifier> newSpecifiers = ReadSpecifiers();
+                args.ClassSpecifiers = newSpecifiers;
+                this.OKButtonEvent(this, args);
+                Close();
+            }
         }
 
-        //public void GenerateGrid()
-        //{
-        //    // Generate grid
-        //    Grid grid = itemGrid;
-
-        //    // Create columns
-        //    for(int i = 0; i < numberOfActualColumns; i++)
-        //    {
-        //        if (i % 3 == 0) { grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(widthBufferColumn) });}     // Buffer column
-        //        if (i % 3 == 1) { grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(widthLabelColumn)  });}     // Label column
-        //        if (i % 3 == 2) { grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(widthValueColumn)  });}     // Value column
-        //    }
-
-        //    // Create rows
-        //    for(int i = 0; i < numberOfRows; i++)
-        //    {
-        //        grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(heightRow) });
-        //    }
-
-        //    grid.ShowGridLines = true;
-            
-
-        //}
-
-        //public void FillGrid()
-        //{
-        //    ClassSpecifier specifier;
-        //    for (int i = 0; i < numberOfActualColumns; i++ )
-        //    {
-        //        // Ignore first row, deduct one for the index though. 
-        //        for (int j = 0; j < numberOfRows; j++)
-        //        {
-        //            // If there are too many columns / rows, stop this!
-        //            if (i / 3 * numberOfRows + j >= viewModel.AllSpecifiers.Count)
-        //            {
-        //                return;
-        //            }
-        //            else
-        //            {
-        //                specifier = viewModel.AllSpecifiers[i / 3 * numberOfRows + j];
-        //            }
-
-
-
-        //            // Buffer, nothing to do here
-        //            if (i % 3 == 0)
-        //            {
-        //                continue;
-        //            }
-
-        //            // Label
-        //            else if (i % 3 == 1)
-        //            {
-
-        //                Label label = new Label();
-        //                label.Content = specifier.Name;
-        //                label.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-        //                label.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-        //                Grid.SetColumn(label, i);
-        //                Grid.SetRow(label, j);
-        //                itemGrid.Children.Add(label);
-        //            }
-        //            // Value control (textbox or checkbox)
-        //            else if (i % 3 == 2)
-        //            {
-        //              //  ClassSpecifier specifier = viewModel.AllSpecifiers[i / 3 * numberOfRows + j];
-                        
-        //                if(specifier.Type == "String")
-        //                {
-        //                    TextBox textBox = new TextBox();
-        //                    textBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-        //                    textBox.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-        //                    textBox.Margin = new Thickness(10);
-        //                    textBox.Width = 150;
-        //                    textBox.Height = 18;
-        //                    Grid.SetColumn(textBox, i);
-        //                    Grid.SetRow(textBox, j);
-
-        //                    // Fill value if there is one
-        //                    textBox.Text = (string)specifier.Value;
-
-        //                    itemGrid.Children.Add(textBox);
-        //                }
-        //                if(specifier.Type == "Boolean")
-        //                {
-        //                    CheckBox checkBox = new CheckBox();
-        //                    checkBox .HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-        //                    checkBox .VerticalAlignment = System.Windows.VerticalAlignment.Center;
-        //                    checkBox .Margin = new Thickness(10, 12, 0, 12);
-        //                    checkBox .Width = 16;
-        //                    checkBox .Height = 16;
-        //                    Grid.SetColumn(checkBox , i);
-        //                    Grid.SetRow(checkBox , j);
-
-        //                    // Checkboxes can either be ticked, not ticked or indetermined (null). In this case null (no value) and false is equivalent to unticked, a true value is ticked.
-        //                    bool checkBoxValue = (bool?)specifier.Value == false || (bool?)specifier.Value == null ? false : true;
-        //                    checkBox.IsChecked = checkBoxValue;
-
-        //                    itemGrid.Children.Add(checkBox);
-        //                }
-
-        //                // Set infobox
-        //                HelpButton helpButton = new HelpButton(specifier.URL);
-        //                helpButton.Width = 24;
-        //                helpButton.Height = 24;
-        //                helpButton.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-        //                helpButton.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-        //                helpButton.Margin = new Thickness(0, 7, 10, 7);
-        //                Grid.SetColumn(helpButton , i);
-        //                Grid.SetRow(helpButton , j);
-
-        //                itemGrid.Children.Add(helpButton);
-        //            }
-                    
-
-
-        //        }
-        //    }
-
-        //}
-
-        /// <summary>
-        /// TODO: This is sooo ugly... Probably gonna be replaced by data binding.
-        /// </summary>
         private List<ClassSpecifier> ReadSpecifiers()
         {
 
@@ -278,6 +150,7 @@ namespace Unreal_Class_Wizard.View
             }
             return allSpecifiers;
         }
+
 
         private void DragWindow(object sender, MouseButtonEventArgs e)
         {

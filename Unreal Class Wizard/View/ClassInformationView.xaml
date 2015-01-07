@@ -53,9 +53,9 @@
             <ColumnDefinition Width="1.5*"/>
 
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Row="0" Grid.RowSpan="11" Grid.Column="2" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
+        <GridSplitter Grid.Row="0" Grid.RowSpan="14" Grid.Column="2" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
 
-        <Label Content="CLASS INFORMATION" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="10,0,0,0" />
+        <Label Content="CLASS INFORMATION" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,4,10,4" />
         <Label Content="PREVIEW" Style="{StaticResource TitleStyle}" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Margin="6,0,0,0"/>
 
         <Label Content="Name" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Margin="0,6"/>
@@ -93,7 +93,7 @@
 
 
 
-        <TabControl Grid.Column="4" HorizontalAlignment="Stretch" Margin="5" Grid.RowSpan="9" VerticalAlignment="Stretch" Grid.Row="2">
+        <TabControl Grid.Column="3" HorizontalAlignment="Stretch" Margin="5,5,16,5" Grid.RowSpan="11" VerticalAlignment="Stretch" Grid.Row="2">
             <TabItem Header="Header File">
                 <view:UE4AvalonEdit x:Name="editorHeader" Grid.Row="2" Grid.Column="4" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
                     <i:Interaction.Behaviors>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Unreal_Class_Wizard.Model
 {
-    public class GeneralInformation
+    public class UserInformation
     {
         public string ProjectName {get; set;}
         public string CopyrightText { get; set; }

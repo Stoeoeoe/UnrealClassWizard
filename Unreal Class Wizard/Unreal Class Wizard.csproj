@@ -175,7 +175,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GeneralInformationView.xaml">
+    <Page Include="View\UserInformationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,8 +219,8 @@
     <Compile Include="CustomControls\UE4StyleWindow.xaml.cs">
       <DependentUpon>UE4StyleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GeneralInformationView.xaml.cs">
-      <DependentUpon>GeneralInformationView.xaml</DependentUpon>
+    <Compile Include="View\UserInformationView.xaml.cs">
+      <DependentUpon>UserInformationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ClassInformationView.xaml.cs">
       <DependentUpon>ClassInformationView.xaml</DependentUpon>
@@ -231,7 +231,7 @@
     </Compile>
     <Compile Include="Helpers\SpecifierValueTemplateSelector.cs" />
     <Compile Include="CustomControls\UE4AvalonEdit.cs" />
-    <Compile Include="ViewModel\GeneralInformationViewModel.cs" />
+    <Compile Include="ViewModel\UserInformationViewModel.cs" />
     <Compile Include="View\MainPage.Window.xaml.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -314,6 +314,7 @@
     </Content>
     <Content Include="Data\User.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

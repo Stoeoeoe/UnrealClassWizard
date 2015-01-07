@@ -1,4 +1,4 @@
-﻿<Page x:Class="Unreal_Class_Wizard.View.GeneralInformationView"
+﻿<Page x:Class="Unreal_Class_Wizard.View.UserInformationView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
       mc:Ignorable="d" 
-      d:DataContext="{d:DesignInstance d:Type=vm:GeneralInformationViewModel, IsDesignTimeCreatable=True}"
+      d:DataContext="{d:DesignInstance d:Type=vm:UserInformationViewModel, IsDesignTimeCreatable=True}"
       d:DesignHeight="600" d:DesignWidth="897"
       Loaded="Page_Loaded"
       Unloaded="Page_Unloaded"
@@ -41,12 +41,11 @@
             <ColumnDefinition Width="500"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label Content="WELCOME" HorizontalAlignment="Left" Margin="0,0,0,0" Style="{DynamicResource TitleStyle}" VerticalAlignment="Top" Height="36.6" Width="620" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,36.6,0,0" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="63.4" >
-    		<Run Text="This seems to be your "/><Run Text="first time"/>
-			<Run Text=" using this magical tool"/><Run Text="."/><LineBreak/>
+        <Label Content="WELCOME" HorizontalAlignment="Left" Style="{DynamicResource TitleStyle}" VerticalAlignment="Top" Grid.Column="1" Margin="2,0,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" Margin="6,38,-6,0" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="63" >
+    		<Run Text="This seems to be the first time you run this application."/>
 			<Run Text="In order to get the best result possible, please fill in the following fields"/><LineBreak/>
-			<Run Text="The results will be stored here: "/>
+			<Run Text="The values will be stored in this file:"/>
 			<Hyperlink x:Name="userFileLink" Click="userFileLink_Click" Foreground="{StaticResource LinkBrush}" ><Run Text="{Binding UserFilePath}"/></Hyperlink>
         </TextBlock>
 
@@ -55,10 +54,10 @@
         <Label Content="Path Header Files" Grid.Column="1" VerticalAlignment="Center" Grid.Row="3"  />
         <Label Content="Path CPP Files" Grid.Column="1"  VerticalAlignment="Center" Grid.Row="4" />
 
-        <xctk:WatermarkTextBox x:Name="projectNameBox" Grid.Column="2" HorizontalAlignment="Left" Height="23"  Grid.Row="1" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Name of your project" ToolTip="Name for your project" Text="{Binding ProjectName}"/>
-        <xctk:WatermarkTextBox x:Name="copyRightTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="2" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="E.g. 'Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.'" ToolTip="The copyright information will be on top of your header files" />
-        <xctk:WatermarkTextBox x:Name="headerPathTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="3" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Path where you want to store the generated .h files" Text="{Binding HeaderPath}" ToolTip="Path to your project's header .h files (public)"/>
-        <xctk:WatermarkTextBox x:Name="cppPathTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="4" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Path where you want to store the generated .cpp files" Text="{Binding CppPath}" ToolTip="Path to your project's header .h files (private)" />
+        <xctk:WatermarkTextBox x:Name="projectNameBox" Grid.Column="2" HorizontalAlignment="Left" Height="23"  Grid.Row="1" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Name of your project" ToolTip="Name for your project" Text="{Binding ProjectName, NotifyOnSourceUpdated=True}"/>
+        <xctk:WatermarkTextBox x:Name="copyRightTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="2" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="E.g. 'Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.'" Text="{Binding CopyrightText, NotifyOnSourceUpdated=True}" ToolTip="The copyright information will be on top of your header files" />
+        <xctk:WatermarkTextBox x:Name="headerPathTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="3" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Path where you want to store the generated .h files" Text="{Binding HeaderPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (public)"/>
+        <xctk:WatermarkTextBox x:Name="cppPathTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="4" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Path where you want to store the generated .cpp files" Text="{Binding CppPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (private)" />
 
         <Button x:Name="headerPathBrowseButton" Content="Browse..." Grid.Column="3" HorizontalAlignment="Left" Grid.Row="3" Style="{DynamicResource ButtonStyle}" VerticalAlignment="Center" Width="75" Click="Browse_ButtonClick"/>
         <Button x:Name="cppPathBrowseButton" Content="Browse..." Grid.Column="3" HorizontalAlignment="Left" Grid.Row="4" Style="{DynamicResource ButtonStyle}" VerticalAlignment="Center" Width="75" Margin="0" Click="Browse_ButtonClick"/>
