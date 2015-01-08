@@ -100,5 +100,14 @@ namespace Unreal_Class_Wizard.View
         }
 
     #endregion
+
+        private void CloseApplication()
+        {
+            MessageBoxResult result = System.Windows.MessageBox.Show("This class has not yet been generated.\r\nDo you really want to quit?", "Exit Program", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK)
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

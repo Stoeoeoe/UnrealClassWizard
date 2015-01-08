@@ -133,7 +133,7 @@ namespace Unreal_Class_Wizard.ViewModel
             get { return api; }
             set
             {
-                api = value;
+                api = value.Trim();
                 classModel.API = api;
                 NotifyPropertyChanged("API");
                 NotifyPropertyChanged("PreviewHeader");
@@ -148,7 +148,7 @@ namespace Unreal_Class_Wizard.ViewModel
             get { return description; }
             set
             {
-                description = value;
+                description = value.Trim();
                 classModel.Description = description;
                 NotifyPropertyChanged("Description");
                 NotifyPropertyChanged("PreviewHeader");
@@ -161,7 +161,7 @@ namespace Unreal_Class_Wizard.ViewModel
             get { return additionalIncludedClasses; }
             set
             {
-                additionalIncludedClasses = value;
+                additionalIncludedClasses = value.Trim();
                 classModel.IncludedClasses.Clear();
                 // Split up string
                 string[] splitUpIncludes = additionalIncludedClasses.Split(new string[]{";"}, StringSplitOptions.RemoveEmptyEntries);

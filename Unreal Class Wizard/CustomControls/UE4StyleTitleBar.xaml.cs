@@ -20,6 +20,10 @@ namespace Unreal_Class_Wizard.CustomControls
     /// </summary>
     public partial class UE4StyleTitleBar : UserControl
     {
+        public delegate void CloseEventHandler();
+        public event CloseEventHandler CloseEvent;
+
+
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(UE4StyleTitleBar), new PropertyMetadata("Title"));
 
         public string Title
@@ -28,42 +32,27 @@ namespace Unreal_Class_Wizard.CustomControls
             set { base.SetValue(TitleProperty, value); }
         }
 
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register("Type", typeof(UE4StyleTitleBarType), typeof(UE4StyleTitleBar));
+
         public UE4StyleTitleBarType Type
         {
             get { return (UE4StyleTitleBarType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
+            set { SetValue(TypeProperty, value); CollapseButtons(value); }
         }
 
-        public static readonly DependencyProperty TypeProperty =
-        DependencyProperty.Register("Type", typeof(UE4StyleTitleBarType), typeof(UE4StyleTitleBar), new PropertyMetadata(UE4StyleTitleBarType.Full));
 
 
 
         public UE4StyleTitleBar()
         {
             InitializeComponent();
-            switch (Type)
-            {
-                case UE4StyleTitleBarType.Full:
-                    break;
-                case UE4StyleTitleBarType.CloseOnly:
-                    restoreButton.Visibility = System.Windows.Visibility.Collapsed;
-                    minimizeButton.Visibility = System.Windows.Visibility.Collapsed;
-                    maximizeButton.Visibility = System.Windows.Visibility.Collapsed;
-                    break;
-                default:
-                    break;
-            }
+
         }
 
 
-        private void CloseWindow(object sender, RoutedEventArgs args)
+        private void CloseWindowButtonPressed(object sender, RoutedEventArgs args)
         {
-            MessageBoxResult result = MessageBox.Show("This class has not yet been generated.\r\nDo you really want to quit?", "Exit Program", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-            if(result == MessageBoxResult.OK)
-            {
-                Application.Current.Shutdown();
-            }
+            CloseEvent();
         }
 
         private void Maximize(object sender, RoutedEventArgs e)
@@ -86,11 +75,26 @@ namespace Unreal_Class_Wizard.CustomControls
 
         }
 
-
-        public enum UE4StyleTitleBarType
+        private void CollapseButtons(UE4StyleTitleBarType Type)
         {
-            Full,
-            CloseOnly
+            switch (Type)
+            {
+                case UE4StyleTitleBarType.Full:
+                    break;
+                case UE4StyleTitleBarType.CloseOnly:
+                    restoreButton.Visibility = System.Windows.Visibility.Collapsed;
+                    minimizeButton.Visibility = System.Windows.Visibility.Collapsed;
+                    maximizeButton.Visibility = System.Windows.Visibility.Collapsed;
+                    break;
+                default:
+                    break;
+            }
         }
+    }
+
+    public enum UE4StyleTitleBarType
+    {
+        Full,
+        CloseOnly
     }
 }

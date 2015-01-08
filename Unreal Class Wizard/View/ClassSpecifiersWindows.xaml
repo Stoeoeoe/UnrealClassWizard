@@ -10,8 +10,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Unreal_Class_Wizard.View.ClassSpecifiersWindow"
         Title="Class Specifiers"
-         WindowStartupLocation="CenterOwner" 
-        WindowStyle="None"  AllowsTransparency="True" Background="{x:Null}" >
+         WindowStartupLocation="CenterScreen" 
+        WindowStyle="None"  AllowsTransparency="True" Background="{x:Null}" ResizeMode="NoResize"
+                MouseDown="DragWindow"
+
+    >
 
     <Window.Resources>
         <!-- Data templates, used for specifiers -->
@@ -40,7 +43,7 @@
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
-            <custom:UE4StyleTitleBar Grid.Row="0" Title="Class Specifiers" Grid.ColumnSpan="3" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove"/>
+            <custom:UE4StyleTitleBar x:Name="titleBar" Grid.Row="0" Title="Class Specifiers" Grid.ColumnSpan="3" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove" CloseEvent="CloseWindow" Type="CloseOnly"/>
 
             <Label Content="CLASS SPECIFIERS" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Height="36" Margin="19,22,0,1" Grid.RowSpan="2" />
 

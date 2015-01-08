@@ -32,18 +32,21 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="124"/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="70"/>
 
             <RowDefinition Height="38"/>
             <RowDefinition Height="38"/>
             <RowDefinition Height="76"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="76"/>
+            <RowDefinition Height="38"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
 
@@ -55,41 +58,63 @@
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Row="0" Grid.RowSpan="14" Grid.Column="2" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
 
-        <Label Content="CLASS INFORMATION" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,4,10,4" />
+        <Label Content="CLASS INFORMATION" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,10,8" />
         <Label Content="PREVIEW" Style="{StaticResource TitleStyle}" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Margin="6,0,0,0"/>
-
-        <Label Content="Name" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" Margin="0" VerticalAlignment="Center"/>
-        <Label Content="Base class" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Margin="0" />
-        <Label Content="Access modifier" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="4" Margin="0"/>
         <Label Content="Is Actor/spawnable?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="5" Margin="0" />
         <Label Content="Is abstract?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="6" Margin="0" />
         <Label Content="Is blueprintable?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Margin="0"/>
-        <Label Content="Use module API?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8" Margin="0,6,0,38" />
-        <Label Content="API" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8" Margin="0,36,0,8" />
+        <Label Content="Use module API?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8" />
+        <Label Content="API" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9"  />
 
-        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9" Margin="0" />
-        <Label Content="Class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="10"  Margin="0" />
-        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="11" Margin="0,5,0,45" />
+        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="10" Margin="0" />
+        <Label Content="Class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="11"  Margin="0" />
+        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="12" Margin="0,5,0,45" />
+        <Label Content="Constructor" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="13" Margin="0" />
+        
+		<Border Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Background="{DynamicResource SemiBackground}" CornerRadius="5" Margin="0,0,12,0">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="130"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="25"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Border Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource LighterDarkBackground}" BorderThickness="0" CornerRadius="5,5,0,0">
+					<Label FontWeight="Bold">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="3"/>
+                        </Label.Effect> Base Information</Label>
+				</Border>
+        			<Label Content="Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+        			<Label Content="Base class" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
+        			<Label Content="Access modifier" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>					
+        			<xctk:WatermarkTextBox x:Name="nameBox" Watermark="Example: 'MyActor'"  Text="{Binding ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)" TabIndex="0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+        			<ComboBox  x:Name="classBox" IsEditable="True"  ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}"  ToolTip="Class from which to inherit, usually not empty" TabIndex="1"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
+        			<ComboBox x:Name="accessBox"  Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2"  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center">
+        				<ComboBoxItem Content="Public"/>
+        				<ComboBoxItem Content="Private"/>
+        			</ComboBox>					
 
-        <xctk:WatermarkTextBox x:Name="nameBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" Watermark="Example: 'MyActor'" VerticalAlignment="Stretch" Margin="8,6,12,8" TabIndex="0" Text="{Binding Path=ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)"/>
-        <ComboBox  x:Name="classBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Margin="8,6,12,8" IsEditable="True"  ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}" TabIndex="1"  ToolTip="Class from which to inherit, usually not empty"/>
+        	</Grid>
+        </Border>
         <!-- Todo integrate into combobox -->
-        <ComboBox x:Name="accessBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Margin="8,6,12,8" TabIndex="2" Text="{Binding Path=Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private">
-            <ComboBoxItem>Public</ComboBoxItem>
-            <ComboBoxItem>Private</ComboBoxItem>
-        </ComboBox>
 
         <CheckBox x:Name="isSpawnable" IsChecked="{Binding IsActor, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0" TabIndex="3" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" />
         <CheckBox x:Name="isAbstract" IsChecked="{Binding IsAbstract, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0" TabIndex="4" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" />
         <CheckBox x:Name="isBlueprintableBox" IsChecked="{Binding IsBlueprintable, Mode=TwoWay}"  HorizontalAlignment="Stretch" Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0" TabIndex="4" ToolTip="Determines whether the class will show up as a possible base class when creating a new blueprint" Content="" />
 
-        <CheckBox x:Name="useAPICheckBox"  Grid.Row="8"  Grid.Column="2" IsChecked="{Binding UseAPI, Mode=TwoWay}" VerticalAlignment="Top"  TabIndex="4" ToolTip="Use Module API to expose this class to the game's DLL file" Content="" Checked="useAPI_Checked" Height="24" Margin="8,12,10,0" />
-        <xctk:WatermarkTextBox x:Name="apiTextBox" Grid.Row="8"  Grid.Column="2" Text="{Binding API, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" TabIndex="5" ToolTip="The game's API to be exposed" Visibility="Visible" Margin="8,6,12,8" IsEnabled="{Binding IsChecked, ElementName=useAPICheckBox}" Height="24"/>
+        <CheckBox x:Name="useAPICheckBox"  Grid.Row="8"  Grid.Column="2" IsChecked="{Binding UseAPI, Mode=TwoWay}" VerticalAlignment="Center"  TabIndex="4" ToolTip="Use Module API to expose this class to the game's DLL file" Content="" Checked="useAPI_Checked" Margin="8,0,0,0" />
+        <xctk:WatermarkTextBox x:Name="apiTextBox" Grid.Row="9"  Grid.Column="2" Text="{Binding API, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" TabIndex="5" ToolTip="The game's API to be exposed" Visibility="Visible" Margin="8,6,12,8" IsEnabled="{Binding IsChecked, ElementName=useAPICheckBox}" Height="24"/>
 
 
-        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="9"  VerticalAlignment="Center" Margin="8,7,12,7" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="6" Height="24" ToolTip="Other classes which will be included in the header" />
-        <Button x:Name="otherClassSpecifiersButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Stretch" Margin="8,7,0,7" TabIndex="7" Content="More..." Width="102" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click" Height="22"/>
-        <xctk:WatermarkTextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="11"  VerticalAlignment="Stretch" Margin="8,6,12,8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" />
+        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="10"  VerticalAlignment="Center" Margin="8,7,12,7" Watermark="Seperate with semicolon" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="6" Height="24" ToolTip="Other classes which will be included in the header" />
+        <Button x:Name="otherClassSpecifiersButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Stretch" Margin="8,7,0,7" TabIndex="7" Content="More..." Width="102" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click" Height="22"/>
+        <xctk:WatermarkTextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="12"  VerticalAlignment="Stretch" Margin="8,6,12,8" SpellCheck.IsEnabled="True" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" />
+        <xctk:WatermarkTextBox x:Name="constructorField" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="13"  VerticalAlignment="Center" Margin="8,7,12,7" Watermark="Constructor signature" Text="{Binding Path=AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="9" Height="24" ToolTip="The constructor of this class, optional" />
 
 
 

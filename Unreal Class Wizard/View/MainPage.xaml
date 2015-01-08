@@ -13,9 +13,11 @@
       mc:Ignorable="d" 
         x:Name="wizardWindow"
         MouseDown="DragWindow"
-        Height="Auto" Width="Auto"
+        Height="Auto" Width="1280"
         ResizeMode="CanResizeWithGrip"  WindowStartupLocation="CenterOwner" 
-        WindowStyle="None"  AllowsTransparency="True" Background="{x:Null}">
+        WindowStyle="None"  AllowsTransparency="True" Background="{x:Null}"
+        MinWidth="1280" MinHeight="768"
+        >
     <Window.CommandBindings>
         <CommandBinding Command="NavigationCommands.PreviousPage" Executed="PreviousPage_Execute"  CanExecute="PreviousPage_CanExecute"/>
         <CommandBinding Command="NavigationCommands.NextPage" Executed="NextPage_Execute"  CanExecute="NextPage_CanExecute"/>
@@ -53,7 +55,7 @@
                 <RowDefinition Height="37*"/>
             </Grid.RowDefinitions>
 
-            <custom:UE4StyleTitleBar Grid.Row="0" Title="Unreal Class Wizard" Grid.ColumnSpan="3" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove"/>
+            <custom:UE4StyleTitleBar Grid.Row="0" Title="Unreal Class Wizard" Grid.ColumnSpan="3" MouseLeftButtonDown="rctHeader_PreviewMouseLeftButtonDown" MouseLeftButtonUp="rctHeader_PreviewMouseLeftButtonUp" MouseMove="rctHeader_PreviewMouseMove" CloseEvent="CloseApplication" />
             <Frame x:Name="navigationFrame" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2"/>
 
             <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" BorderBrush="{DynamicResource LightBackground}" BorderThickness="0,0,1,0">

@@ -43,8 +43,12 @@ namespace Unreal_Class_Wizard.View
 
         public ClassSpecifiersWindow(List<ClassSpecifier> ClassSpecifierValues)
         {
-            InitializeComponent();         
-  
+            InitializeComponent();
+            //this.SourceInitialized += Window_SourceInitialized;
+
+            // TODO: Should already work? To be investigated...
+            this.titleBar.Type = Unreal_Class_Wizard.CustomControls.UE4StyleTitleBarType.CloseOnly;
+
             viewModel = new ClassSpecifierViewModel(ClassSpecifierValues);
             this.DataContext = viewModel;
 
@@ -365,6 +369,13 @@ namespace Unreal_Class_Wizard.View
 
         #endregion 
 
+        private void CloseWindow()
+        {
+            Close();
+        }
+
 
     }
+
+    
 }
