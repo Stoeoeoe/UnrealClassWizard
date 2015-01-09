@@ -36,23 +36,23 @@ namespace Unreal_Class_Wizard.View
 
             ViewModel = new UnrealClassViewModel(DesignerProperties.GetIsInDesignMode(this));
             this.DataContext = ViewModel;
-            SetFocusOnNameBox();
+            //SetFocusOnNameBox();
 
         }
 
         /// <summary>
         /// Sets the focus on the first textbox.
         /// </summary>
-        public void SetFocusOnNameBox()
-        {
-            Dispatcher.BeginInvoke(DispatcherPriority.Input,
-            new Action(delegate()
-            {
-                nameBox.Focus();         // Set Logical Focus
-                Keyboard.Focus(nameBox); // Set Keyboard Focus
-            }));
+        //public void SetFocusOnNameBox()
+        //{
+        //    Dispatcher.BeginInvoke(DispatcherPriority.Input,
+        //    new Action(delegate()
+        //    {
+        //        nameBox.Focus();         // Set Logical Focus
+        //        Keyboard.Focus(nameBox); // Set Keyboard Focus
+        //    }));
 
-        }
+        //}
 
         // TODO: Could not be handled via DataBinding due to Nullpointer Exceptions, to be corrected.
         private void BaseClassChanged(object sender, TextChangedEventArgs e)
