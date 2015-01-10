@@ -21,8 +21,6 @@ namespace Unreal_Class_Wizard.CustomControls
     public partial class GroupControl : UserControl
     {
 
-
-
         public List<FrameworkElement> Labels
         {
             get { return (List<FrameworkElement>)GetValue(LabelsProperty); }
@@ -68,7 +66,7 @@ namespace Unreal_Class_Wizard.CustomControls
 
         // Using a DependencyProperty as the backing store for GridSpace.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GridSpaceProperty =
-            DependencyProperty.Register("GridSpace", typeof(int), typeof(GroupControl), new PropertyMetadata(5));
+            DependencyProperty.Register("GridSpace", typeof(int), typeof(GroupControl), new PropertyMetadata(3));
 
 
 
@@ -80,7 +78,7 @@ namespace Unreal_Class_Wizard.CustomControls
 
         // Using a DependencyProperty as the backing store for LineHeight.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LineHeightProperty =
-            DependencyProperty.Register("LineHeight", typeof(int), typeof(GroupControl), new PropertyMetadata(28));
+            DependencyProperty.Register("LineHeight", typeof(int), typeof(GroupControl), new PropertyMetadata(34));
 
         
         
@@ -89,11 +87,14 @@ namespace Unreal_Class_Wizard.CustomControls
         {
             InitializeComponent();
 
+            // Re-Initialize list properties, otherwise they will be shared accross all instances of GroupControl
+            SetValue(FieldsProperty, new List<FrameworkElement>());
+            SetValue(LabelsProperty, new List<FrameworkElement>()); 
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             if (Fields.Count != Labels.Count)
             {
                 throw new Exception("The number of Fields and Labels must be equal.");
@@ -105,16 +106,15 @@ namespace Unreal_Class_Wizard.CustomControls
                 
 
                 FrameworkElement label = Labels[i];
-                label.Margin = new Thickness(label.Margin.Left, label.Margin.Top + GridSpace, label.Margin.Right, label.Margin.Bottom + GridSpace);
-                Grid.SetRow(label, i + 1);
+                //label.Margin = new Thickness(label.Margin.Left, label.Margin.Top + GridSpace, label.Margin.Right, label.Margin.Bottom + GridSpace);
+                Grid.SetRow(label, i);
                 Grid.SetColumn(label, 1);
                 itemGrid.Children.Add(label);
-                
 
                 FrameworkElement field = Fields[i];
                 field.Margin = new Thickness(field.Margin.Left, field.Margin.Top + GridSpace, field.Margin.Right, field.Margin.Bottom + GridSpace);
 
-                Grid.SetRow(field, i + 1);
+                Grid.SetRow(field, i);
                 Grid.SetColumn(field, 2);
                 itemGrid.Children.Add(field);
 

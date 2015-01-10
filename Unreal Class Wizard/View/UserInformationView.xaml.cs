@@ -82,7 +82,6 @@ namespace Unreal_Class_Wizard.View
             }
             catch (Exception ex)
             {
-
             }
         }
 

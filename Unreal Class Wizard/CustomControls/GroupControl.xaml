@@ -8,24 +8,35 @@
              x:Name="groupControl"
              >
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/UE4Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style BasedOn="{StaticResource ExpanderStyle}" TargetType="{x:Type Expander}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Border Background="{DynamicResource SemiBackground}" CornerRadius="5">
-        <Grid x:Name="itemGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="130"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" Grid.ColumnSpan="4" Background="{StaticResource LighterDarkBackground}" BorderThickness="0" CornerRadius="5,5,0,0">
-                <Label FontWeight="Bold" Content="{Binding Title, ElementName=groupControl}" x:Name="titleLabel" Margin="10,0,3,0">
-                    <Label.Effect>
-                        <DropShadowEffect ShadowDepth="3"/>
-                    </Label.Effect>
-                </Label>
-            </Border>
+        <Grid x:Name="baseGrid">
+            <Expander x:Name="expander" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Grid.RowSpan="2" IsExpanded="True">
+                <Expander.Header>
+                    <Label FontWeight="Bold" Content="{Binding Title, ElementName=groupControl}" x:Name="titleLabel" Margin="10,-2,0,0">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="3"/>
+                        </Label.Effect>
+                    </Label>
+                </Expander.Header>
+                <Grid x:Name="itemGrid" FlowDirection="LeftToRight">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                </Grid>
+            </Expander>
         </Grid>
     </Border>
 </UserControl>
