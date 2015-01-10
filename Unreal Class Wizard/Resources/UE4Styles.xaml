@@ -17,7 +17,5 @@
         <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TextBlockStyle.xaml"/>
         <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TextBoxStyle.xaml"/>
         <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/TitleStyle.xaml"/>
-        <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/Styles/ExpanderStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

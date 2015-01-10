@@ -13,7 +13,7 @@
       mc:Ignorable="d" 
         x:Name="wizardWindow"
         MouseDown="DragWindow"
-        Height="800" Width="1280"
+        Height="Auto" Width="1280"
         ResizeMode="CanResizeWithGrip"  WindowStartupLocation="CenterOwner" 
         WindowStyle="None"  AllowsTransparency="True" Background="{x:Null}"
         MinWidth="1280" MinHeight="768"
@@ -42,7 +42,7 @@
     </Window.Resources>
 
 
-    <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" Background="{DynamicResource DarkImageBackground}">
+    <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" Background="{DynamicResource DarkBackground}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190"/>
@@ -68,7 +68,7 @@
                     <ListBox x:Name="navigationListBox" HorizontalAlignment="Stretch"   VerticalAlignment="Top" SelectionChanged="ListBox_SelectionChanged" FontSize="14" Grid.Row="1" BorderThickness="0"  AlternationCount="2">
                         <ListBoxItem Content="1. General Information" IsSelected="True"/>
                         <ListBoxItem Content="2. Class Information" />
-                        <ListBoxItem Content="3. Constructor" />
+                        <ListBoxItem Content="3. Properties" />
                     </ListBox>
                 </Grid>
 
@@ -80,6 +80,33 @@
 
             </StackPanel>
 
+            <!--<xctk:Wizard Grid.Row="1" FinishButtonClosesWindow="True" CanHelp="False" PageChanged="Wizard_PageChanged" Grid.ColumnSpan="2">
+                <xctk:WizardPage
+                    x:Name="IntroPage"
+                    Title="Welcome to the UE4 Class Wizzard"
+                    Description="Blah">
+                    <view:IntroPage/>
+                </xctk:WizardPage>
+
+                <xctk:WizardPage x:Name="MetaInfosPage" PageType="Interior"
+                                       Title="Meta Information"
+                                       Description="This is the first page in the process."
+                                       NextPage="{Binding ElementName=Page2}"
+                                       PreviousPage="{Binding ElementName=IntroPage}">
+
+                    <view:ClassInformationView/>
+                </xctk:WizardPage>
+
+                <xctk:WizardPage x:Name="Page2" PageType="Interior"
+                                       Title="Page 2"
+                                       Description="This is the second page in the process">
+                </xctk:WizardPage>
+
+                <xctk:WizardPage x:Name="LastPage" PageType="Interior"
+                                       Title="Last Page"
+                                       Description="This is the last page in the process"
+                                       CanFinish="True"/>
+            </xctk:Wizard>-->
         </Grid>
     </Border>
 </Window>

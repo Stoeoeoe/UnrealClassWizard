@@ -17,13 +17,11 @@
     <Color x:Key="FocusColorLight">#FFFFEEA0</Color>
     <Color x:Key="FocusColorDark">#FFCCB137</Color>
     <Color x:Key="LinkColor">LightBlue</Color>
-    
 
 
 
-    <SolidColorBrush x:Key="DarkBackground" Color="{StaticResource DarkBackgroundColor}" />
-    <ImageBrush x:Key="DarkImageBackground" ImageSource="/Unreal Class Wizard;component/Images/NoiseBackground.png" Viewport="0,0,64,64" ViewportUnits="Absolute" TileMode="Tile" />
 
+    <SolidColorBrush x:Key="DarkBackground" Color="{StaticResource DarkBackgroundColor}"/>
     <SolidColorBrush x:Key="LighterDarkBackground" Color="{StaticResource LighterDarkBackgroundColor}"/>
     <SolidColorBrush x:Key="SemiBackground" Color="{StaticResource SemiDarkBackgroundColor}"/>
     <SolidColorBrush x:Key="LightBackground" Color="{StaticResource LightBackgroundColor}"/>
