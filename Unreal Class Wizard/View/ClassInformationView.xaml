@@ -1,19 +1,5 @@
-﻿<Page
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
-      xmlns:editor="http://icsharpcode.net/sharpdevelop/avalonedit"
-      xmlns:view="clr-namespace:Unreal_Class_Wizard.View"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
-      xmlns:CustomControls="clr-namespace:Unreal_Class_Wizard.CustomControls" x:Class="Unreal_Class_Wizard.View.ClassInformationView"
-      mc:Ignorable="d" 
-      d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True}"
-      d:DesignHeight="800" d:DesignWidth="1280"
-      x:Name="metaInformation"
-      >
+﻿<?xml version="1.0"?>
+<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit" xmlns:editor="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:view="clr-namespace:Unreal_Class_Wizard.View" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel" xmlns:CustomControls="clr-namespace:Unreal_Class_Wizard.CustomControls" x:Class="Unreal_Class_Wizard.View.ClassInformationView" mc:Ignorable="d" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True}" d:DesignHeight="1024" d:DesignWidth="1280" x:Name="metaInformation">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,69 +14,87 @@
             <Style BasedOn="{StaticResource ComboBoxStyle}" TargetType="{x:Type ComboBox}"/>
         </ResourceDictionary>
     </Page.Resources>
-
     <Grid x:Name="baseGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="140"/>
-            <RowDefinition Height="0"/>
-            <RowDefinition Height="0"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="76"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="76"/>
-            <RowDefinition Height="38"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1.5*"/>
-
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Row="0" Grid.RowSpan="14" Grid.Column="2" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
+        <GridSplitter Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
+        <Label Content="CLASS INFORMATION" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="4,0,6,8"/>
+        <Label Content="PREVIEW" Style="{StaticResource TitleStyle}" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Margin="3,0,0,0"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical">
+            <CustomControls:GroupControl Title="Main">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Name</Label>
+                    <Label>Base class</Label>
+                    <Label>Access modifier</Label>
+                    <Label>Is Actor/spawnable?</Label>
+                    <Label>Included classes</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <xctk:WatermarkTextBox Watermark="Example: 'MyActor'" Text="{Binding ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)" TabIndex="0"/>
+                    <ComboBox IsEditable="True" ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}" ToolTip="Class from which to inherit, usually not empty" TabIndex="1"/>
+                    <ComboBox Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2">
+                        <ComboBoxItem Content="Public"/>
+                        <ComboBoxItem Content="Private"/>
+                    </ComboBox>
+                    <CheckBox IsChecked="{Binding IsActor, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" TabIndex="3"/>
+                    <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="Seperate with semicolon" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="6" ToolTip="Other classes which will be included in the header"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+            <CustomControls:GroupControl Title="Class Specifiers" Margin="0,15,0,0">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Is abstract?</Label>
+                    <Label>Is blueprintable?</Label>
+                    <Label>Class Specifiers</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <CheckBox IsChecked="{Binding IsAbstract, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" TabIndex="4"/>
+                    <CheckBox IsChecked="{Binding IsBlueprintable, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class will show up as a possible base class when creating a new blueprint" TabIndex="5"/>
+                    <Button Content="More..." HorizontalAlignment="Left" Width="100" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click" Height="22" TabIndex="6"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+            <CustomControls:GroupControl Title="API" Margin="0,15,0,0">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Add module API?</Label>
+                    <Label>API</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <CheckBox IsChecked="{Binding UseAPI, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Use Module API to expose this class to the game's DLL file" Checked="useAPI_Checked" Margin="8,0,0,0" TabIndex="4"/>
+                    <xctk:WatermarkTextBox Watermark="The API, e.g. MyProject_API" Text="{Binding API, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ToolTip="The game's API to be exposed" Visibility="Visible" IsEnabled="{Binding IsChecked, ElementName=useAPICheckBox}" TabIndex="5"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+            <CustomControls:GroupControl Title="Constructor" Margin="0,15,0,0">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Add Constructor?</Label>
+                    <Label>Constructor</Label>
+                    <Label>Add Destructor?</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <CheckBox IsChecked="{Binding AddConstructor, Mode=TwoWay}" TabIndex="9"/>
+                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Constructor signature" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="The constructor of this class, optional" TabIndex="9"/>
+                    <CheckBox IsChecked="{Binding UseDestructor, Mode=TwoWay}" ToolTip="Adds a destructor to the class" TabIndex="9"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
 
-        <Label Content="CLASS INFORMATION" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,10,8" />
-        <Label Content="PREVIEW" Style="{StaticResource TitleStyle}" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Margin="6,0,0,0"/>
-        <Label Content="Use module API?" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="8" />
-        <Label Content="API" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9"  />
+            <CustomControls:GroupControl  Title="Description" Margin="0,15,0,0" Height="169">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Description</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SpellCheck.IsEnabled="True" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" Margin="0,5,0,-93"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
 
-        <Label Content="Included classes" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="10" Margin="0" />
-        <Label Content="Class specifiers" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="11"  Margin="0" />
-        <Label Content="Description" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="12" Margin="0,5,0,45" />
-        <Label Content="Constructor" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="13" Margin="0" />
-
-        <!--<view:HelpButton Grid.Column="3" Grid.Row="2" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="3" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="4" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="5" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="6" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="7" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="8" URL="http://www.ilex-game.com/" ToolTip="Olol" />
-        <view:HelpButton Grid.Column="3" Grid.Row="9" URL="http://www.ilex-game.com/" ToolTip="Olol" />-->
-        <!-- Todo integrate into combobox -->
-
-        <CheckBox x:Name="useAPICheckBox"  Grid.Row="8"  Grid.Column="2" IsChecked="{Binding UseAPI, Mode=TwoWay}" VerticalAlignment="Center"  TabIndex="4" ToolTip="Use Module API to expose this class to the game's DLL file" Content="" Checked="useAPI_Checked" Margin="8,0,0,0" />
-        <xctk:WatermarkTextBox x:Name="apiTextBox" Grid.Row="9"  Grid.Column="2" Text="{Binding API, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" TabIndex="5" ToolTip="The game's API to be exposed" Visibility="Visible" Margin="8,6,12,8" IsEnabled="{Binding IsChecked, ElementName=useAPICheckBox}" Height="24"/>
+        </StackPanel>
 
 
-        <xctk:WatermarkTextBox x:Name="includedTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="10"  VerticalAlignment="Center" Margin="8,7,12,7" Watermark="Seperate with semicolon" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="6" Height="24" ToolTip="Other classes which will be included in the header" />
-        <Button x:Name="otherClassSpecifiersButton" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Stretch" Margin="8,7,0,7" TabIndex="7" Content="More..." Width="102" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click" Height="22"/>
-        <xctk:WatermarkTextBox x:Name="description" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="12"  VerticalAlignment="Stretch" Margin="8,6,12,8" SpellCheck.IsEnabled="True" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" />
-        <xctk:WatermarkTextBox x:Name="constructorField" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="13"  VerticalAlignment="Center" Margin="8,7,12,7" Watermark="Constructor signature" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="9" Height="24" ToolTip="The constructor of this class, optional" />
-
-
-
-        <TabControl Grid.Column="3" HorizontalAlignment="Stretch" Margin="5,5,16,5" Grid.RowSpan="11" VerticalAlignment="Stretch" Grid.Row="2">
+        <TabControl Grid.Column="2" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Grid.Row="1">
             <TabItem Header="Header File">
                 <view:UE4AvalonEdit x:Name="editorHeader" Grid.Row="2" Grid.Column="4" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
                     <i:Interaction.Behaviors>
@@ -106,38 +110,5 @@
                 </view:UE4AvalonEdit>
             </TabItem>
         </TabControl>
-
-
-        <!--<CustomControls:GroupControl Title="Class Specifiers" GridSpace="5" LineHeight="34" Grid.RowSpan="5">
-            <CustomControls:GroupControl.Labels>
-                --><!--<Label>Is abstract?</Label>
-                <Label>Is blueprintable?</Label>--><!--
-            </CustomControls:GroupControl.Labels>
-            <CustomControls:GroupControl.Fields>
-                --><!--<CheckBox IsChecked="{Binding IsAbstract, Mode=TwoWay}"  VerticalAlignment="Center" TabIndex="4" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" />
-                <CheckBox IsChecked="{Binding IsBlueprintable, Mode=TwoWay}"  VerticalAlignment="Center" TabIndex="4" ToolTip="Determines whether the class will show up as a possible base class when creating a new blueprint" />--><!--
-            </CustomControls:GroupControl.Fields>
-        </CustomControls:GroupControl>-->        
-        
-        <CustomControls:GroupControl Title="Main" Margin="0,0,10,10" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" GridSpace="5" LineHeight="34" Grid.RowSpan="4">
-            <CustomControls:GroupControl.Labels>
-                <Label>Name</Label>
-                <Label>Base class</Label>
-                <Label>Access modifier</Label>
-                <Label>Is Actor/spawnable?</Label>
-
-            </CustomControls:GroupControl.Labels>
-            <CustomControls:GroupControl.Fields>
-                <xctk:WatermarkTextBox  Watermark="Example: 'MyActor'"  Text="{Binding ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)" TabIndex="0" Grid.Row="1" Grid.Column="1"/>
-                <ComboBox  IsEditable="True"  ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}"  ToolTip="Class from which to inherit, usually not empty" TabIndex="1"  />
-                <ComboBox  Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2" >
-                    <ComboBoxItem Content="Public"/>
-                    <ComboBoxItem Content="Private"/>
-                </ComboBox>
-                <CheckBox IsChecked="{Binding IsActor, Mode=TwoWay}"  VerticalAlignment="Center" TabIndex="3" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" />
-            </CustomControls:GroupControl.Fields>
-        </CustomControls:GroupControl>
-
     </Grid>
-
 </Page>
