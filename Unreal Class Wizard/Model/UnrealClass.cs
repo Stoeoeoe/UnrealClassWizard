@@ -50,7 +50,7 @@ namespace Unreal_Class_Wizard.Model
             set
             {
                 if (description == value) return;
-                description = value.Trim();
+                description = value.Trim(new char[' ']);
                 GeneratePreviews();
             }
         }

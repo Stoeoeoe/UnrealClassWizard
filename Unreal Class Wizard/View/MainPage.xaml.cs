@@ -56,6 +56,7 @@ namespace Unreal_Class_Wizard.View
             {
                 case 1: navigationFrame.Navigate(new Uri("View/UserInformationView.xaml", UriKind.Relative)); break;
                 case 2: navigationFrame.Navigate(new Uri("View/ClassInformationView.xaml", UriKind.Relative)); break;
+                case 3: navigationFrame.Navigate(new Uri("View/ConstructorView.xaml", UriKind.Relative)); break;
                 default: break;
             }
         }

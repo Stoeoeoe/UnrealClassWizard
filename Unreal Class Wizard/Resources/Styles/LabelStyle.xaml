@@ -9,4 +9,9 @@
         <Setter Property="Foreground" Value="{StaticResource LabelForegroundBrush}"/>
     </Style>
 
+    <Style x:Key="GroupLabelStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource LabelForegroundBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
 </ResourceDictionary>

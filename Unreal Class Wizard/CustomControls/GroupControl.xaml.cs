@@ -106,10 +106,11 @@ namespace Unreal_Class_Wizard.CustomControls
                 
 
                 FrameworkElement label = Labels[i];
-                //label.Margin = new Thickness(label.Margin.Left, label.Margin.Top + GridSpace, label.Margin.Right, label.Margin.Bottom + GridSpace);
+                label.Style = Resources["GroupLabelStyle"] as Style;
                 Grid.SetRow(label, i);
                 Grid.SetColumn(label, 1);
                 itemGrid.Children.Add(label);
+
 
                 FrameworkElement field = Fields[i];
                 field.Margin = new Thickness(field.Margin.Left, field.Margin.Top + GridSpace, field.Margin.Right, field.Margin.Bottom + GridSpace);

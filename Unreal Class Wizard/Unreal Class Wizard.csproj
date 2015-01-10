@@ -179,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomControls\UE4StyleWindow.xaml">
+    <Page Include="View\ConstructorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,6 +217,7 @@
     <Compile Include="Model\BaseClass.cs" />
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="ViewModel\ConstructorViewModel.cs" />
     <Compile Include="ViewModel\UnrealClassViewModel.cs" />
     <Compile Include="CustomControls\HelpButton.xaml.cs">
       <DependentUpon>HelpButton.xaml</DependentUpon>
@@ -227,8 +228,8 @@
     <Compile Include="CustomControls\UE4StyleTitleBar.xaml.cs">
       <DependentUpon>UE4StyleTitleBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\UE4StyleWindow.xaml.cs">
-      <DependentUpon>UE4StyleWindow.xaml</DependentUpon>
+    <Compile Include="View\ConstructorView.xaml.cs">
+      <DependentUpon>ConstructorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserInformationView.xaml.cs">
       <DependentUpon>UserInformationView.xaml</DependentUpon>

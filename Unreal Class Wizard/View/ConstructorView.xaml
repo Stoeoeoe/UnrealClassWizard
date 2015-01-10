@@ -1,0 +1,92 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+      xmlns:editor="http://icsharpcode.net/sharpdevelop/avalonedit"
+      xmlns:view="clr-namespace:Unreal_Class_Wizard.View"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
+      xmlns:CustomControls="clr-namespace:Unreal_Class_Wizard.CustomControls"
+      x:Class="Unreal_Class_Wizard.View.ConstructorView"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True}"
+      d:DesignHeight="1024" d:DesignWidth="1280"
+      x:Name="constructorView">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/UE4Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style BasedOn="{StaticResource LabelStyle}" TargetType="{x:Type Label}"/>
+            <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type TextBox}"/>
+            <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type xctk:WatermarkTextBox}"/>
+            <Style BasedOn="{StaticResource CheckBoxStyle}" TargetType="{x:Type CheckBox}"/>
+            <Style BasedOn="{StaticResource ButtonStyle}" TargetType="{x:Type Button}"/>
+            <Style BasedOn="{StaticResource TabItemStyle}" TargetType="{x:Type TabItem}"/>
+            <Style BasedOn="{StaticResource ComboBoxStyle}" TargetType="{x:Type ComboBox}"/>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid x:Name="baseGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Width="5" BorderThickness="1,0" Background="#FFB0B0B0"/>
+        <Label Content="CONSTRUCTOR" Style="{StaticResource TitleStyle}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="4,0,6,8"/>
+        <Label Content="PREVIEW" Style="{StaticResource TitleStyle}" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Margin="3,0,0,0"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Vertical">
+
+
+            <!-- Constructor Group -->
+            <CustomControls:GroupControl Title="Constructor" Height="135">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Add Constructor?</Label>
+                    <Label>Constructor</Label>
+                    <Label>Reload</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <CheckBox IsChecked="{Binding AddConstructor, Mode=TwoWay}" VerticalAlignment="Center" TabIndex="9"/>
+                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Constructor signature" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="The constructor of this class, optional" TabIndex="9"/>
+                    <Button Click="reloadConstructor" Content="Reload constructor from base class" Margin="0,3,0,3" Height="22"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+    
+            <!-- Destructor Group -->
+            <CustomControls:GroupControl Title="Destructor" Margin="0,15,0,0">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Add Destructor?</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <CheckBox IsChecked="{Binding AddDestructor, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Adds a destructor to the class" TabIndex="9"/>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+        </StackPanel>
+
+
+
+        <TabControl Grid.Column="2" HorizontalAlignment="Stretch" Margin="10,10,15,10" VerticalAlignment="Stretch" Grid.Row="1">
+            <TabItem Header="Header File">
+                <view:UE4AvalonEdit x:Name="editorHeader" Grid.Row="2" Grid.Column="4" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
+                    <i:Interaction.Behaviors>
+                        <view:AvalonEditBehavior BoundText="{Binding PreviewHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:Interaction.Behaviors>
+                </view:UE4AvalonEdit>
+            </TabItem>
+            <TabItem Header="C++ File">
+                <view:UE4AvalonEdit x:Name="editorCPP" Grid.Row="2" Grid.Column="4" IsReadOnly="True" SyntaxHighlighting="C++" Grid.RowSpan="8">
+                    <i:Interaction.Behaviors>
+                        <view:AvalonEditBehavior BoundText="{Binding PreviewCPP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:Interaction.Behaviors>
+                </view:UE4AvalonEdit>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Page>
