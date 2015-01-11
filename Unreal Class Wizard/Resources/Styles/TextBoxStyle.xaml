@@ -8,7 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- TextBox Style -->
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type xctk:WatermarkTextBox}">
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource ControlGrayBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource DarkControlForegroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}"/>
@@ -44,7 +44,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
 
 

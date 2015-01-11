@@ -31,7 +31,6 @@
             </ResourceDictionary.MergedDictionaries>
             <Style BasedOn="{StaticResource LabelStyle}" TargetType="Label"/>
             <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox"/>
-            <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="xctk:WatermarkTextBox"/>
             <Style BasedOn="{StaticResource CheckBoxStyle}" TargetType="CheckBox"/>
             <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button"/>
             <Style BasedOn="{StaticResource TabItemStyle}" TargetType="TabItem"/>
@@ -73,7 +72,6 @@
                 </Grid>
 
             </Border>
-
             <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,12,7" Height="30" Width="176" Grid.ColumnSpan="2">
                 <Button Content="Previous" Grid.Column="1" Grid.Row="1" Width="80" Margin="4" Command="NavigationCommands.PreviousPage"/>
                 <Button Content="Next" Grid.Column="1" Grid.Row="1" Width="80" Margin="4"  Command="NavigationCommands.NextPage"/>

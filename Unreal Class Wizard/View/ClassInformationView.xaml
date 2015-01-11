@@ -20,8 +20,10 @@
                 <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/UE4Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style BasedOn="{StaticResource LabelStyle}" TargetType="{x:Type Label}"/>
-            <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type TextBox}"/>
+            
+            <!--<Style BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type TextBox}"/>-->
             <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="{x:Type xctk:WatermarkTextBox}"/>
+            
             <Style BasedOn="{StaticResource CheckBoxStyle}" TargetType="{x:Type CheckBox}"/>
             <Style BasedOn="{StaticResource ButtonStyle}" TargetType="{x:Type Button}"/>
             <Style BasedOn="{StaticResource TabItemStyle}" TargetType="{x:Type TabItem}"/>
@@ -54,8 +56,8 @@
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
                     <xctk:WatermarkTextBox Watermark="Example: 'MyActor'" Text="{Binding ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)" TabIndex="0" Height="22"/>
-                    <ComboBox IsEditable="True" ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}" ToolTip="Class from which to inherit, usually not empty" TabIndex="1" Height="20"/>
-                    <ComboBox Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2" Height="20">
+                    <ComboBox IsEditable="True" ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}" ToolTip="Class from which to inherit, usually not empty" TabIndex="1" Height="20" Template="{DynamicResource ComboBoxControlTemplate1}"/>
+                    <ComboBox Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2" Height="20" Template="{DynamicResource NonEditableComboboxStyle}">
                         <ComboBoxItem Content="Public"/>
                         <ComboBoxItem Content="Private"/>
                     </ComboBox>
@@ -96,7 +98,14 @@
                     <Label>Description</Label>
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
-                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SpellCheck.IsEnabled="True" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" Margin="0,11,0,-82"/>
+                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           SpellCheck.IsEnabled="True"
+                                           Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           AcceptsReturn="True"
+                                           TextWrapping="Wrap"
+                                           VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" Margin="0,11,0,-82"
+                                           />
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>
 

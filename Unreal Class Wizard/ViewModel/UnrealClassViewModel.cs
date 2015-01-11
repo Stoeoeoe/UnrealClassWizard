@@ -148,7 +148,7 @@ namespace Unreal_Class_Wizard.ViewModel
             get { return description; }
             set
             {
-                description = value.Trim();
+                description = value.Trim(new char[' ']);
                 classModel.Description = description;
                 NotifyPropertyChanged("Description");
                 NotifyPropertyChanged("PreviewHeader");
