@@ -15,12 +15,13 @@ namespace Unreal_Class_Wizard.Model
     {
         public static List<BaseClass> AllBaseClasses { get; set; }
 
-        public BaseClass(string name)
+        public BaseClass(string name, bool isGenerated)
         {
             this.ClassName = name;
             this.ReadableName = name;
             this.IsActorClass = false;
             this.HeaderFiles = new string[]{ "XXXXX/" + name + ".h" };
+            this.IsGenerated = isGenerated;
         }
 
         public BaseClass()
@@ -111,6 +112,8 @@ namespace Unreal_Class_Wizard.Model
         public string ReadableName { get; set; }
 
         public bool IsActorClass { get; set; }
+
+        public bool IsGenerated { get; set; }
 
         [XmlArray("HeaderFiles")]
         [XmlArrayItem("HeaderFile")]

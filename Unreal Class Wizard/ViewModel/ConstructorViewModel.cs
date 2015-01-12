@@ -11,9 +11,14 @@ namespace Unreal_Class_Wizard.ViewModel
     {
         public ConstructorViewModel()
         {
+            this.ClassModel = App.CurrentClass;
+
             this.AddConstructor = true;
             this.AddDestructor = false;
             this.ConstructorSignature = "";
+
+            NotifyPropertyChanged("PreviewHeader");
+
         }
 
         private string constructorSignature;
@@ -45,5 +50,7 @@ namespace Unreal_Class_Wizard.ViewModel
         }
 
 
+
+        public UnrealClass ClassModel { get; set; }
     }
 }

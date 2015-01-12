@@ -108,7 +108,10 @@
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
                         </Trigger>
-                        <!--<Trigger Property="ExpandDirection" Value="Right">
+                        <Trigger Property="Tag" Value="HideExpander">
+                            <Setter Property="Visibility" TargetName="HeaderSite" Value="Collapsed"/>
+                        </Trigger>
+                                <!--<Trigger Property="ExpandDirection" Value="Right">
                             <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
                             <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
                             <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderRightHeaderStyle}"/>

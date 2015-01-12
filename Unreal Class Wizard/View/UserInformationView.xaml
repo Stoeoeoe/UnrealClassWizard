@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
       xmlns:vm="clr-namespace:Unreal_Class_Wizard.ViewModel"
+      xmlns:CustomControls="clr-namespace:Unreal_Class_Wizard.CustomControls"
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance d:Type=vm:UserInformationViewModel, IsDesignTimeCreatable=True}"
       d:DesignHeight="600" d:DesignWidth="897"
@@ -17,7 +18,7 @@
                 <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/UE4Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style BasedOn="{StaticResource LabelStyle}" TargetType="Label"/>
-            <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox"/>
+            <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="xctk:WatermarkTextBox"/>
             <Style BasedOn="{StaticResource CheckBoxStyle}" TargetType="CheckBox"/>
             <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button"/>
             <Style BasedOn="{StaticResource TabItemStyle}" TargetType="TabItem"/>
@@ -28,39 +29,61 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
-            <RowDefinition Height="38"/>
+            <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="525"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label Content="WELCOME" HorizontalAlignment="Left" Style="{DynamicResource TitleStyle}" VerticalAlignment="Top" Grid.Column="1" Margin="2,0,0,0"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" Margin="6,38,-6,0" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="63" >
+        <Label Content="WELCOME" HorizontalAlignment="Left" Style="{DynamicResource TitleStyle}" VerticalAlignment="Top" Grid.Column="1" Margin="2,0,0,0" Height="37" Width="108"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" Margin="6,38,-6,0" Style="{DynamicResource TextBlockStyle}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="63" Grid.RowSpan="2" >
     		<Run Text="This seems to be the first time you run this application."/>
 			<Run Text="In order to get the best result possible, please fill in the following fields"/><LineBreak/>
 			<Run Text="The values will be stored in this file:"/>
 			<Hyperlink x:Name="userFileLink" Click="userFileLink_Click" Foreground="{StaticResource LinkBrush}" ><Run Text="{Binding UserFilePath}"/></Hyperlink>
         </TextBlock>
 
-        <Label Content="Project Name" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" />
-        <Label Content="Copyright Information" Grid.Column="1"  VerticalAlignment="Center" Grid.Row="2"  />
-        <Label Content="Header Files Folder" Grid.Column="1" VerticalAlignment="Center" Grid.Row="3"  />
-        <Label Content="CPP Files Path" Grid.Column="1"  VerticalAlignment="Center" Grid.Row="4" />
+        <StackPanel Grid.ColumnSpan="2"  Grid.Column="1" Grid.Row="1">
+            <!-- Main Group -->
+            <CustomControls:GroupControl Title="Project" HideExpander="True" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Project Name</Label>
+                    <Label>Copyright Information</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <xctk:WatermarkTextBox Height="22"  Grid.Row="1" Watermark="Name of your project" ToolTip="Name for your project" Text="{Binding ProjectName, NotifyOnSourceUpdated=True}" Margin="15,0,0,0"/>
+                    <xctk:WatermarkTextBox Height="22" Grid.Column="2" Watermark="E.g. 'Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.'" Text="{Binding CopyrightText, NotifyOnSourceUpdated=True}" ToolTip="The copyright information will be on top of your header files" Margin="15,0,0,0" />
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
 
-        <xctk:WatermarkTextBox x:Name="projectNameBox" Grid.Column="2" HorizontalAlignment="Left" Height="23"  Grid.Row="1" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Name of your project" ToolTip="Name for your project" Text="{Binding ProjectName, NotifyOnSourceUpdated=True}"/>
-        <xctk:WatermarkTextBox x:Name="copyRightTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="2" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="E.g. 'Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.'" Text="{Binding CopyrightText, NotifyOnSourceUpdated=True}" ToolTip="The copyright information will be on top of your header files" />
-        <xctk:WatermarkTextBox x:Name="headerPathTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="3" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Path where you want to store the generated .h files (public)" Text="{Binding HeaderPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (public)"/>
-        <xctk:WatermarkTextBox x:Name="cppPathTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Grid.Row="4" Style="{DynamicResource TextBoxStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Width="480" Watermark="Path where you want to store the generated .cpp files (private)" Text="{Binding CppPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (private)" />
+            <CustomControls:GroupControl Title="Folders" HideExpander="True" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Header Files</Label>
+                    <Label>CPP Files</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <StackPanel  Orientation="Horizontal">
+                        <xctk:WatermarkTextBox Height="22" Watermark="Path where you want to store the generated .h files (public)" Text="{Binding HeaderPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (public)"   Margin="15,4,0,4" Width="413"/>
+                        <Button Content="Browse..." Click="GetSavePathHeader" Height="22" HorizontalContentAlignment="Center" Width="80" Margin="15,0,0,0"/>
+                    </StackPanel>
 
-        <Button x:Name="headerPathBrowseButton" Content="Browse..." Grid.Column="3" HorizontalAlignment="Left" Grid.Row="3" Style="{DynamicResource ButtonStyle}" VerticalAlignment="Center" Width="75" Click="Browse_ButtonClick"/>
-        <Button x:Name="cppPathBrowseButton" Content="Browse..." Grid.Column="3" HorizontalAlignment="Left" Grid.Row="4" Style="{DynamicResource ButtonStyle}" VerticalAlignment="Center" Width="75" Margin="0" Click="Browse_ButtonClick"/>
+                    <StackPanel Orientation="Horizontal">
+                        <xctk:WatermarkTextBox Height="22" Watermark="Path where you want to store the generated .cpp files (private)" Text="{Binding CppPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (private)"   Margin="15,0,0,0" Width="413" />
+                        <Button Content="Browse..."  Height="22" Click="GetSavePathCpp"  HorizontalContentAlignment="Center" Width="80" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+
+            <StackPanel>
+
+            </StackPanel>
+
+
+
+        </StackPanel>
 
     </Grid>
 </Page>

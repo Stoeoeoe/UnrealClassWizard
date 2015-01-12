@@ -78,10 +78,22 @@ namespace Unreal_Class_Wizard.CustomControls
 
         // Using a DependencyProperty as the backing store for LineHeight.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LineHeightProperty =
-            DependencyProperty.Register("LineHeight", typeof(int), typeof(GroupControl), new PropertyMetadata(34));
+            DependencyProperty.Register("LineHeight", typeof(int), typeof(GroupControl), new PropertyMetadata(36));
 
-        
-        
+
+
+
+        public bool HideExpander
+        {
+            get { return (bool)GetValue(HideExpanderProperty); }
+            set { SetValue(HideExpanderProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HideExpander.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HideExpanderProperty =
+            DependencyProperty.Register("HideExpander", typeof(bool), typeof(GroupControl), new PropertyMetadata(false));
+
+
 
         public GroupControl()
         {
@@ -94,7 +106,11 @@ namespace Unreal_Class_Wizard.CustomControls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            if (HideExpander)
+            {
+                expander.Tag = "HideExpander";
+            }
+
             if (Fields.Count != Labels.Count)
             {
                 throw new Exception("The number of Fields and Labels must be equal.");

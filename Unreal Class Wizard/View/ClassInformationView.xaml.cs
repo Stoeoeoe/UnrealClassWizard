@@ -40,20 +40,6 @@ namespace Unreal_Class_Wizard.View
 
         }
 
-        /// <summary>
-        /// Sets the focus on the first textbox.
-        /// </summary>
-        //public void SetFocusOnNameBox()
-        //{
-        //    Dispatcher.BeginInvoke(DispatcherPriority.Input,
-        //    new Action(delegate()
-        //    {
-        //        nameBox.Focus();         // Set Logical Focus
-        //        Keyboard.Focus(nameBox); // Set Keyboard Focus
-        //    }));
-
-        //}
-
         // TODO: Could not be handled via DataBinding due to Nullpointer Exceptions, to be corrected.
         private void BaseClassChanged(object sender, TextChangedEventArgs e)
         {
@@ -79,15 +65,7 @@ namespace Unreal_Class_Wizard.View
             ViewModel.UpdateClassSpecifiers(classSpecifierEventArgs.ClassSpecifiers);
         }
 
-        private void useAPI_Checked(object sender, RoutedEventArgs e)
-        {
-            //bool checkBoxValue = (bool)(sender as CheckBox).IsChecked;
-            ////Visibility apiBoxVisibility = checkBoxValue == true? Visibility.Visible : Visibility.Collapsed;
-            ////Visibility apiCheckBoxVisibility = checkBoxValue == true? Visibility.Collapsed : Visibility.Visible;
-            ////string labelText = checkBoxValue == true ? "API" : "Use API?";
-            //apiTextBox.IsEnabled = checkBoxValue;
 
-        }
 
 
     }

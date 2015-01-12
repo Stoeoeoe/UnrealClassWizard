@@ -39,32 +39,27 @@ namespace Unreal_Class_Wizard.View
             Application.Current.Shutdown();
         }
 
-        private void Browse_ButtonClick(object sender, RoutedEventArgs e)
-        {
-            GetSavePath(sender);
-        }
 
-
-        /// <summary>
-        /// Opens a folder browser and stores the string in the ViewModel
-        /// </summary>
-        /// <param name="source">The button which was pressed</param>
-        private void GetSavePath(object source)
+        private void GetSavePathHeader(object sender, RoutedEventArgs e)
         {
             var dialog = new CommonOpenFileDialog("Choose Folder") { IsFolderPicker = true };
             CommonFileDialogResult result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
             {
-                if (source == cppPathBrowseButton)
-                {
-                    viewModel.CppPath = dialog.FileName;
-                }
-                else if (source == headerPathBrowseButton)
-                {
-                    viewModel.HeaderPath = dialog.FileName;
-                }
-            }   
+                viewModel.HeaderPath = dialog.FileName;
+            }
         }
+
+        private void GetSavePathCpp(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog("Choose Folder") { IsFolderPicker = true };
+            CommonFileDialogResult result = dialog.ShowDialog();
+            if (result == CommonFileDialogResult.Ok)
+            {
+                viewModel.CppPath = dialog.FileName;
+            }
+        }
+
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

@@ -22,7 +22,7 @@
 
 
     <SolidColorBrush x:Key="DarkBackground" Color="{StaticResource DarkBackgroundColor}" />
-    <ImageBrush x:Key="DarkImageBackground" ImageSource="/Unreal Class Wizard;component/Images/NoiseBackground.png" Viewport="0,0,64,64" ViewportUnits="Absolute" TileMode="Tile" />
+    <ImageBrush x:Key="DarkImageBackground" ImageSource="/Unreal Class Wizard;component/Images/Noise.png" Viewport="0,0,64,64" ViewportUnits="Absolute" TileMode="Tile" />
 
     <SolidColorBrush x:Key="LighterDarkBackground" Color="{StaticResource LighterDarkBackgroundColor}"/>
     <SolidColorBrush x:Key="SemiBackground" Color="{StaticResource SemiDarkBackgroundColor}"/>

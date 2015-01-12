@@ -18,14 +18,26 @@ namespace Unreal_Class_Wizard.ViewModel
             // Run application (not design time)
             if (isDesignMode == false)
             {
+                // Fill BaseClass dropdown
+                this.BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);              
+
                 this.ClassModel = App.CurrentClass;
+                this.Access = ClassModel.Access;
+                this.ClassName = ClassModel.ClassName;
+                this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiers);
 
-                this.BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);               // Fill BaseClass dropdown
-                this.CurrentBaseClassIndex = 0;
-                this.Access = "Public";
+                this.Description = ClassModel.Description;
+                this.IncludedClasses = new ObservableCollection<string>(ClassModel.IncludedClasses);
+                this.IsActor = ClassModel.IsActor;
 
-                this.API = App.CurrentUser.UserInformation.ProjectName + "_API";
-                this.UseAPI = false;
+                this.CurrentBaseClass = ClassModel.BaseClass;
+                this.CurrentBaseClassIndex = BaseClasses.IndexOf(ClassModel.BaseClass);
+                this.CurrentBaseClassText = CurrentBaseClass.ReadableName;
+
+                this.UseAPI = ClassModel.UseAPI;
+                this.API = ClassModel.API;
+
+                //this.CurrentBaseClassIndex = 0;
 
                 UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
             }
@@ -69,12 +81,16 @@ namespace Unreal_Class_Wizard.ViewModel
             }
             set
             {
-                currentBaseClassText = value.Trim();
-                NotifyPropertyChanged("CurrentBaseClassText");
-                if (CurrentBaseClassIndex == -1)
+                if(value != null)
                 {
-                    CurrentBaseClass = new BaseClass(currentBaseClassText);
-                    NotifyPropertyChanged("CurrentBaseClass");
+                    currentBaseClassText = value.Trim();
+                    NotifyPropertyChanged("CurrentBaseClassText");
+                    if (CurrentBaseClassIndex == -1)
+                    {
+                        CurrentBaseClass = new BaseClass(currentBaseClassText, true);
+                        NotifyPropertyChanged("CurrentBaseClass");
+                    }
+
                 }
             }
         }
@@ -106,10 +122,17 @@ namespace Unreal_Class_Wizard.ViewModel
                     currentBaseClass = value;
                     classModel.BaseClass = currentBaseClass;
 
+                    if(classModel.BaseClass.IsGenerated == false)
+                    {
+                        IsActor = currentBaseClass.IsActorClass;
+                        classModel.IsActor = IsActor;
+                        NotifyPropertyChanged("IsActor");
+                    }
+
                     NotifyPropertyChanged("CurrentBaseClass");
                     NotifyPropertyChanged("PreviewHeader");
+                    
                     // If the base class is "Actor", activate the checkbox
-                    IsActor = currentBaseClass.IsActorClass;
             }
         }
 
@@ -179,8 +202,8 @@ namespace Unreal_Class_Wizard.ViewModel
         
 
 
-        private bool isActor;
-        public bool IsActor
+        private bool? isActor;
+        public bool? IsActor
         {
             get { return isActor; }
             set

@@ -10,21 +10,24 @@ namespace Unreal_Class_Wizard.Model
 {
     public class UnrealClass
     {
+        bool isInitialized;
 
         public UnrealClass()
         {
-            className = "XXXXX";
-            description = "";
+            this.ClassName = "XXXXX";
+            this.Description = "";
+            this.BaseClass = new BaseClass();
+            this.Access = "Public";
+            this.IncludedClasses = new List<string>();
+            this.ClassSpecifiers = ClassSpecifier.LoadClassSpecifiers();
+            this.IsActor = false;
+            this.CopyrightText = "";
+            this.ConstructorText = "";
+            this.API = App.CurrentUser.UserInformation.ProjectName + "_API";
+            this.UseAPI = false;
 
-            baseClass = new BaseClass();
+            this.isInitialized = true;
             
-
-            access = "Public";
-            includedClasses = new List<string>();
-            classSpecifiers = ClassSpecifier.LoadClassSpecifiers();
-            isActor = false;
-            copyrightText = "";
-            constructorText = "";
         }
 
         #region Properties
@@ -107,14 +110,31 @@ namespace Unreal_Class_Wizard.Model
             }
         }
 
-        private bool isActor;
+        private bool? isActor;
 
-        public bool IsActor {
-            get { return isActor; }
+        public bool? IsActor {
+            get
+            {
+                return isActor;
+            }
             
             set
             {
+
                 isActor = value;
+                GeneratePreviews();
+            }
+        }
+
+
+        private string copyrightText;
+        public string CopyrightText
+        {
+            get { return copyrightText; }
+
+            set
+            {
+                copyrightText = value;
                 GeneratePreviews();
             }
         }
@@ -132,17 +152,6 @@ namespace Unreal_Class_Wizard.Model
         }
 
 
-        private string copyrightText;
-        public string CopyrightText
-        {
-            get { return copyrightText; }
-
-            set
-            {
-                copyrightText = value;
-                GeneratePreviews();
-            }
-        }
 
         private string api;
         public string API
@@ -175,8 +184,11 @@ namespace Unreal_Class_Wizard.Model
 
         public void GeneratePreviews()
         {
-            GenerateHeader();
-            GenerateCPP();
+            if (isInitialized)
+            {
+                GenerateHeader();
+                GenerateCPP();
+            }
         }
 
         public void GenerateHeader()
@@ -184,7 +196,7 @@ namespace Unreal_Class_Wizard.Model
             StringBuilder sb = new StringBuilder();
 
             // Preparation
-            string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
+            string prefix = (bool)IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
             string copyRightText = CopyrightText == "" ? App.CurrentUser.UserInformation.CopyrightText : CopyrightText;
 
             // Concat all Class Specifiers
@@ -278,7 +290,7 @@ namespace Unreal_Class_Wizard.Model
             string gamePlayClass = App.CurrentUser.UserInformation.GameplayClass;
             gamePlayClass = gamePlayClass.EndsWith(".h")? gamePlayClass : gamePlayClass + ".h";
             string tempClassName = ClassName == "" ? "XXXXX" : ClassName;                               // Use XXXXX as a substitute as long as there is no class name
-            string prefix = IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
+            string prefix = (bool)IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
 
             StringBuilder sb = new StringBuilder();
 
