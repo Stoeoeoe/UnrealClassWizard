@@ -62,7 +62,7 @@
                         <ComboBoxItem Content="Private"/>
                     </ComboBox>
                     <CheckBox IsChecked="{Binding IsActor, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" TabIndex="3"/>
-                    <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="Seperate with semicolon" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="6" ToolTip="Other classes which will be included in the header"/>
+                    <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="Seperate with semicolon" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Other classes which will be included in the header" TabIndex="4"/>
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>
 
@@ -74,9 +74,9 @@
                     <Label>Class Specifiers</Label>
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
-                    <CheckBox IsChecked="{Binding IsAbstract, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" TabIndex="4"/>
-                    <CheckBox IsChecked="{Binding IsBlueprintable, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class will show up as a possible base class when creating a new blueprint" TabIndex="5"/>
-                    <Button Content="More..." HorizontalAlignment="Left" Width="100" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click" Height="22" TabIndex="6"/>
+                    <CheckBox IsChecked="{Binding IsAbstract, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" TabIndex="5"/>
+                    <CheckBox IsChecked="{Binding IsBlueprintable, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class will show up as a possible base class when creating a new blueprint" TabIndex="6"/>
+                    <Button Content="More..." HorizontalAlignment="Left" Width="100" ToolTip="Management of all class specifiers" Click="otherClassSpecifiersButton_Click" Height="22" TabIndex="7"/>
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>
 
@@ -87,13 +87,13 @@
                     <Label>API</Label>
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
-                    <CheckBox IsChecked="{Binding UseAPI, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Use Module API to expose this class to the game's DLL file" TabIndex="4"/>
-                    <xctk:WatermarkTextBox Watermark="The API, e.g. MyProject_API" Text="{Binding API, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ToolTip="The game's API to be exposed" Visibility="Visible" IsEnabled="{Binding UseAPI}" TabIndex="5" Height="22"/>
+                    <CheckBox IsChecked="{Binding UseAPI, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Use Module API to expose this class to the game's DLL file" TabIndex="8"/>
+                    <xctk:WatermarkTextBox Watermark="The API, e.g. MyProject_API" Text="{Binding API, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ToolTip="The game's API to be exposed" Visibility="Visible" IsEnabled="{Binding UseAPI}" TabIndex="9" Height="22"/>
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>
 
 
-            <CustomControls:GroupControl  Title="Description" Margin="0,15,0,0" Height="151">
+            <CustomControls:GroupControl  Title="Description" Margin="0,15,0,0" LineHeight="150">
                 <CustomControls:GroupControl.Labels>
                     <Label>Description</Label>
                 </CustomControls:GroupControl.Labels>
@@ -104,7 +104,8 @@
                                            Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                            AcceptsReturn="True"
                                            TextWrapping="Wrap"
-                                           VerticalScrollBarVisibility="Visible" TabIndex="8" ToolTip="Description/documentation of this class" Margin="0,11,0,-82"
+                                           VerticalScrollBarVisibility="Disabled"
+                                           TabIndex="10" ToolTip="Description/documentation of this class" Margin="0,15,0,15"
                                            />
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>

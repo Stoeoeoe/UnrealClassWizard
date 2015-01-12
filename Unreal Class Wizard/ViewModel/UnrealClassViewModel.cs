@@ -18,17 +18,18 @@ namespace Unreal_Class_Wizard.ViewModel
             // Run application (not design time)
             if (isDesignMode == false)
             {
+
                 // Fill BaseClass dropdown
                 this.BaseClasses = new ObservableCollection<BaseClass>(BaseClass.AllBaseClasses);              
 
                 this.ClassModel = App.CurrentClass;
+
                 this.Access = ClassModel.Access;
                 this.ClassName = ClassModel.ClassName;
                 this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiers);
 
                 this.Description = ClassModel.Description;
                 this.IncludedClasses = new ObservableCollection<string>(ClassModel.IncludedClasses);
-                this.IsActor = ClassModel.IsActor;
 
                 this.CurrentBaseClass = ClassModel.BaseClass;
                 this.CurrentBaseClassIndex = BaseClasses.IndexOf(ClassModel.BaseClass);
@@ -36,10 +37,10 @@ namespace Unreal_Class_Wizard.ViewModel
 
                 this.UseAPI = ClassModel.UseAPI;
                 this.API = ClassModel.API;
+                this.IsActor = ClassModel.IsActor;
 
-                //this.CurrentBaseClassIndex = 0;
-
-                UpdateClassSpecifiers(ClassSpecifier.LoadClassSpecifiers());
+                this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiers);
+                UpdateClassSpecifiers(ClassModel.ClassSpecifiers);
             }
             // Design time
             else
@@ -122,12 +123,14 @@ namespace Unreal_Class_Wizard.ViewModel
                     currentBaseClass = value;
                     classModel.BaseClass = currentBaseClass;
 
-                    if(classModel.BaseClass.IsGenerated == false)
+                    // Read the "IsActor" property from base class only if the class is not generated (not in XML) and has not been overwritten
+                    if(classModel.BaseClass.IsGenerated == false && classModel.BaseClass.IsActorClass == classModel.IsActor)
                     {
                         IsActor = currentBaseClass.IsActorClass;
                         classModel.IsActor = IsActor;
                         NotifyPropertyChanged("IsActor");
                     }
+                    
 
                     NotifyPropertyChanged("CurrentBaseClass");
                     NotifyPropertyChanged("PreviewHeader");
@@ -202,7 +205,7 @@ namespace Unreal_Class_Wizard.ViewModel
         
 
 
-        private bool? isActor;
+        private bool? isActor = null;
         public bool? IsActor
         {
             get { return isActor; }

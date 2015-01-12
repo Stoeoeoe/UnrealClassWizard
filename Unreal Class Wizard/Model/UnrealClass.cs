@@ -14,17 +14,19 @@ namespace Unreal_Class_Wizard.Model
 
         public UnrealClass()
         {
-            this.ClassName = "XXXXX";
-            this.Description = "";
-            this.BaseClass = new BaseClass();
-            this.Access = "Public";
-            this.IncludedClasses = new List<string>();
-            this.ClassSpecifiers = ClassSpecifier.LoadClassSpecifiers();
-            this.IsActor = false;
-            this.CopyrightText = "";
-            this.ConstructorText = "";
-            this.API = App.CurrentUser.UserInformation.ProjectName + "_API";
-            this.UseAPI = false;
+            this.className = "MyClass";
+            this.description = "";
+            this.baseClass = new BaseClass("", true);
+            this.access = "Public";
+            this.includedClasses = new List<string>();
+            this.classSpecifiers = ClassSpecifier.LoadClassSpecifiers();
+            this.isActor = baseClass.IsActorClass;
+            this.copyrightText = "";
+            this.constructorText = "";
+            this.api = App.CurrentUser.UserInformation.ProjectName + "_API";
+            this.useAPI = false;
+
+            
 
             this.isInitialized = true;
             
@@ -32,6 +34,7 @@ namespace Unreal_Class_Wizard.Model
 
         #region Properties
 
+        // Property to block the generation of CPP and header file to prevent unneccesary code generation
         private string className;
 
         public string ClassName
@@ -124,8 +127,13 @@ namespace Unreal_Class_Wizard.Model
                 isActor = value;
                 GeneratePreviews();
             }
+
         }
 
+        private string GetPrefix()
+        {
+            return (bool)IsActor ? "A" : "U"; 
+        }
 
         private string copyrightText;
         public string CopyrightText
@@ -184,7 +192,8 @@ namespace Unreal_Class_Wizard.Model
 
         public void GeneratePreviews()
         {
-            if (isInitialized)
+
+            if (isInitialized)            
             {
                 GenerateHeader();
                 GenerateCPP();
@@ -194,13 +203,27 @@ namespace Unreal_Class_Wizard.Model
         public void GenerateHeader()
         {
             StringBuilder sb = new StringBuilder();
+            WriteHeaderUntilConstructor(sb);
+            WriteConstructor(sb);
 
-            // Preparation
-            string prefix = (bool)IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine();                                                                             // Empty line
+            sb.AppendLine();                                                                             // Empty line
+
+            sb.AppendLine("}");                                                                          // End class body
+
+            HeaderText = sb.ToString();
+        }
+
+        private void WriteHeaderUntilConstructor(StringBuilder sb)
+        {
             string copyRightText = CopyrightText == "" ? App.CurrentUser.UserInformation.CopyrightText : CopyrightText;
 
             // Concat all Class Specifiers
             StringBuilder sbClassSpecifiers = new StringBuilder();
+
+
             foreach (ClassSpecifier classSpecifierValue in ClassSpecifiers)
             {
                 string name = classSpecifierValue.Name;
@@ -209,9 +232,9 @@ namespace Unreal_Class_Wizard.Model
                 {
                     sbClassSpecifiers.Append(name + ", ");
                 }
-                else if(value is string && value as string != "")
+                else if (value is string && value as string != "")
                 {
-                    sbClassSpecifiers.Append(name + "(" + value + ")");
+                    sbClassSpecifiers.Append(name + "(" + value + "),");
                 }
             }
 
@@ -220,9 +243,9 @@ namespace Unreal_Class_Wizard.Model
 
             // Start writing header
             sb.AppendLine("//" + App.CurrentUser.UserInformation.CopyrightText + "\r\n\r\n");         // Copyright
-            sb.AppendLine("#pragma once");                                                               // Pragma once
+            sb.AppendLine("#pragma once");                                                            // Pragma once
 
-            // TODO: Included classes
+            // Included classes
             for (int i = 0; i < includedClasses.Count; i++)
             {
                 string includedClass = includedClasses[i];
@@ -233,7 +256,7 @@ namespace Unreal_Class_Wizard.Model
                 sb.AppendLine(String.Format("#include \"{0}\"", includedClass));
             }
 
-            sb.AppendLine(String.Format("#include \"{0}\"", ClassName + ".generated.h"));            // Generated header
+            sb.AppendLine(String.Format("#include \"{0}\"", ClassName + ".generated.h"));                // Generated header
             sb.AppendLine();                                                                             // Empty line
 
 
@@ -253,12 +276,12 @@ namespace Unreal_Class_Wizard.Model
             sb.Append(classSpecifierString);
             sb.Append(")\r\n");                                                                         // UClass definition end
 
-            sb.Append("class");      // Class declaration start
+            sb.Append("class");                                                                         // Class declaration start
             if (useAPI)
             {
-                sb.Append(String.Format(" {0}" , API));      // API
+                sb.Append(String.Format(" {0}", API));                                                 // API
             }
-            sb.Append(String.Format(" {0}{1} ", prefix, className));      // Class declaration
+            sb.Append(String.Format(" {0}{1} ", GetPrefix(), className));                                    // Class declaration
 
             // Only inherit if there is a base class
             if (BaseClass.ClassName != "")
@@ -270,22 +293,18 @@ namespace Unreal_Class_Wizard.Model
             sb.AppendLine("{");                                                                          // Start class body
             sb.AppendLine("    GENERATED_BODY()");                                                       // GENERATED_BODY() macro
 
-            if (ConstructorText != "")
-            {
-                sb.AppendLine(String.Format("    {0}{1}({2});", prefix, ClassName, ConstructorText));                                                                       // Add constructor
-            }
-
-            sb.AppendLine();                                                                             // Empty line
-            sb.AppendLine();                                                                             // Empty line
-            sb.AppendLine();                                                                             // Empty line
-            sb.AppendLine();                                                                             // Empty line
-
-            sb.AppendLine("}");                                                                             // End class body
-
-            HeaderText = sb.ToString();
         }
 
-        public void GenerateCPP()
+        private void WriteConstructor(StringBuilder sb)
+        {
+
+            if (ConstructorText != "")
+            {
+                sb.AppendLine(String.Format("    {0}{1}({2});", GetPrefix(), ClassName, ConstructorText));   // Add constructor
+            }
+        }
+
+        private void GenerateCPP()
         {
             string gamePlayClass = App.CurrentUser.UserInformation.GameplayClass;
             gamePlayClass = gamePlayClass.EndsWith(".h")? gamePlayClass : gamePlayClass + ".h";

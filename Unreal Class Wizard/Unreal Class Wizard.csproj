@@ -210,7 +210,7 @@
     <Compile Include="Helpers\ClassSpecifierEventArgs.cs" />
     <Compile Include="Model\ClassSpecifier.cs" />
     <Compile Include="Model\HeaderParser.cs" />
-    <Compile Include="Model\NotifyPropertyChangedBase.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ClassSpecifierViewModel.cs" />
     <Compile Include="Helpers\AvalonEditBehavior.cs" />
     <Compile Include="Model\GeneralInformation.cs" />

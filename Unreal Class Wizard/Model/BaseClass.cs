@@ -20,7 +20,7 @@ namespace Unreal_Class_Wizard.Model
             this.ClassName = name;
             this.ReadableName = name;
             this.IsActorClass = false;
-            this.HeaderFiles = new string[]{ "XXXXX/" + name + ".h" };
+            this.HeaderFiles = new string[]{ "MyClass/" + name + ".h" };
             this.IsGenerated = isGenerated;
         }
 
@@ -122,7 +122,8 @@ namespace Unreal_Class_Wizard.Model
 
         public override string ToString()
         {
-            return ClassName + " (" + ReadableName + ")";
+            return this.ClassName;
+          //  return ClassName + " (" + ReadableName + ")";
         }
         
     }
