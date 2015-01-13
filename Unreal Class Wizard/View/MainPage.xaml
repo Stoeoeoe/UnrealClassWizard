@@ -68,6 +68,9 @@
                         <ListBoxItem Content="1. General Information" IsSelected="True"/>
                         <ListBoxItem Content="2. Class Information" />
                         <ListBoxItem Content="3. Constructor" />
+                        <ListBoxItem Content="4. Methods" />
+                        <ListBoxItem Content="5. Properties" />
+                        <ListBoxItem Content="6. Structs" />
                     </ListBox>
                 </Grid>
 

@@ -1,0 +1,14 @@
+﻿TODO:
+BlueprintSpawnableComponent
+CustomConstructor  <-- Constructor in header
+Namespaces
+Enums
+
+?:
+Classes that inherit from SWidget are prefixed by S.
+Classes that are abstract interfaces are prefixed by I.
+
+Dont forget:
+Booleans b prefix...
+
+Multi inheritance

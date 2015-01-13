@@ -7,7 +7,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class UserInformationViewModel : INotifyPropertyChanged
+    public class UserInformationViewModel : BaseViewModel
     {
 
         public UserInformation UserInformationModel { get; set; }
@@ -97,17 +97,6 @@ namespace Unreal_Class_Wizard.ViewModel
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public UnrealClass ClassModel { get; set; }
-
-        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-
-            }
-        }
 
     }
 }

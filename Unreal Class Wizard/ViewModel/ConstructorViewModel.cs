@@ -8,33 +8,34 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class ConstructorViewModel : INotifyPropertyChanged
+    public class ConstructorViewModel : BaseViewModel
     {
-        public UnrealClass ClassModel { get; set; }
-
 
         public ConstructorViewModel()
         {
             this.ClassModel = App.CurrentClass;
 
-            this.AddConstructor = true;
-            this.AddDestructor = false;
-            this.ConstructorSignature = "";
+            this.AddConstructor = ClassModel.AddConstructor;
+            this.AddDestructor = ClassModel.AddDestructor;
 
-            NotifyPropertyChanged("PreviewHeader");
+            this.ConstructorArguments = ClassModel.ConstructorArguments;
+
+
+            this.ClassModel.GeneratePreviews(this.GetType());
+           
 
         }
 
-        private string constructorSignature;
+        private List<string> constructorArguments;
 
-        public string ConstructorSignature
+        public List<string> ConstructorArguments
         {
-            get { return constructorSignature; }
+            get { return constructorArguments; }
             set
             {
-                constructorSignature = value;
-                ClassModel.ConstructorSignature = constructorSignature;
-                NotifyPropertyChanged("ConstructorSignature");
+                constructorArguments = value;
+                ClassModel.ConstructorArguments = constructorArguments;
+                NotifyPropertyChanged("ConstructorSignature", true);
             }
         }
 
@@ -50,7 +51,7 @@ namespace Unreal_Class_Wizard.ViewModel
             {
                 addDestructor = value;
                 ClassModel.AddDestructor = addDestructor;
-                NotifyPropertyChanged("AddDestructor");
+                NotifyPropertyChanged("AddDestructor", true);
             }
         }
 
@@ -67,47 +68,13 @@ namespace Unreal_Class_Wizard.ViewModel
             {
                 addConstructor = value;
                 ClassModel.AddConstructor = addConstructor;
-                NotifyPropertyChanged("AddConstructor");            
+                NotifyPropertyChanged("AddConstructor", true);            
             }
         }
 
 
 
-        private string previewHeader;
-        public string PreviewHeader
-        {
-            get { return ClassModel.HeaderText; }
-            set
-            {
-                previewHeader = value;
-                NotifyPropertyChanged("PreviewHeader");
-            }
-        }
 
-        private string previewCPP;
-        public string PreviewCPP
-        {
-            get { return ClassModel.CPPText; }
-            set
-            {
-                previewCPP = value;
-                NotifyPropertyChanged("PreviewCPP");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                if (updatePreviews == true)
-                {
-                    ClassModel.GeneratePreviews();
-                }
-            }
-        }
 
     }
 }

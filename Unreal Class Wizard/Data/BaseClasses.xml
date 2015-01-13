@@ -9,12 +9,12 @@
 			</HeaderFiles>
 			<IsActorClass>false</IsActorClass>
 		</BaseClass>
-		<BaseClass>
+		<!--<BaseClass>
 			<ClassName/>
 			<ReadableName>None</ReadableName>
 			<HeaderFiles/>
 			<IsActorClass>false</IsActorClass>
-		</BaseClass>
+		</BaseClass>-->
 		<BaseClass>
 			<ClassName>ACharacter</ClassName>
 			<ReadableName>Character</ReadableName>

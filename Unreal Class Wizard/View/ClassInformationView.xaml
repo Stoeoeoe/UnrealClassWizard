@@ -50,17 +50,17 @@
                 <CustomControls:GroupControl.Labels>
                     <Label>Name</Label>
                     <Label>Base class</Label>
-                    <Label>Access modifier</Label>
+                    <!--<Label>Access modifier</Label>-->
                     <Label>Is Actor/spawnable?</Label>
                     <Label>Included classes</Label>
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
                     <xctk:WatermarkTextBox Watermark="Example: 'MyActor'" Text="{Binding ClassName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Determines the name of the class (without prefix)" TabIndex="0" Height="22"/>
                     <ComboBox IsEditable="True" ItemsSource="{Binding BaseClasses}" Text="{Binding CurrentBaseClassText, NotifyOnSourceUpdated=True}" SelectedIndex="{Binding CurrentBaseClassIndex}" ToolTip="Class from which to inherit, usually not empty" TabIndex="1" Height="22" Template="{DynamicResource ComboBoxControlTemplate1}"/>
-                    <ComboBox Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2" Height="22" Template="{DynamicResource NonEditableComboboxStyle}">
+                    <!--<ComboBox Text="{Binding Access, Mode=TwoWay}" ToolTip="Determines whether a class is public or private" TabIndex="2" Height="22" Template="{DynamicResource NonEditableComboboxStyle}">
                         <ComboBoxItem Content="Public"/>
                         <ComboBoxItem Content="Private"/>
-                    </ComboBox>
+                    </ComboBox>-->
                     <CheckBox IsChecked="{Binding IsActor, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" TabIndex="3"/>
                     <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="Seperate with semicolon" Text="{Binding IncludedClassesString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Other classes which will be included in the header" TabIndex="4"/>
                 </CustomControls:GroupControl.Fields>
@@ -71,7 +71,7 @@
                 <CustomControls:GroupControl.Labels>
                     <Label>Is abstract?</Label>
                     <Label>Is blueprintable?</Label>
-                    <Label>Class Specifiers</Label>
+                    <Label>Other Specifiers</Label>
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
                     <CheckBox IsChecked="{Binding IsAbstract, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines whether the class is abstract and thus cannot be instantiated" TabIndex="5"/>

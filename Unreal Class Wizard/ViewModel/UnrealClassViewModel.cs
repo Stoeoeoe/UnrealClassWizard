@@ -11,7 +11,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class UnrealClassViewModel : INotifyPropertyChanged
+    public class UnrealClassViewModel : BaseViewModel
     {
         public UnrealClassViewModel(bool isDesignMode)
         {
@@ -42,7 +42,7 @@ namespace Unreal_Class_Wizard.ViewModel
                 this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiers);
                 UpdateClassSpecifiers(ClassModel.ClassSpecifiers);
 
-                this.ClassModel.GeneratePreviews();
+                this.ClassModel.GeneratePreviews(this.GetType());
             }
             // Design time
             else
@@ -52,12 +52,6 @@ namespace Unreal_Class_Wizard.ViewModel
 
         }
 
-        private UnrealClass classModel;
-        public UnrealClass ClassModel
-        {
-            get { return classModel; }
-            set { classModel = value; }
-        }
 
 
 
@@ -68,7 +62,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 className = value.Trim();
-                classModel.ClassName = className;
+                ClassModel.ClassName = className;
                 NotifyPropertyChanged("ClassName");
             }
         }
@@ -122,13 +116,13 @@ namespace Unreal_Class_Wizard.ViewModel
             get { return currentBaseClass; }
             set {
                     currentBaseClass = value;
-                    classModel.BaseClass = currentBaseClass;
+                    ClassModel.BaseClass = currentBaseClass;
 
                     // Read the "IsActor" property from base class only if the class is not generated (not in XML) and has not been overwritten
-                    if(classModel.BaseClass.IsGenerated == false && classModel.BaseClass.IsActorClass == classModel.IsActor)
+                    if(ClassModel.BaseClass.IsGenerated == false && ClassModel.BaseClass.IsActorClass == ClassModel.IsActor)
                     {
                         IsActor = currentBaseClass.IsActorClass;
-                        classModel.IsActor = IsActor;
+                        ClassModel.IsActor = IsActor;
                         NotifyPropertyChanged("IsActor");
                     }
                     
@@ -146,7 +140,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 access = value;
-                classModel.Access = access;
+                ClassModel.Access = access;
                 NotifyPropertyChanged("Access");
             }
         }
@@ -159,7 +153,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 api = value.Trim();
-                classModel.API = api;
+                ClassModel.API = api;
                 NotifyPropertyChanged("API");
 
             }
@@ -173,7 +167,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 description = value.Trim(new char[' ']);
-                classModel.Description = description;
+                ClassModel.Description = description;
                 NotifyPropertyChanged("Description");
             }
         }
@@ -185,12 +179,14 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 includedClassesString = value.Trim();
-                classModel.IncludedClasses.Clear();
+                ClassModel.IncludedClasses.Clear();
                 // Split up string
                 string[] splitUpIncludes = includedClassesString.Split(new string[]{";"}, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string include in splitUpIncludes)
                 {
-                    classModel.IncludedClasses.Add(include.Trim());
+                    string includeH = include.EndsWith(".h") ? include.Trim() : include.Trim() + ".h" ;
+                    ClassModel.IncludedClasses.Add(includeH.Trim());
+                    
                 }
 
                 NotifyPropertyChanged("AdditionalIncludedClasses");
@@ -207,7 +203,16 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 isActor = value;
-                classModel.IsActor = isActor;
+                ClassModel.IsActor = isActor;
+                if (ClassModel.ConstructorArguments.Contains("const FObjectInitializer& ObjectInitializer") == true && isActor == false)
+                {
+                    ClassModel.ConstructorArguments.Remove("const FObjectInitializer& ObjectInitializer");
+                }
+                else if (ClassModel.ConstructorArguments.Contains("const FObjectInitializer& ObjectInitializer")  == false && isActor == true)
+                {
+                    ClassModel.ConstructorArguments.Add("const FObjectInitializer& ObjectInitializer");
+                }
+
                 NotifyPropertyChanged("IsActor");
             }
         }
@@ -220,9 +225,9 @@ namespace Unreal_Class_Wizard.ViewModel
              set{
                  isAbstract = value;
 
-                 classModel.ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract").Value = isAbstract;
-                 
-                 classModel.GeneratePreviews();
+                 ClassModel.ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract").Value = isAbstract;
+
+                 ClassModel.GeneratePreviews(this.GetType());
                  NotifyPropertyChanged("ClassSpecifiers");
                  NotifyPropertyChanged("IsAbstract");
                 }
@@ -236,9 +241,9 @@ namespace Unreal_Class_Wizard.ViewModel
                 {
                 isBlueprintable = value;
 
-                classModel.ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isBlueprintable;
-                
-                classModel.GeneratePreviews();
+                ClassModel.ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "blueprintable").Value = isBlueprintable;
+
+                ClassModel.GeneratePreviews(this.GetType());
                 NotifyPropertyChanged("ClassSpecifiers");
                 NotifyPropertyChanged("IsBlueprintable");
                 }
@@ -252,7 +257,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set 
             {
                 useAPI = value;
-                classModel.UseAPI = useAPI;
+                ClassModel.UseAPI = useAPI;
                 NotifyPropertyChanged("UseAPI");
             }
         }
@@ -287,7 +292,7 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 classSpecifiers = value;
-                classModel.ClassSpecifiers = classSpecifiers.ToList<ClassSpecifier>();
+                ClassModel.ClassSpecifiers = classSpecifiers.ToList<ClassSpecifier>();
                 NotifyPropertyChanged("ClassSpecifiers");
             }
         }
@@ -315,7 +320,7 @@ namespace Unreal_Class_Wizard.ViewModel
         public void UpdateClassSpecifiers(List<ClassSpecifier> newSpecifiers)
         {
             ClassSpecifiers = new ObservableCollection<ClassSpecifier>(newSpecifiers);
-            NotifyPropertyChanged("ClassSpecifiers");
+            NotifyPropertyChanged("ClassSpecifiers", true);
 
             // There are two special cases, abstract and blueprintable which are handled separately
             ClassSpecifier abstractClassSpecifier = ClassSpecifiers.SingleOrDefault(specifier => specifier.Name.ToLower() == "abstract");
@@ -331,46 +336,5 @@ namespace Unreal_Class_Wizard.ViewModel
             }
 
         }
-
-
-        private string previewHeader;
-        public string PreviewHeader
-        {
-            get { return ClassModel.HeaderText; }
-            set
-            {
-                previewHeader = value;
-                NotifyPropertyChanged("PreviewHeader");
-            }
-        }
-
-        private string previewCPP;
-        public string PreviewCPP
-        {
-            get { return ClassModel.CPPText; }
-            set
-            {
-                previewCPP = value;
-                NotifyPropertyChanged("PreviewCPP");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                if (updatePreviews == true)
-                {
-                    ClassModel.GeneratePreviews();
-                    NotifyPropertyChanged("PreviewHeader", updatePreviews = false);
-                    NotifyPropertyChanged("PreviewCPP", updatePreviews = false);
-                }
-            }
-        }
-
-
     }
 }

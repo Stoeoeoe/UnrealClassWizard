@@ -9,7 +9,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class ClassSpecifierViewModel : INotifyPropertyChanged
+    public class ClassSpecifierViewModel : BaseViewModel
     {
         public ObservableCollection<ClassSpecifier> AllSpecifiers {get;set;}
 
@@ -33,15 +33,7 @@ namespace Unreal_Class_Wizard.ViewModel
             //}
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Unreal_Class_Wizard.ViewModel;
 
 namespace Unreal_Class_Wizard.Model
 {
@@ -18,21 +19,20 @@ namespace Unreal_Class_Wizard.Model
             this.ClassSpecifiers = ClassSpecifier.LoadClassSpecifiers();
             this.IsActor = BaseClass.IsActorClass;
             this.CopyrightText = "";
-            this.ConstructorSignature = "";
+            this.ConstructorArguments = new List<string>();
+            if(IsActor)
+            {
+                this.ConstructorArguments.Add("const FObjectInitializer& ObjectInitializer");
+            }
             this.API = App.CurrentUser.UserInformation.ProjectName + "_API";
             this.UseAPI = false;
 
-            
+
+            this.AddConstructor = true;
 
             this.isInitialized = true;
             
         }
-
-        private string GetPrefix()
-        {
-            return (bool)IsActor ? "A" : "U";
-        }
-
 
         #region Properties
 
@@ -46,17 +46,19 @@ namespace Unreal_Class_Wizard.Model
         public string CopyrightText { get; set; }
         public bool UseAPI { get; set; }
         public string API { get; set; }
-        public string ConstructorSignature { get; set; }
+        public List<string> ConstructorArguments { get; set; }
         public string HeaderText { get; set; }
         public string CPPText { get; set; }
         public bool AddDestructor { get; set; }
         public bool AddConstructor { get; set; }
 
+        private Type currentTriggerClass;
+
         #endregion
 
-        public void GeneratePreviews()
+        public void GeneratePreviews(Type triggerClass)
         {
-
+            this.currentTriggerClass = triggerClass;
             if (isInitialized)            
             {
                 GenerateHeader();
@@ -82,11 +84,11 @@ namespace Unreal_Class_Wizard.Model
 
         private void WriteHeaderUntilConstructor(StringBuilder sb)
         {
+            // TODO allow for customized Copyright
             string copyRightText = CopyrightText == "" ? App.CurrentUser.UserInformation.CopyrightText : CopyrightText;
 
             // Concat all Class Specifiers
             StringBuilder sbClassSpecifiers = new StringBuilder();
-
 
             foreach (ClassSpecifier classSpecifierValue in ClassSpecifiers)
             {
@@ -105,23 +107,18 @@ namespace Unreal_Class_Wizard.Model
             // remove final comma
             string classSpecifierString = sbClassSpecifiers.ToString().TrimEnd(new char[] { ',', ' ' });
 
+
             // Start writing header
             sb.AppendLine("//" + App.CurrentUser.UserInformation.CopyrightText + "\r\n\r\n");         // Copyright
             sb.AppendLine("#pragma once");                                                            // Pragma once
 
             // Included classes
-            for (int i = 0; i < IncludedClasses.Count; i++)
+            foreach (string includedClass in IncludedClasses)
             {
-                string includedClass = IncludedClasses[i];
-                if (includedClass.EndsWith(".h") == false)
-                {
-                    includedClass += ".h";
-                }
-                sb.AppendLine(String.Format("#include \"{0}\"", includedClass));
+                sb.AppendFormat("#include \"{0}\"\r\n", includedClass);                       // Included classes
             }
 
-            sb.AppendLine(String.Format("#include \"{0}\"", ClassName + ".generated.h"));                // Generated header
-            sb.AppendLine();                                                                             // Empty line
+            sb.AppendFormat("#include \"{0}.generated.h\"\r\n\r\n", ClassName);                        // Generated class file
 
 
             sb.AppendLine("/**");                                                                        // Start description
@@ -143,14 +140,14 @@ namespace Unreal_Class_Wizard.Model
             sb.Append("class");                                                                         // Class declaration start
             if (UseAPI)
             {
-                sb.Append(String.Format(" {0}", API));                                                 // API
+                sb.AppendFormat(" {0}", API);                                                 // API
             }
-            sb.Append(String.Format(" {0}{1} ", GetPrefix(), ClassName));                                    // Class declaration
+            sb.AppendFormat(" {0}{1} ", GetPrefix(), ClassName);                                    // Class declaration
 
             // Only inherit if there is a base class
             if (BaseClass.ClassName != "")
             {
-                sb.Append(String.Format(": {0} {1}", Access.ToLower(), BaseClass.ClassName));
+                sb.AppendFormat(": {0} {1}", Access.ToLower(), BaseClass.ClassName);
             }
 
             sb.AppendLine();                                                                             // Empty line
@@ -161,38 +158,60 @@ namespace Unreal_Class_Wizard.Model
 
         private void WriteConstructor(StringBuilder sb)
         {
-
-            if (ConstructorSignature != "")
+            if (currentTriggerClass == typeof(ConstructorViewModel))
             {
-                sb.AppendLine(String.Format("    {0}{1}({2});", GetPrefix(), ClassName, ConstructorSignature));   // Add constructor
+                if (AddConstructor)
+                {
+                    // Constructor
+                    if (AddConstructor)
+                    {
+                        sb.AppendFormat("{0}{1}::{0}{1}(", GetPrefix(), ClassName);                                                      // First part of constructor
+                        sb.Append(string.Join(",", ConstructorArguments));
+                        sb.Append(")");
+                    }
+                    sb.AppendFormat("    {0}{1}({2});", GetPrefix(), ClassName, ConstructorArguments);   // Add constructor
+                }
+
             }
         }
 
         private void GenerateCPP()
         {
             string gamePlayClass = App.CurrentUser.UserInformation.GameplayClass;
-            gamePlayClass = gamePlayClass.EndsWith(".h")? gamePlayClass : gamePlayClass + ".h";
-            string tempClassName = ClassName == "" ? "XXXXX" : ClassName;                               // Use XXXXX as a substitute as long as there is no class name
-            string prefix = (bool)IsActor ? "A" : "U";                                                        // Set prefix, A for Actors and U for everything else, wasn't there F too?
 
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine("//" + App.CurrentUser.UserInformation.CopyrightText);                      // Copyright
             sb.AppendLine();                                                                             // Empty line
-            sb.AppendLine(String.Format("#include \"{0}\"", gamePlayClass));                             // Gameplay class
+            sb.AppendFormat("#include \"{0}.h\"", gamePlayClass);                             // Gameplay class
             sb.AppendLine();                                                                             // Empty line
-            
-            // TODO: Constructor support
-            //if(ConstructorText != "")
-            //{
-            //    sb.AppendLine("{0}{1}::{0}{1}");                                                             // Empty line
-            //}
+
+
+            // TODO: That's wrong, to be decoupled
+            if (currentTriggerClass == typeof(ConstructorViewModel))
+            {
+                // Constructor
+                if (AddConstructor)
+                {
+                    sb.AppendFormat("{0}{1}::{0}{1}(", GetPrefix(), ClassName);                                                      // First part of constructor
+                    sb.Append(string.Join(",", ConstructorArguments));
+                    sb.Append(")");
+                }
+
+            }
 
             // TODO: Method support
 
 
             CPPText = sb.ToString();
         }
+
+        private string GetPrefix()
+        {
+            return (bool)IsActor ? "A" : "U";
+        }
+
+        //private string GetL
 
 
     }
