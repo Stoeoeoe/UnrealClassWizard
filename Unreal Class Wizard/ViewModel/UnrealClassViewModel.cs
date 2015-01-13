@@ -11,7 +11,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class UnrealClassViewModel : BaseViewModel
+    public class UnrealClassViewModel : INotifyPropertyChanged
     {
         public UnrealClassViewModel(bool isDesignMode)
         {
@@ -41,6 +41,8 @@ namespace Unreal_Class_Wizard.ViewModel
 
                 this.ClassSpecifiers = new ObservableCollection<ClassSpecifier>(ClassModel.ClassSpecifiers);
                 UpdateClassSpecifiers(ClassModel.ClassSpecifiers);
+
+                this.ClassModel.GeneratePreviews();
             }
             // Design time
             else
@@ -68,7 +70,6 @@ namespace Unreal_Class_Wizard.ViewModel
                 className = value.Trim();
                 classModel.ClassName = className;
                 NotifyPropertyChanged("ClassName");
-                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
@@ -133,7 +134,6 @@ namespace Unreal_Class_Wizard.ViewModel
                     
 
                     NotifyPropertyChanged("CurrentBaseClass");
-                    NotifyPropertyChanged("PreviewHeader");
                     
                     // If the base class is "Actor", activate the checkbox
             }
@@ -148,7 +148,6 @@ namespace Unreal_Class_Wizard.ViewModel
                 access = value;
                 classModel.Access = access;
                 NotifyPropertyChanged("Access");
-                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
@@ -162,7 +161,6 @@ namespace Unreal_Class_Wizard.ViewModel
                 api = value.Trim();
                 classModel.API = api;
                 NotifyPropertyChanged("API");
-                NotifyPropertyChanged("PreviewHeader");
 
             }
         }
@@ -177,36 +175,33 @@ namespace Unreal_Class_Wizard.ViewModel
                 description = value.Trim(new char[' ']);
                 classModel.Description = description;
                 NotifyPropertyChanged("Description");
-                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
-        private string additionalIncludedClasses;
-        public string AdditionalIncludedClasses
+        private string includedClassesString;
+        public string IncludedClassesString
         {
-            get { return additionalIncludedClasses; }
+            get { return includedClassesString; }
             set
             {
-                additionalIncludedClasses = value.Trim();
+                includedClassesString = value.Trim();
                 classModel.IncludedClasses.Clear();
                 // Split up string
-                string[] splitUpIncludes = additionalIncludedClasses.Split(new string[]{";"}, StringSplitOptions.RemoveEmptyEntries);
+                string[] splitUpIncludes = includedClassesString.Split(new string[]{";"}, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string include in splitUpIncludes)
                 {
                     classModel.IncludedClasses.Add(include.Trim());
                 }
 
-                classModel.GeneratePreviews();                                // Trigger manual generation because we do not set the value
                 NotifyPropertyChanged("AdditionalIncludedClasses");
-                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
         
 
 
-        private bool? isActor = null;
-        public bool? IsActor
+        private bool isActor;
+        public bool IsActor
         {
             get { return isActor; }
             set
@@ -214,7 +209,6 @@ namespace Unreal_Class_Wizard.ViewModel
                 isActor = value;
                 classModel.IsActor = isActor;
                 NotifyPropertyChanged("IsActor");
-                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
@@ -231,7 +225,6 @@ namespace Unreal_Class_Wizard.ViewModel
                  classModel.GeneratePreviews();
                  NotifyPropertyChanged("ClassSpecifiers");
                  NotifyPropertyChanged("IsAbstract");
-                 NotifyPropertyChanged("PreviewHeader");
                 }
         }
 
@@ -248,7 +241,6 @@ namespace Unreal_Class_Wizard.ViewModel
                 classModel.GeneratePreviews();
                 NotifyPropertyChanged("ClassSpecifiers");
                 NotifyPropertyChanged("IsBlueprintable");
-                NotifyPropertyChanged("PreviewHeader");
                 }
         }
 
@@ -262,43 +254,26 @@ namespace Unreal_Class_Wizard.ViewModel
                 useAPI = value;
                 classModel.UseAPI = useAPI;
                 NotifyPropertyChanged("UseAPI");
-                NotifyPropertyChanged("PreviewHeader");
             }
         }
 
 
-        private string previewHeader;
-        public string PreviewHeader
-        {
-            get { return ClassModel.HeaderText; }
-            set {
-                previewHeader = value;
-                NotifyPropertyChanged("PreviewHeader");            
-            }
-        }
 
-        private string previewCPP;
-        public string PreviewCPP
-        {
-            get { return ClassModel.CPPText; }
-            set
-            {
-                previewCPP = value;
-                NotifyPropertyChanged("PreviewCPP");
-            }
-        }
 
 
         private ObservableCollection<string> includedClasses;
         public ObservableCollection<string> IncludedClasses
         {
-            get { return new ObservableCollection<string>(ClassModel.IncludedClasses); }
+            get
+            {
+                return includedClasses;
+            }
             set
             {
                 includedClasses = value;
-
                 NotifyPropertyChanged("IncludedClasses");
-                NotifyPropertyChanged("PreviewHeader");
+            
+                IncludedClassesString = string.Join(";", includedClasses.ToArray());
             }
         }
 
@@ -314,8 +289,6 @@ namespace Unreal_Class_Wizard.ViewModel
                 classSpecifiers = value;
                 classModel.ClassSpecifiers = classSpecifiers.ToList<ClassSpecifier>();
                 NotifyPropertyChanged("ClassSpecifiers");
-                NotifyPropertyChanged("PreviewHeader");
-                classModel.GeneratePreviews();
             }
         }
 
@@ -358,6 +331,46 @@ namespace Unreal_Class_Wizard.ViewModel
             }
 
         }
+
+
+        private string previewHeader;
+        public string PreviewHeader
+        {
+            get { return ClassModel.HeaderText; }
+            set
+            {
+                previewHeader = value;
+                NotifyPropertyChanged("PreviewHeader");
+            }
+        }
+
+        private string previewCPP;
+        public string PreviewCPP
+        {
+            get { return ClassModel.CPPText; }
+            set
+            {
+                previewCPP = value;
+                NotifyPropertyChanged("PreviewCPP");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                if (updatePreviews == true)
+                {
+                    ClassModel.GeneratePreviews();
+                    NotifyPropertyChanged("PreviewHeader", updatePreviews = false);
+                    NotifyPropertyChanged("PreviewCPP", updatePreviews = false);
+                }
+            }
+        }
+
 
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class UserInformationViewModel : BaseViewModel
+    public class UserInformationViewModel : INotifyPropertyChanged
     {
 
         public UserInformation UserInformationModel { get; set; }
@@ -96,12 +97,17 @@ namespace Unreal_Class_Wizard.ViewModel
         }
 
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        public UnrealClass ClassModel { get; set; }
 
+        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 
-        //public void SaveChangesToModel(string companyName, string headerPath, string cppPath, bool useAPI)
-        //{
-        //    App.CurrentUser.CompanyInformation.HeaderPath = HeaderPath;
-        //    App.CurrentUser.CompanyInformation.CppPath = CppPath;
-        //}
+            }
+        }
+
     }
 }

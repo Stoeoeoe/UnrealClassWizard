@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using Unreal_Class_Wizard.Model;
 
 namespace Unreal_Class_Wizard.ViewModel
 {
-    public class ClassSpecifierViewModel : BaseViewModel
+    public class ClassSpecifierViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<ClassSpecifier> AllSpecifiers {get;set;}
 
@@ -30,7 +31,17 @@ namespace Unreal_Class_Wizard.ViewModel
             //{
             //    SpecifierValues.Add(new object());
             //}
-
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChanged(string propertyName, bool updatePreviews = true)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
     }
 }

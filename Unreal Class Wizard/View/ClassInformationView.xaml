@@ -62,7 +62,7 @@
                         <ComboBoxItem Content="Private"/>
                     </ComboBox>
                     <CheckBox IsChecked="{Binding IsActor, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="Determines the prefix of the class, A for spawnable objects, U for others" TabIndex="3"/>
-                    <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="Seperate with semicolon" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Other classes which will be included in the header" TabIndex="4"/>
+                    <xctk:WatermarkTextBox VerticalAlignment="Center" Watermark="Seperate with semicolon" Text="{Binding IncludedClassesString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Other classes which will be included in the header" TabIndex="4"/>
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>
 

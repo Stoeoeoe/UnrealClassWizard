@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Unreal_Class_Wizard.Model
 {
@@ -14,17 +10,17 @@ namespace Unreal_Class_Wizard.Model
 
         public UnrealClass()
         {
-            this.className = "MyClass";
-            this.description = "";
-            this.baseClass = new BaseClass("", true);
-            this.access = "Public";
-            this.includedClasses = new List<string>();
-            this.classSpecifiers = ClassSpecifier.LoadClassSpecifiers();
-            this.isActor = baseClass.IsActorClass;
-            this.copyrightText = "";
-            this.constructorText = "";
-            this.api = App.CurrentUser.UserInformation.ProjectName + "_API";
-            this.useAPI = false;
+            this.ClassName = "MyClass";
+            this.Description = "";
+            this.BaseClass = new BaseClass("", true);
+            this.Access = "Public";
+            this.IncludedClasses = new List<string>();
+            this.ClassSpecifiers = ClassSpecifier.LoadClassSpecifiers();
+            this.IsActor = BaseClass.IsActorClass;
+            this.CopyrightText = "";
+            this.ConstructorSignature = "";
+            this.API = App.CurrentUser.UserInformation.ProjectName + "_API";
+            this.UseAPI = false;
 
             
 
@@ -32,161 +28,29 @@ namespace Unreal_Class_Wizard.Model
             
         }
 
-        #region Properties
-
-        // Property to block the generation of CPP and header file to prevent unneccesary code generation
-        private string className;
-
-        public string ClassName
-        {
-            get { return className; }
-            set 
-            {
-                if (className == value) return;
-                className = value;
-                GeneratePreviews();
-            }
-        }
-
-        private string description;
-
-        public string Description
-        {
-            get { return description; }
-            set
-            {
-                if (description == value) return;
-                description = value;
-                GeneratePreviews();
-            }
-        }
-
-
-        private BaseClass baseClass;
-
-        public BaseClass BaseClass
-        {
-            get { return baseClass; }
-            set
-            {
-                baseClass = value;
-                GeneratePreviews();
-            }        
-        }
-
-
-        private string access;
-
-        public string Access
-        {
-            get { return access; }
-            set
-            {
-                access = value;
-                GeneratePreviews();
-            }
-        }
-
-
-        private List<string> includedClasses;
-
-        public List<string> IncludedClasses
-        {
-            get { return includedClasses; }
-            set
-            {
-                includedClasses = value;
-                GeneratePreviews();
-            }
-        }
-
-
-        private List<ClassSpecifier> classSpecifiers;
-
-        public List<ClassSpecifier> ClassSpecifiers
-        {
-            get { return classSpecifiers; }
-            set
-            {
-                classSpecifiers = value;
-                GeneratePreviews();
-            }
-        }
-
-        private bool? isActor;
-
-        public bool? IsActor {
-            get
-            {
-                return isActor;
-            }
-            
-            set
-            {
-
-                isActor = value;
-                GeneratePreviews();
-            }
-
-        }
-
         private string GetPrefix()
         {
-            return (bool)IsActor ? "A" : "U"; 
-        }
-
-        private string copyrightText;
-        public string CopyrightText
-        {
-            get { return copyrightText; }
-
-            set
-            {
-                copyrightText = value;
-                GeneratePreviews();
-            }
-        }
-
-        private bool useAPI;
-
-        public bool UseAPI
-        {
-            get { return useAPI; }
-            set
-            {
-                useAPI = value;
-                GeneratePreviews();
-            }
+            return (bool)IsActor ? "A" : "U";
         }
 
 
+        #region Properties
 
-        private string api;
-        public string API
-        {
-            get { return api; }
-
-            set
-            {
-                api = value;
-                GeneratePreviews();
-            }
-        }
-
-
-        private string constructorText;
-        public string ConstructorText
-        {
-            get { return constructorText; }
-
-            set
-            {
-                constructorText = value;
-                GeneratePreviews();
-            }
-        }
-
-
+        public string ClassName { get; set; }
+        public string Description { get; set; }
+        public BaseClass BaseClass { get; set; }
+        public string Access { get; set; }
+        public List<string> IncludedClasses { get; set; }
+        public List<ClassSpecifier> ClassSpecifiers {get;set;}
+        public bool IsActor {get; set;}
+        public string CopyrightText { get; set; }
+        public bool UseAPI { get; set; }
+        public string API { get; set; }
+        public string ConstructorSignature { get; set; }
+        public string HeaderText { get; set; }
+        public string CPPText { get; set; }
+        public bool AddDestructor { get; set; }
+        public bool AddConstructor { get; set; }
 
         #endregion
 
@@ -246,9 +110,9 @@ namespace Unreal_Class_Wizard.Model
             sb.AppendLine("#pragma once");                                                            // Pragma once
 
             // Included classes
-            for (int i = 0; i < includedClasses.Count; i++)
+            for (int i = 0; i < IncludedClasses.Count; i++)
             {
-                string includedClass = includedClasses[i];
+                string includedClass = IncludedClasses[i];
                 if (includedClass.EndsWith(".h") == false)
                 {
                     includedClass += ".h";
@@ -277,11 +141,11 @@ namespace Unreal_Class_Wizard.Model
             sb.Append(")\r\n");                                                                         // UClass definition end
 
             sb.Append("class");                                                                         // Class declaration start
-            if (useAPI)
+            if (UseAPI)
             {
                 sb.Append(String.Format(" {0}", API));                                                 // API
             }
-            sb.Append(String.Format(" {0}{1} ", GetPrefix(), className));                                    // Class declaration
+            sb.Append(String.Format(" {0}{1} ", GetPrefix(), ClassName));                                    // Class declaration
 
             // Only inherit if there is a base class
             if (BaseClass.ClassName != "")
@@ -298,9 +162,9 @@ namespace Unreal_Class_Wizard.Model
         private void WriteConstructor(StringBuilder sb)
         {
 
-            if (ConstructorText != "")
+            if (ConstructorSignature != "")
             {
-                sb.AppendLine(String.Format("    {0}{1}({2});", GetPrefix(), ClassName, ConstructorText));   // Add constructor
+                sb.AppendLine(String.Format("    {0}{1}({2});", GetPrefix(), ClassName, ConstructorSignature));   // Add constructor
             }
         }
 
@@ -329,12 +193,6 @@ namespace Unreal_Class_Wizard.Model
 
             CPPText = sb.ToString();
         }
-
-        public string HeaderText { get; set; }
-        public string CPPText { get; set; }
-
-
-
 
 
     }
