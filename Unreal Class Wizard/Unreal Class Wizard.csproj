@@ -319,8 +319,6 @@
     <Resource Include="Images\WindowButton_Restore_Normal.png" />
     <Resource Include="Images\WindowButton_Restore_Pressed.png" />
     <Resource Include="Images\CPP-Symbol.png" />
-    <Resource Include="Images\WindowButton_Maximize_Disabled.png" />
-    <Resource Include="Images\WindowButton_Minimize_Disabled.png" />
     <Resource Include="Images\WindowButton_Minimize_Hovered.png" />
     <Resource Include="Images\WindowButton_Minimize_Normal.png" />
     <Resource Include="Images\WindowButton_Minimize_Pressed.png" />
