@@ -47,13 +47,13 @@
             <!-- Constructor Group -->
             <CustomControls:GroupControl Title="Constructor" Height="135">
                 <CustomControls:GroupControl.Labels>
-                    <Label>Add Constructor?</Label>
-                    <Label>Constructor</Label>
-                    <Label>Reload</Label>
+                    <Label>Add constructor?</Label>
+                    <Label>Constructor arguments</Label>
+                    <Label> </Label>
                 </CustomControls:GroupControl.Labels>
                 <CustomControls:GroupControl.Fields>
                     <CheckBox IsChecked="{Binding AddConstructor, Mode=TwoWay}" VerticalAlignment="Center" TabIndex="9"/>
-                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Constructor signature" Text="{Binding AdditionalIncludedClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="The constructor of this class, optional" TabIndex="9"/>
+                    <xctk:WatermarkTextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Constructor signature" Text="{Binding ConstructorArgumentsText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="The constructor of this class, optional" TabIndex="9"/>
                     <Button Click="reloadConstructor" Content="Reload constructor from base class" Margin="0,3,0,3" Height="22"/>
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>

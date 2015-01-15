@@ -26,6 +26,7 @@ namespace Unreal_Class_Wizard.ViewModel
 
         }
 
+
         private List<string> constructorArguments;
 
         public List<string> ConstructorArguments
@@ -34,10 +35,14 @@ namespace Unreal_Class_Wizard.ViewModel
             set
             {
                 constructorArguments = value;
-                ClassModel.ConstructorArguments = constructorArguments;
+
                 NotifyPropertyChanged("ConstructorSignature", true);
+
+
             }
         }
+
+        
 
         /// <summary>
         /// If true, a destructor is added to the class/header

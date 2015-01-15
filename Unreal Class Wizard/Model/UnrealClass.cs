@@ -165,11 +165,15 @@ namespace Unreal_Class_Wizard.Model
                     // Constructor
                     if (AddConstructor)
                     {
-                        sb.AppendFormat("{0}{1}::{0}{1}(", GetPrefix(), ClassName);                                                      // First part of constructor
+                        sb.AppendFormat("\r\n    {0}{1}::{0}{1}(", GetPrefix(), ClassName);             // First part of constructor
                         sb.Append(string.Join(",", ConstructorArguments));
-                        sb.Append(")");
+                        sb.Append(");");
+
+                        if(AddDestructor)
+                        {
+                            sb.AppendFormat("\r\n    {0}{1}::~{0}{1}();", GetPrefix(), ClassName);         // First part of constructor
+                        }
                     }
-                    sb.AppendFormat("    {0}{1}({2});", GetPrefix(), ClassName, ConstructorArguments);   // Add constructor
                 }
 
             }
@@ -190,12 +194,19 @@ namespace Unreal_Class_Wizard.Model
             // TODO: That's wrong, to be decoupled
             if (currentTriggerClass == typeof(ConstructorViewModel))
             {
-                // Constructor
-                if (AddConstructor)
+                // Constructor/Destructor
+                if (AddConstructor == true)
                 {
-                    sb.AppendFormat("{0}{1}::{0}{1}(", GetPrefix(), ClassName);                                                      // First part of constructor
+                    sb.AppendFormat("\r\n{0}{1}::{0}{1}(", GetPrefix(), ClassName);                                                      // First part of constructor
                     sb.Append(string.Join(",", ConstructorArguments));
-                    sb.Append(")");
+                    sb.Append(")\r\n{\r\n\r\n}");
+
+                    if(AddDestructor == true)
+                    {
+                        sb.AppendFormat("\r\n\r\n{0}{1}::~{0}{1}()\r\n{{\r\n\r\n}}", GetPrefix(), ClassName);                                                      // First part of constructor
+
+                    }
+
                 }
 
             }

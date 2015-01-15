@@ -36,7 +36,7 @@ namespace Unreal_Class_Wizard.Model
             switch(method)
             {
                 case "XML":  list = LoadFromXML();  break;
-                case "JSON": list = LoadFromJSON(); break;
+                //case "JSON": list = LoadFromJSON(); break;
                 default:     list = LoadFromXML();  break;
             }
             AllBaseClasses = list;
@@ -61,6 +61,7 @@ namespace Unreal_Class_Wizard.Model
                 }
                 catch(Exception ex)
                 {
+                    Console.WriteLine(ex);
                     // TODO: Handle.
                 }
             }
@@ -80,32 +81,32 @@ namespace Unreal_Class_Wizard.Model
 
                 }catch(Exception ex)
                 {
-
+                    Console.WriteLine(ex);
                 }
             }
             return baseClasses;
         }
 
-        private static List<BaseClass> LoadFromJSON()
-        {
+        //private static List<BaseClass> LoadFromJSON()
+        //{
 
-            DataContractJsonSerializer s = new DataContractJsonSerializer(typeof(BaseClassList), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = false });
-            FileStream fs = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/BaseClasses.json", FileMode.OpenOrCreate);
-            List<BaseClass> baseClasses = new List<BaseClass>();
+        //    DataContractJsonSerializer s = new DataContractJsonSerializer(typeof(BaseClassList), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = false });
+        //    FileStream fs = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/BaseClasses.json", FileMode.OpenOrCreate);
+        //    List<BaseClass> baseClasses = new List<BaseClass>();
 
-            if (fs.Length >= 0)
-            {
-                BaseClassList list = s.ReadObject(fs) as BaseClassList;
-                baseClasses = new List<BaseClass>();
-                baseClasses.AddRange(list.BaseClasses);
-                return baseClasses;
-            }
-            else
-            {
-                return baseClasses;
-            }
+        //    if (fs.Length >= 0)
+        //    {
+        //        BaseClassList list = s.ReadObject(fs) as BaseClassList;
+        //        baseClasses = new List<BaseClass>();
+        //        baseClasses.AddRange(list.BaseClasses);
+        //        return baseClasses;
+        //    }
+        //    else
+        //    {
+        //        return baseClasses;
+        //    }
 
-        }
+        //}
 
         public string ClassName { get; set; }
 
