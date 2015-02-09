@@ -20,5 +20,7 @@ namespace Unreal_Class_Wizard.Model
         public string HeaderPath { get; set; }
 
         public string CppPath { get; set; }
+
+        public string EnginePath { get; set; }
     }
 }

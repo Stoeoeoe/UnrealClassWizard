@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
+using Unreal_Class_Wizard.Helpers;
 using Unreal_Class_Wizard.Model;
 using Unreal_Class_Wizard.View;
 using Unreal_Class_Wizard.ViewModel;
@@ -26,6 +27,8 @@ namespace Unreal_Class_Wizard
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+
 
             //Check if all required folders exist
             if (Directory.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "/Data/") == false)

@@ -7,8 +7,17 @@ Enums
 ?:
 Classes that inherit from SWidget are prefixed by S.
 Classes that are abstract interfaces are prefixed by I.
+Classes with F and T
 
 Dont forget:
 Booleans b prefix...
 
 Multi inheritance
+
+Add support for FGameObjectLookupTable
+
+Interfaces
+
+D:\Unreal Engine\Unreal Engine\4.6\Engine\Source
+
+D:\Unreal Engine\Unreal Engine\4.6\Engine\Source\Runtime\Engine

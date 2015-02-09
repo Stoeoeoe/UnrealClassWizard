@@ -9,14 +9,14 @@
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance d:Type=vm:UserInformationViewModel, IsDesignTimeCreatable=True}"
       d:DesignHeight="600" d:DesignWidth="897"
-      Loaded="Page_Loaded"
-      Unloaded="Page_Unloaded"
+
 	Title="GeneralInformationView">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Unreal Class Wizard;component/Resources/UE4Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Style BasedOn="{StaticResource LabelStyle}" TargetType="Label"/>
             <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="xctk:WatermarkTextBox"/>
             <Style BasedOn="{StaticResource CheckBoxStyle}" TargetType="CheckBox"/>
@@ -59,7 +59,7 @@
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>
 
-            <CustomControls:GroupControl Title="Folders" HideExpander="True" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,15,0,0">
+            <CustomControls:GroupControl Title="Project Folders" HideExpander="True" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,15,0,0">
                 <CustomControls:GroupControl.Labels>
                     <Label>Header Files</Label>
                     <Label>CPP Files</Label>
@@ -73,6 +73,24 @@
                     <StackPanel Orientation="Horizontal">
                         <xctk:WatermarkTextBox Height="22" Watermark="Path where you want to store the generated .cpp files (private)" Text="{Binding CppPath, NotifyOnSourceUpdated=True}" ToolTip="Path to your project's header .h files (private)"   Margin="15,0,0,0" Width="413" />
                         <Button Content="Browse..."  Height="22" Click="GetSavePathCpp"  HorizontalContentAlignment="Center" Width="80" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </CustomControls:GroupControl.Fields>
+            </CustomControls:GroupControl>
+            
+            
+            <CustomControls:GroupControl Title="Source" HideExpander="True" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                <CustomControls:GroupControl.Labels>
+                    <Label>Engine Path</Label>
+                    <Label Visibility="{Binding HasValidEngineDirectory, Converter={StaticResource BooleanToVisibilityConverter}}">Relevant Source Folders</Label>
+                </CustomControls:GroupControl.Labels>
+                <CustomControls:GroupControl.Fields>
+                    <StackPanel  Orientation="Horizontal">
+                        <xctk:WatermarkTextBox Height="22" Watermark="Path to the Engine folder, e.g. 'C:\Unreal Engine\Unreal Engine\4.6'" Text="{Binding EnginePath, NotifyOnSourceUpdated=True}" ToolTip="Your engine folder" Margin="15,4,0,4" Width="413"/>
+                        <Button Content="Browse..." Click="GetEnginePath" Height="22" HorizontalContentAlignment="Center" Width="80" Margin="15,0,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Choose..." Click="OpenTreeWindow" Height="22" HorizontalContentAlignment="Center" Width="80" Margin="15,0,0,0"/>
                     </StackPanel>
                 </CustomControls:GroupControl.Fields>
             </CustomControls:GroupControl>

@@ -12,6 +12,9 @@ namespace Unreal_Class_Wizard.ViewModel
 
         public UserInformation UserInformationModel { get; set; }
 
+
+
+
         public UserInformationViewModel(bool isDesignMode)
         {
             // Model
@@ -71,7 +74,7 @@ namespace Unreal_Class_Wizard.ViewModel
             {
                 cppPath = value;
                 UserInformationModel.CppPath = cppPath;
-                NotifyPropertyChanged("CppPath");
+                NotifyPropertyChanged("CppPath", false);
             }
         }
 
@@ -96,6 +99,27 @@ namespace Unreal_Class_Wizard.ViewModel
             }
         }
 
+        private string enginePath;
+
+        public string EnginePath
+        {
+            get { return enginePath; }
+            set
+            {
+                enginePath = value;
+                NotifyPropertyChanged("EnginePath", false);
+                HasValidEnginePath = enginePath != "";
+            }
+        }
+
+
+        private bool hasValidEnginePath;
+
+        public bool HasValidEnginePath
+        {
+            get { return hasValidEnginePath; }
+            set { hasValidEnginePath = value; NotifyPropertyChanged("HasValidEnginePath", false); }
+        }
 
 
     }

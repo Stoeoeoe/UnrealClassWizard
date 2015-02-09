@@ -60,14 +60,29 @@ namespace Unreal_Class_Wizard.View
             }
         }
 
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void GetEnginePath(object sender, RoutedEventArgs e)
         {
+            var dialog = new CommonOpenFileDialog("Choose Folder") { IsFolderPicker = true };
+            CommonFileDialogResult result = dialog.ShowDialog();
+            if (result == CommonFileDialogResult.Ok)
+            {
+                viewModel.EnginePath = dialog.FileName;
+            }
         }
 
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        private void OpenTreeWindow(object sender, RoutedEventArgs e)
         {
+            SourceFoldersWindow sourceFoldersWindow = new SourceFoldersWindow(viewModel.EnginePath);
+            sourceFoldersWindow.OKButtonEvent += sourceFoldersWindow_OKButtonEvent;
+            sourceFoldersWindow.Show();
         }
+
+        void sourceFoldersWindow_OKButtonEvent(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
 
         private void userFileLink_Click(object sender, RoutedEventArgs e)
         {

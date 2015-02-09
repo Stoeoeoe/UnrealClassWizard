@@ -178,6 +178,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SourceFoldersWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\ClassSpecifiersWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +225,9 @@
     <Compile Include="Helpers\GenerationLevel.cs" />
     <Compile Include="Model\ClassSpecifier.cs" />
     <Compile Include="Model\HeaderParser.cs" />
+    <Compile Include="Model\Tree\DirectoryItem.cs" />
+    <Compile Include="Model\Tree\FileItem.cs" />
+    <Compile Include="Model\Tree\Item.cs" />
     <Compile Include="ViewModel\BaseUnrealClassViewModel.cs" />
     <Compile Include="ViewModel\ClassSpecifierViewModel.cs" />
     <Compile Include="Helpers\AvalonEditBehavior.cs" />
@@ -229,9 +236,13 @@
     <Compile Include="Model\UnrealClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\ConstructorViewModel.cs" />
+    <Compile Include="ViewModel\SourceFoldersViewModel.cs" />
     <Compile Include="ViewModel\UnrealClassViewModel.cs" />
     <Compile Include="CustomControls\HelpButton.xaml.cs">
       <DependentUpon>HelpButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SourceFoldersWindow.xaml.cs">
+      <DependentUpon>SourceFoldersWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ClassSpecifiersWindows.xaml.cs">
       <DependentUpon>ClassSpecifiersWindows.xaml</DependentUpon>
@@ -314,6 +325,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Compile Include="Helpers\HeaderCrawler.cs" />
     <Resource Include="TODO.txt" />
     <Resource Include="Images\Noise.png" />
     <Resource Include="Images\WindowButton_Restore_Hovered.png" />
